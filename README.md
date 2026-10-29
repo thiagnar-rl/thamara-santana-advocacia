@@ -29,7 +29,7 @@ Deve aparecer algo como `v24.x.x` ou `v22.x.x`.
 
 1. Abra o **VS Code** → `Arquivo > Abrir Pasta...` → escolha a pasta **Projeto Advocacia**.
    > Em outro computador, baixe o projeto do GitHub primeiro:
-   > `git clone https://github.com/SEU-USUARIO/thamara-santana-advocacia.git`
+   > `git clone https://github.com/thiagnar-rl/thamara-santana-advocacia.git`
 2. Abra o terminal do VS Code: menu `Terminal > Novo Terminal`.
 3. Instale as dependências (só na primeira vez — demora alguns minutos):
 
