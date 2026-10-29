@@ -41,7 +41,7 @@ describe('Banco Turso (nuvem) — driver libSQL', () => {
     assert.equal(typeof ana, 'number');
     assert.ok((await UsuarioModel.autenticar('ana@x.com', 'segredo1'))?.id === ana);
 
-    const { dados } = ProcessoModel.validar({ numero: 'P-1', cliente: 'Carlos' });
+    const { dados } = ProcessoModel.validar({ numero: '0001234-56.2026.8.26.0100', cliente: 'Carlos' });
     const p = await ProcessoModel.criar(ana, dados);
     const c = await CompromissoModel.criar(ana, {
       processo_id: p, tipo: 'audiencia', titulo: 'Instrução', data: '2026-11-05',

@@ -19,10 +19,16 @@
           class="entrada mono"
           [class.invalida]="campoInvalido() === 'numero'"
           placeholder="0000000-00.0000.0.00.0000"
-          [(ngModel)]="form.numero"
+          [value]="form.numero"
+          (input)="digitarNumero($event)"
+          inputmode="numeric"
+          maxlength="25"
           autocomplete="off"
+          aria-describedby="numero-ajuda"
           required
         />
+        <!-- [C1] Máscara CNJ — solicitado por Mariana Couto (teste de 29/10/2026) -->
+        <small id="numero-ajuda" class="ajuda">Padrão CNJ: digite só os números, a pontuação é automática.</small>
       </div>
 
       <div class="grade-campos">

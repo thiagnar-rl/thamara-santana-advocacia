@@ -58,7 +58,7 @@ Para desligar, clique no terminal e aperte `Ctrl + C`.
 | **Entrar / Criar conta** | Login com e-mail e senha.                                                              |
 | **Início**    | Resumo do dia: compromissos de hoje, próximos 7 dias, atrasados e pendências por tipo.            |
 | **Agenda**    | Calendário do mês com pontinhos coloridos + lista com filtros (próximos, atrasados, concluídos).  |
-| **Processos** | Cadastro de processos (número, cliente, parte contrária, vara, área, situação, observações).      |
+| **Processos** | Cadastro de processos (número no padrão CNJ com máscara automática, cliente, parte contrária, vara, área, situação, observações). |
 | **Processo**  | Ficha do processo com todos os compromissos ligados a ele.                                        |
 
 Cada compromisso tem um **tipo** com cor própria:
@@ -82,10 +82,12 @@ O projeto segue o padrão **MVC (Model-View-Controller)**:
 ```
 Projeto Advocacia/
 ├── package.json              ← comandos "instalar", "dev", "test" e "deploy"
+├── CHANGELOG.md              ← histórico de versões e de cada alteração
 ├── vercel.json               ← configuração da publicação na Vercel (site + API)
 ├── .vercelignore             ← o que NÃO é enviado para a Vercel
 ├── .gitignore                ← o que NÃO é enviado para o GitHub
 ├── docs/                     ← documentação do projeto (Word)
+│   └── solicitacoes/         ← uma ficha por pedido de correção/melhoria (quem pediu, o que mudou)
 ├── backend/                  ← API (Node + Express + SQLite)
 │   ├── .env.example          ← modelo das variáveis de ambiente
 │   ├── data/                 ← banco local + segredo do login (criado sozinho, fora do Git)
@@ -130,7 +132,7 @@ Projeto Advocacia/
 
 ## 5. Testes unitários
 
-São **81 testes** (63 no backend e 18 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
+São **88 testes** (67 no backend e 21 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
 
 ```bash
 npm test                                   # roda todos os testes
@@ -221,6 +223,16 @@ git push
 ```
 
 > Nunca coloque o token do Turso nem o `JWT_SECRET` em arquivos do projeto — eles ficam só nas variáveis da Vercel.
+
+### Rastreabilidade das alterações
+
+Todo pedido de correção ou melhoria recebe um **código** (C1, C2… para correções; F1, F2… para funcionalidades novas) e é registrado em três lugares:
+
+1. **Ficha do pedido** em [`docs/solicitacoes/`](docs/solicitacoes/README.md): quem pediu, o problema, a solução, os arquivos alterados, os testes e os passos do Git.
+2. **[`CHANGELOG.md`](CHANGELOG.md)**: resumo por versão.
+3. **Código e testes**: comentários e nomes de testes com a marca `[C1]`, `[C2]`… — basta pesquisar o código (Ctrl + Shift + F no VS Code) para achar tudo o que um pedido alterou.
+
+Cada pedido é feito num **ramo próprio** (ex.: `correcao/C1-mascara-numero-processo`) e a mensagem do commit cita o código e quem pediu.
 
 ---
 

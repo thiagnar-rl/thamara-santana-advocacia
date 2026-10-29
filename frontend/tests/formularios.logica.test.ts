@@ -1,6 +1,15 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { validarAcesso, validarCompromisso, validarProcesso } from '../src/app/core/logica/formularios.logica';
+import {
+  formatarNumeroCNJ,
+  MENSAGEM_NUMERO_INVALIDO,
+  numeroCNJValido,
+  validarAcesso,
+  validarCompromisso,
+  validarProcesso,
+} from '../src/app/core/logica/formularios.logica';
+
+const NUMERO = '1002345-67.2026.8.26.0100';
 
 describe('formularios.logica', () => {
   it('validarCompromisso() indica a mensagem e o campo com erro', () => {
@@ -15,8 +24,30 @@ describe('formularios.logica', () => {
 
   it('validarProcesso() exige número e cliente', () => {
     assert.equal(validarProcesso({ numero: '', cliente: 'A' }).campo, 'numero');
-    assert.equal(validarProcesso({ numero: '1', cliente: '' }).campo, 'cliente');
-    assert.equal(validarProcesso({ numero: '1', cliente: 'A' }).erro, null);
+    assert.equal(validarProcesso({ numero: NUMERO, cliente: '' }).campo, 'cliente');
+    assert.equal(validarProcesso({ numero: NUMERO, cliente: 'A' }).erro, null);
+  });
+
+  it('[C1] validarProcesso() recusa número fora do padrão CNJ (sugestão: Mariana Couto)', () => {
+    assert.deepEqual(validarProcesso({ numero: '123abc', cliente: 'A' }), { erro: MENSAGEM_NUMERO_INVALIDO, campo: 'numero' });
+    assert.equal(validarProcesso({ numero: '1002345-67.2026', cliente: 'A' }).campo, 'numero'); // incompleto
+  });
+
+  it('[C1] formatarNumeroCNJ() aplica a máscara enquanto digita', () => {
+    assert.equal(formatarNumeroCNJ('1002345'), '1002345');
+    assert.equal(formatarNumeroCNJ('10023456'), '1002345-6');
+    assert.equal(formatarNumeroCNJ('100234567202'), '1002345-67.202');
+    assert.equal(formatarNumeroCNJ('10023456720268260100'), NUMERO);
+    assert.equal(formatarNumeroCNJ('123abc'), '123'); // letras são descartadas
+    assert.equal(formatarNumeroCNJ(NUMERO + '999'), NUMERO); // no máximo 20 dígitos
+    assert.equal(formatarNumeroCNJ(''), '');
+    assert.equal(formatarNumeroCNJ(null), '');
+  });
+
+  it('[C1] numeroCNJValido() só aceita o número completo', () => {
+    assert.equal(numeroCNJValido(NUMERO), true);
+    assert.equal(numeroCNJValido('1002345-67.2026.8.26.010'), false);
+    assert.equal(numeroCNJValido('10023456720268260100'), false); // sem pontuação: o campo sempre formata antes
   });
 
   it('validarAcesso() valida login e cadastro', () => {

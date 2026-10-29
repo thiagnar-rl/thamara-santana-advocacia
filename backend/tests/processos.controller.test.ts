@@ -15,26 +15,33 @@ describe('ProcessosController', () => {
 
   it('criar() devolve 201 e o processo criado', async () => {
     const res = resposta();
-    await ProcessosController.criar(requisicao({ usuarioId: ana, body: { numero: '123', cliente: 'Carlos' } }), res as never);
+    await ProcessosController.criar(requisicao({ usuarioId: ana, body: { numero: '0001234-56.2026.8.26.0100', cliente: 'Carlos' } }), res as never);
     assert.equal(res.statusCode, 201);
-    assert.equal(res.corpo.numero, '123');
+    assert.equal(res.corpo.numero, '0001234-56.2026.8.26.0100');
     assert.equal(res.corpo.total_pendentes, 0);
   });
 
   it('criar() devolve 400 sem cliente e 409 com número repetido', async () => {
     const semCliente = resposta();
-    await ProcessosController.criar(requisicao({ usuarioId: ana, body: { numero: '1' } }), semCliente as never);
+    await ProcessosController.criar(requisicao({ usuarioId: ana, body: { numero: '0001234-56.2026.8.26.0100' } }), semCliente as never);
     assert.equal(semCliente.statusCode, 400);
 
-    await criarProcesso(ana, { numero: '1' });
+    await criarProcesso(ana, { numero: '0001234-56.2026.8.26.0100' });
     const repetido = resposta();
-    await ProcessosController.criar(requisicao({ usuarioId: ana, body: { numero: '1', cliente: 'X' } }), repetido as never);
+    await ProcessosController.criar(requisicao({ usuarioId: ana, body: { numero: '0001234-56.2026.8.26.0100', cliente: 'X' } }), repetido as never);
     assert.equal(repetido.statusCode, 409);
   });
 
+  it('[C1] criar() devolve 400 para número fora do padrão CNJ (sugestão: Mariana Couto)', async () => {
+    const res = resposta();
+    await ProcessosController.criar(requisicao({ usuarioId: ana, body: { numero: '123abc', cliente: 'Carlos' } }), res as never);
+    assert.equal(res.statusCode, 400);
+    assert.match(res.corpo.erro, /padrão CNJ/);
+  });
+
   it('listar() aplica a busca enviada na URL', async () => {
-    await criarProcesso(ana, { numero: '1', cliente: 'Carlos' });
-    await criarProcesso(ana, { numero: '2', cliente: 'Renata' });
+    await criarProcesso(ana, { numero: '0001234-56.2026.8.26.0100', cliente: 'Carlos' });
+    await criarProcesso(ana, { numero: '0007654-32.2025.5.15.0001', cliente: 'Renata' });
     const res = resposta();
     await ProcessosController.listar(requisicao({ usuarioId: ana, query: { busca: 'ren' } }), res as never);
     assert.deepEqual(res.corpo.map((p: { cliente: string }) => p.cliente), ['Renata']);
@@ -56,7 +63,7 @@ describe('ProcessosController', () => {
 
   it('atualizar() devolve 200, ou 404 se não for da usuária', async () => {
     const p = await criarProcesso(ana);
-    const body = { numero: 'Novo', cliente: 'Novo cliente', status: 'suspenso' };
+    const body = { numero: '0007654-32.2025.5.15.0001', cliente: 'Novo cliente', status: 'suspenso' };
 
     const res = resposta();
     await ProcessosController.atualizar(requisicao({ usuarioId: ana, params: { id: String(p) }, body }), res as never);
