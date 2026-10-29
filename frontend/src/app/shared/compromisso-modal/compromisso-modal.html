@@ -1,0 +1,112 @@
+<div class="modal-fundo" (click)="fechar.emit()">
+  <form class="modal" (click)="$event.stopPropagation()" (ngSubmit)="salvar()">
+    <header class="modal-cabecalho">
+      <div>
+        <span class="sobretitulo">{{ editando ? 'Editar' : 'Novo' }}</span>
+        <h2>{{ editando ? 'Editar compromisso' : 'Novo compromisso' }}</h2>
+      </div>
+      <button type="button" class="botao-icone" title="Fechar" (click)="fechar.emit()">
+        <app-icone nome="fechar" />
+      </button>
+    </header>
+
+    <div class="modal-corpo">
+      <div class="campo">
+        <span class="rotulo">Tipo</span>
+        <div class="tipos">
+          @for (t of tipos; track t.valor) {
+            <button
+              type="button"
+              class="opcao-tipo tipo-{{ t.valor }}"
+              [class.selecionado]="form.tipo === t.valor"
+              (click)="form.tipo = t.valor"
+            >
+              <app-icone [nome]="t.icone" [tamanho]="20" />
+              {{ t.rotulo }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="titulo">Título</label>
+        <input
+          id="titulo"
+          name="titulo"
+          class="entrada"
+          [class.invalida]="campoInvalido() === 'titulo'"
+          placeholder="Ex.: Audiência de conciliação"
+          [(ngModel)]="form.titulo"
+          autocomplete="off"
+          required
+        />
+      </div>
+
+      <div class="campo">
+        <label for="processo">Processo</label>
+        <select id="processo" name="processo" class="entrada" [(ngModel)]="form.processo_id">
+          <option [ngValue]="null">Sem processo vinculado</option>
+          @for (p of processos(); track p.id) {
+            <option [ngValue]="p.id">{{ p.numero }} — {{ p.cliente }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="grade-campos">
+        <div class="campo">
+          <label for="data">Data</label>
+          <input id="data" name="data" type="date" class="entrada" [class.invalida]="campoInvalido() === 'data'" [(ngModel)]="form.data" required />
+        </div>
+        <div class="campo">
+          <label for="hora">Hora <span class="opcional">(opcional)</span></label>
+          <input id="hora" name="hora" type="time" class="entrada" [class.invalida]="campoInvalido() === 'hora'" [(ngModel)]="form.hora" />
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="local">Local <span class="opcional">(opcional)</span></label>
+        <input
+          id="local"
+          name="local"
+          class="entrada"
+          placeholder="Ex.: 2ª Vara Cível — Fórum Central, sala 204"
+          [(ngModel)]="form.local"
+        />
+      </div>
+
+      <div class="campo">
+        <span class="rotulo">Prioridade</span>
+        <div class="segmentos">
+          @for (p of prioridades; track p.valor) {
+            <button type="button" [class.ativo]="form.prioridade === p.valor" (click)="form.prioridade = p.valor">
+              {{ p.rotulo }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="descricao">Anotações <span class="opcional">(opcional)</span></label>
+        <textarea
+          id="descricao"
+          name="descricao"
+          class="entrada"
+          placeholder="Documentos a levar, testemunhas, prazos..."
+          [(ngModel)]="form.descricao"
+        ></textarea>
+      </div>
+
+      @if (erro()) {
+        <div class="mensagem-erro"><app-icone nome="alerta" [tamanho]="16" /> {{ erro() }}</div>
+      }
+    </div>
+
+    <footer class="modal-rodape">
+      <button type="button" class="botao fantasma" (click)="fechar.emit()">Cancelar</button>
+      <button type="submit" class="botao" [disabled]="salvando()">
+        <app-icone nome="check" [tamanho]="16" />
+        {{ salvando() ? 'Salvando...' : 'Salvar' }}
+      </button>
+    </footer>
+  </form>
+</div>

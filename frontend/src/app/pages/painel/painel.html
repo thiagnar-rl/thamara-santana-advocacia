@@ -1,0 +1,135 @@
+<div class="pagina">
+  <header class="cabecalho-pagina">
+    <div>
+      <p class="sobretitulo">{{ diaSemana }}, {{ dataHoje }}</p>
+      <h1>{{ saudacao }}, {{ auth.primeiroNome() }}.</h1>
+    </div>
+    <button type="button" class="botao" (click)="edicao.novoCompromisso({ data: hoje })">
+      <app-icone nome="mais" [tamanho]="17" [traco]="2.2" /> Novo compromisso
+    </button>
+  </header>
+
+  @if (dados(); as d) {
+    <!-- Números do dia -->
+    <section class="numeros">
+      <div class="numero destaque">
+        <span class="rotulo">Para hoje</span>
+        <strong>{{ d.resumo.hoje }}</strong>
+        <span class="legenda">{{ d.resumo.hoje === 1 ? 'compromisso pendente' : 'compromissos pendentes' }}</span>
+      </div>
+      <div class="numero">
+        <span class="rotulo">Próximos 7 dias</span>
+        <strong>{{ d.resumo.semana }}</strong>
+        <span class="legenda">na agenda</span>
+      </div>
+      <div class="numero" [class.alerta]="d.resumo.atrasados > 0">
+        <span class="rotulo">Atrasados</span>
+        <strong>{{ d.resumo.atrasados }}</strong>
+        <span class="legenda">{{ d.resumo.atrasados ? 'precisam de atenção' : 'tudo em dia' }}</span>
+      </div>
+      <a class="numero" routerLink="/processos">
+        <span class="rotulo">Processos ativos</span>
+        <strong>{{ d.resumo.processosAtivos }}</strong>
+        <span class="legenda">{{ d.resumo.concluidosMes }} concluídos no mês</span>
+      </a>
+    </section>
+
+    <div class="colunas">
+      <div class="coluna-principal">
+        <!-- Hoje -->
+        <section class="cartao">
+          <header class="cartao-cabecalho">
+            <h2>Hoje <span class="contador">{{ d.hoje.length }}</span></h2>
+            <a routerLink="/agenda" class="botao fantasma pequeno">Ver agenda</a>
+          </header>
+          <div class="lista">
+            @for (c of d.hoje; track c.id) {
+              <app-compromisso-item
+                [compromisso]="c"
+                (alternarStatus)="edicao.alternarStatus($event)"
+                (editar)="edicao.editarCompromisso($event)"
+                (excluir)="edicao.excluirCompromisso($event)"
+              />
+            } @empty {
+              <div class="vazio">
+                <span class="icone-vazio"><app-icone nome="calendario" [tamanho]="22" /></span>
+                <strong>Dia livre</strong>
+                <p>Nenhum compromisso para hoje. Aproveite para adiantar as peças da semana.</p>
+              </div>
+            }
+          </div>
+        </section>
+
+        <!-- Próximos dias -->
+        <section class="cartao">
+          <header class="cartao-cabecalho">
+            <h2>Próximos 7 dias</h2>
+          </header>
+          <div class="lista">
+            @for (grupo of proximosPorDia(); track grupo.data) {
+              <h3 class="dia">{{ grupo.titulo }}</h3>
+              @for (c of grupo.itens; track c.id) {
+                <app-compromisso-item
+                  [compromisso]="c"
+                  (alternarStatus)="edicao.alternarStatus($event)"
+                  (editar)="edicao.editarCompromisso($event)"
+                  (excluir)="edicao.excluirCompromisso($event)"
+                />
+              }
+            } @empty {
+              <div class="vazio">
+                <span class="icone-vazio"><app-icone nome="vazio" [tamanho]="22" /></span>
+                <strong>Semana tranquila</strong>
+                <p>Nada agendado para os próximos dias.</p>
+              </div>
+            }
+          </div>
+        </section>
+      </div>
+
+      <aside class="coluna-lateral">
+        <!-- Atrasados -->
+        @if (d.atrasados.length) {
+          <section class="cartao atrasados">
+            <header class="cartao-cabecalho">
+              <h2><app-icone nome="alerta" [tamanho]="18" /> Atrasados</h2>
+            </header>
+            <div class="lista">
+              @for (c of d.atrasados; track c.id) {
+                <app-compromisso-item
+                  [compromisso]="c"
+                  [mostrarData]="true"
+                  [mostrarProcesso]="false"
+                  (alternarStatus)="edicao.alternarStatus($event)"
+                  (editar)="edicao.editarCompromisso($event)"
+                  (excluir)="edicao.excluirCompromisso($event)"
+                />
+              }
+            </div>
+          </section>
+        }
+
+        <!-- Por tipo -->
+        <section class="cartao">
+          <header class="cartao-cabecalho">
+            <h2>Pendências por tipo</h2>
+            <span class="contador">{{ totalPendentes() }}</span>
+          </header>
+          <ul class="distribuicao">
+            @for (t of distribuicao(); track t.valor) {
+              <li class="tipo-{{ t.valor }}">
+                <div class="linha">
+                  <span class="nome"><app-icone [nome]="t.icone" [tamanho]="16" /> {{ t.plural }}</span>
+                  <strong>{{ t.total }}</strong>
+                </div>
+                <div class="barra"><span [style.width.%]="t.largura"></span></div>
+              </li>
+            }
+          </ul>
+        </section>
+      </aside>
+    </div>
+  } @else {
+    <div class="carregando">Carregando sua agenda...</div>
+  }
+</div>

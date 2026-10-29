@@ -1,0 +1,50 @@
+<aside class="lateral">
+  <a routerLink="/inicio" class="marca" title="Thamara Santana — Advocacia e Consultoria Jurídica">
+    <img class="logo" src="marca/monograma.png" alt="" />
+    <span class="textos">
+      <span class="nome">Thamara Santana</span>
+      <span class="sub">Advocacia e Consultoria Jurídica</span>
+    </span>
+  </a>
+
+  <button type="button" class="novo" (click)="edicao.novoCompromisso()">
+    <app-icone nome="mais" [tamanho]="18" [traco]="2.2" />
+    <span>Novo compromisso</span>
+  </button>
+
+  <nav class="menu">
+    @for (item of menu; track item.rota) {
+      <a [routerLink]="item.rota" routerLinkActive="ativo" class="link">
+        <app-icone [nome]="item.icone" [tamanho]="19" />
+        <span>{{ item.rotulo }}</span>
+      </a>
+    }
+  </nav>
+
+  <div class="usuario">
+    <span class="avatar">{{ iniciais() }}</span>
+    <div class="dados">
+      <strong>{{ auth.usuario()?.nome }}</strong>
+      <small>{{ auth.usuario()?.email }}</small>
+    </div>
+    <button type="button" class="sair" title="Sair" (click)="auth.sair()">
+      <app-icone nome="sair" [tamanho]="17" />
+    </button>
+  </div>
+</aside>
+
+<main class="principal">
+  <router-outlet />
+</main>
+
+@if (edicao.compromisso(); as dados) {
+  <app-compromisso-modal [dados]="dados" (fechar)="edicao.compromisso.set(null)" />
+}
+
+@if (edicao.processo(); as dados) {
+  <app-processo-modal [dados]="dados" (fechar)="edicao.processo.set(null)" />
+}
+
+@if (confirmacao.pedido(); as pedido) {
+  <app-confirmacao [pedido]="pedido" />
+}

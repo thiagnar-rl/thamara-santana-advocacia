@@ -1,0 +1,259 @@
+:host {
+  display: flex;
+  min-height: 100vh;
+}
+
+.lateral {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 256px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 16px 16px;
+  background:
+    radial-gradient(120% 60% at 0% 0%, rgba(214, 180, 108, 0.12), transparent 60%),
+    var(--tinta);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px 20px;
+
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 0 22px;
+  margin-bottom: 8px;
+  text-align: center;
+  border-bottom: 1px solid rgba(214, 180, 108, 0.16);
+
+  .logo {
+    width: 58px;
+    height: auto;
+    filter: drop-shadow(0 4px 14px rgba(214, 180, 108, 0.18));
+  }
+
+  .textos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.2;
+  }
+
+  .nome {
+    font-family: var(--fonte-marca);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    background: var(--ouro-gradiente);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .sub {
+    margin-top: 5px;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.62);
+    white-space: nowrap;
+  }
+}
+
+.novo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  margin-bottom: 14px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--dourado-claro);
+  color: var(--tinta);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    transform 0.1s;
+
+  &:hover {
+    background: #e3c587;
+  }
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.93rem;
+  transition:
+    background 0.15s,
+    color 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+  }
+
+  &.ativo {
+    background: rgba(255, 255, 255, 0.09);
+    color: #fff;
+
+    app-icone {
+      color: var(--dourado-claro);
+    }
+  }
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding: 12px 8px 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  .avatar {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(214, 180, 108, 0.18);
+    color: var(--dourado-claro);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .dados {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+
+    strong {
+      color: #fff;
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+    small {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    strong,
+    small {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .sair {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.55);
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+  }
+}
+
+.principal {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------- Celular: menu vira barra inferior ---------- */
+@media (max-width: 720px) {
+  :host {
+    display: block;
+  }
+
+  .lateral {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    width: auto;
+    height: 68px;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 12px;
+    background: var(--tinta);
+  }
+
+  .marca,
+  .usuario .dados,
+  .usuario .avatar {
+    display: none;
+  }
+
+  .usuario {
+    order: 3;
+    margin: 0 0 0 4px;
+    padding: 0;
+    border: 0;
+  }
+
+  .menu {
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .link {
+    flex-direction: column;
+    gap: 2px;
+    height: auto;
+    padding: 8px 12px;
+    font-size: 0.7rem;
+  }
+
+  .novo {
+    order: 2;
+    width: 48px;
+    height: 48px;
+    margin: 0 0 0 8px;
+    border-radius: 14px;
+
+    span {
+      display: none;
+    }
+  }
+}

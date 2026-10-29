@@ -1,0 +1,221 @@
+.tela {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  min-height: 100vh;
+}
+
+/* ---------- Lado da marca (foto + logo dourada) ---------- */
+
+.vitrine {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 48px 56px 40px;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.75);
+  background:
+    radial-gradient(70% 45% at 50% 48%, rgba(214, 180, 108, 0.1), transparent 70%),
+    linear-gradient(180deg, rgba(20, 19, 23, 0.35) 0%, rgba(20, 19, 23, 0.55) 60%, rgba(20, 19, 23, 0.9) 100%),
+    url('/marca/fundo-login.jpg') center 30% / cover no-repeat,
+    var(--tinta);
+}
+
+.centro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  text-align: center;
+}
+
+.logo-completa {
+  width: min(440px, 80%);
+  height: auto;
+  filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.45));
+  animation: surgir 0.9s ease-out both;
+}
+
+.lema {
+  max-width: 360px;
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.7);
+  animation: surgir 0.9s 0.2s ease-out both;
+}
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.tipos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(214, 180, 108, 0.2);
+    backdrop-filter: blur(4px);
+    font-size: 0.84rem;
+    font-weight: 500;
+  }
+
+  span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cor-tipo);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--cor-tipo) 30%, transparent);
+  }
+}
+
+/* ---------- Formulário ---------- */
+
+.formulario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.caixa {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  h2 {
+    font-family: var(--fonte-titulo);
+    font-weight: 500;
+    font-size: 2rem;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitulo {
+    margin-top: -10px;
+    margin-bottom: 8px;
+  }
+}
+
+.marca-mobile {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 8px;
+
+  img {
+    width: 64px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .nome {
+    font-family: var(--fonte-marca);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: var(--ouro-gradiente);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .sub {
+    margin-top: 4px;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--texto-2);
+  }
+}
+
+.senha {
+  position: relative;
+
+  .entrada {
+    padding-right: 48px;
+  }
+
+  .botao-icone {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+}
+
+.enviar {
+  height: 48px;
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+.troca {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--texto-2);
+
+  a {
+    color: var(--tinta);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--dourado);
+    text-underline-offset: 4px;
+  }
+}
+
+/* ---------- Celular / tela estreita ---------- */
+
+@media (max-width: 900px) {
+  .tela {
+    grid-template-columns: 1fr;
+    background:
+      linear-gradient(180deg, rgba(20, 19, 23, 0.55), rgba(20, 19, 23, 0.85)),
+      url('/marca/fundo-login.jpg') center 30% / cover no-repeat,
+      var(--tinta);
+  }
+
+  .vitrine {
+    display: none;
+  }
+
+  .caixa {
+    padding: 28px 24px;
+    border-radius: 20px;
+    background: var(--superficie);
+    box-shadow: var(--sombra-lg);
+
+    h2 {
+      font-size: 1.6rem;
+      text-align: center;
+    }
+
+    .subtitulo {
+      text-align: center;
+    }
+  }
+
+  .marca-mobile {
+    display: flex;
+  }
+}

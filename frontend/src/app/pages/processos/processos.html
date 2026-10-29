@@ -1,0 +1,85 @@
+<div class="pagina">
+  <header class="cabecalho-pagina">
+    <div>
+      <p class="sobretitulo">Carteira</p>
+      <h1>Processos</h1>
+    </div>
+    <button type="button" class="botao" (click)="edicao.novoProcesso()">
+      <app-icone nome="mais" [tamanho]="17" [traco]="2.2" /> Novo processo
+    </button>
+  </header>
+
+  <div class="barra">
+    <label class="busca">
+      <app-icone nome="busca" [tamanho]="18" />
+      <input
+        class="entrada"
+        type="search"
+        placeholder="Buscar por número, cliente, parte, vara..."
+        (input)="digitar($any($event.target).value)"
+      />
+    </label>
+
+    <div class="segmentos">
+      <button type="button" [class.ativo]="status() === null" (click)="status.set(null)">Todos</button>
+      @for (s of opcoesStatus; track s.valor) {
+        <button type="button" [class.ativo]="status() === s.valor" (click)="status.set(s.valor)">
+          {{ s.rotulo }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (carregando() && !processos().length) {
+    <div class="carregando">Carregando processos...</div>
+  } @else {
+    <div class="grade">
+      @for (p of processos(); track p.id) {
+        <a class="cartao processo" [routerLink]="['/processos', p.id]">
+          <div class="topo">
+            <span class="mono numero">{{ p.numero }}</span>
+            <span class="etiqueta {{ p.status }}">{{ rotuloStatus(p.status) }}</span>
+          </div>
+
+          <h3>{{ p.cliente }}</h3>
+          @if (p.parte_contraria) {
+            <p class="contra"><span>×</span> {{ p.parte_contraria }}</p>
+          }
+
+          <div class="detalhes">
+            @if (p.tribunal) {
+              <span><app-icone nome="tribunal" [tamanho]="14" /> {{ p.tribunal }}</span>
+            }
+            @if (p.area) {
+              <span class="area">{{ p.area }}</span>
+            }
+          </div>
+
+          <footer>
+            <span class="pendentes" [class.zero]="!p.total_pendentes">
+              <strong>{{ p.total_pendentes }}</strong>
+              {{ p.total_pendentes === 1 ? 'pendência' : 'pendências' }}
+            </span>
+            @if (p.proximo_compromisso) {
+              <span class="proximo">
+                <app-icone nome="calendario" [tamanho]="14" />
+                Próximo: {{ dataRelativa(p.proximo_compromisso) }}
+              </span>
+            }
+          </footer>
+        </a>
+      } @empty {
+        <div class="cartao vazio-cartao">
+          <div class="vazio">
+            <span class="icone-vazio"><app-icone nome="pasta" [tamanho]="22" /></span>
+            <strong>Nenhum processo encontrado</strong>
+            <p>Cadastre seus processos para vincular audiências, recursos, manifestações e despachos.</p>
+            <button type="button" class="botao secundario pequeno" (click)="edicao.novoProcesso()">
+              <app-icone nome="mais" [tamanho]="15" /> Cadastrar processo
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

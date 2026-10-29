@@ -1,0 +1,93 @@
+<div class="tela">
+  <section class="vitrine">
+    <div class="centro">
+      <img
+        class="logo-completa"
+        src="marca/logo-completa.png"
+        alt="Thamara Santana — Advocacia e Consultoria Jurídica"
+      />
+      <p class="lema">Processos, prazos e audiências — tudo no seu lugar.</p>
+    </div>
+
+    <ul class="tipos">
+      <li class="tipo-audiencia"><span></span>Audiências</li>
+      <li class="tipo-recurso"><span></span>Recursos</li>
+      <li class="tipo-manifestacao"><span></span>Manifestações</li>
+      <li class="tipo-despacho"><span></span>Despachos</li>
+    </ul>
+  </section>
+
+  <section class="formulario">
+    <form class="caixa" (ngSubmit)="enviar()">
+      <div class="marca-mobile">
+        <img src="marca/monograma.png" alt="" />
+        <span class="nome">Thamara Santana</span>
+        <span class="sub">Advocacia e Consultoria Jurídica</span>
+      </div>
+
+      <h2>{{ cadastro() ? 'Criar sua conta' : 'Bem-vinda de volta' }}</h2>
+      <p class="suave subtitulo">
+        {{ cadastro() ? 'Leva menos de um minuto.' : 'Entre para ver sua agenda.' }}
+      </p>
+
+      @if (cadastro()) {
+        <div class="campo">
+          <label for="nome">Nome</label>
+          <input id="nome" name="nome" class="entrada" placeholder="Seu nome completo" [(ngModel)]="nome" autocomplete="name" />
+        </div>
+      }
+
+      <div class="campo">
+        <label for="email">E-mail</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          class="entrada"
+          placeholder="voce@exemplo.com"
+          [(ngModel)]="email"
+          autocomplete="email"
+        />
+      </div>
+
+      <div class="campo">
+        <label for="senha">Senha</label>
+        <div class="senha">
+          <input
+            id="senha"
+            name="senha"
+            class="entrada"
+            [type]="mostrarSenha() ? 'text' : 'password'"
+            [placeholder]="cadastro() ? 'Mínimo de 6 caracteres' : 'Sua senha'"
+            [(ngModel)]="senha"
+            [attr.autocomplete]="cadastro() ? 'new-password' : 'current-password'"
+          />
+          <button
+            type="button"
+            class="botao-icone"
+            [title]="mostrarSenha() ? 'Esconder senha' : 'Mostrar senha'"
+            (click)="mostrarSenha.set(!mostrarSenha())"
+          >
+            <app-icone [nome]="mostrarSenha() ? 'olhoFechado' : 'olho'" [tamanho]="17" />
+          </button>
+        </div>
+      </div>
+
+      @if (erro()) {
+        <div class="mensagem-erro"><app-icone nome="alerta" [tamanho]="16" /> {{ erro() }}</div>
+      }
+
+      <button type="submit" class="botao enviar" [disabled]="enviando()">
+        {{ enviando() ? 'Aguarde...' : cadastro() ? 'Criar conta' : 'Entrar' }}
+      </button>
+
+      <p class="troca">
+        @if (cadastro()) {
+          Já tem conta? <a routerLink="/entrar">Entrar</a>
+        } @else {
+          Primeira vez aqui? <a routerLink="/cadastro">Criar conta</a>
+        }
+      </p>
+    </form>
+  </section>
+</div>

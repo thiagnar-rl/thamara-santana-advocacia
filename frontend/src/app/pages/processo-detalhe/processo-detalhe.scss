@@ -1,0 +1,129 @@
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--texto-2);
+
+  &:hover {
+    color: var(--tinta);
+  }
+}
+
+.cabecalho {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+
+  .linha {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .numero {
+    color: var(--texto-2);
+  }
+
+  .contra {
+    margin-top: 6px;
+    color: var(--texto-2);
+
+    span {
+      color: var(--dourado);
+      font-weight: 700;
+    }
+  }
+
+  .acoes {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 20px;
+  align-items: start;
+
+  @media (max-width: 960px) {
+    grid-template-columns: minmax(0, 1fr);
+
+    .ficha {
+      order: -1;
+    }
+  }
+}
+
+.lista {
+  padding: 0 8px 10px;
+}
+
+.separador {
+  margin: 10px 12px 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--borda);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-3);
+}
+
+.ficha {
+  padding: 20px;
+
+  h2 {
+    margin-bottom: 14px;
+  }
+
+  dl {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+  }
+
+  dt {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--texto-3);
+  }
+
+  dd {
+    margin: 2px 0 0;
+    font-weight: 500;
+    color: var(--tinta);
+  }
+
+  .observacoes {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--borda);
+
+    h3 {
+      margin-bottom: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--texto-3);
+    }
+
+    p {
+      white-space: pre-line;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+  }
+}

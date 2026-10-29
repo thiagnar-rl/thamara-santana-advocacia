@@ -1,0 +1,154 @@
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.busca {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+  max-width: 420px;
+
+  app-icone {
+    position: absolute;
+    left: 14px;
+    top: 13px;
+    color: var(--texto-3);
+    pointer-events: none;
+  }
+
+  .entrada {
+    padding-left: 42px;
+  }
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 16px;
+}
+
+.processo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    border-color 0.15s;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: var(--borda-forte);
+    box-shadow:
+      0 1px 2px rgba(29, 28, 33, 0.04),
+      0 14px 30px -10px rgba(29, 28, 33, 0.18);
+  }
+
+  .topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .numero {
+    color: var(--texto-2);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  h3 {
+    font-family: var(--fonte-titulo);
+    font-weight: 500;
+    font-size: 1.25rem;
+  }
+
+  .contra {
+    font-size: 0.88rem;
+    color: var(--texto-2);
+
+    span {
+      color: var(--dourado);
+      font-weight: 700;
+      margin-right: 2px;
+    }
+  }
+
+  .detalhes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin-top: 6px;
+    font-size: 0.82rem;
+    color: var(--texto-2);
+
+    > span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    app-icone {
+      color: var(--texto-3);
+    }
+  }
+
+  .area {
+    padding: 2px 9px;
+    border-radius: 6px;
+    background: var(--dourado-suave);
+    color: #8a6a37;
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px dashed var(--borda);
+    font-size: 0.8rem;
+    color: var(--texto-2);
+  }
+
+  .detalhes + footer,
+  h3 + footer,
+  .contra + footer {
+    margin-top: 14px;
+  }
+
+  .pendentes strong {
+    color: var(--tinta);
+    font-size: 0.95rem;
+  }
+
+  .pendentes.zero {
+    color: var(--texto-3);
+
+    strong {
+      color: var(--texto-3);
+    }
+  }
+
+  .proximo {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+}
+
+.vazio-cartao {
+  grid-column: 1 / -1;
+}

@@ -1,0 +1,195 @@
+:host {
+  display: block;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 14px 14px 18px;
+  border-radius: var(--raio-md);
+  transition: background 0.15s;
+
+  // filete colorido do tipo
+  &::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 16px;
+    bottom: 16px;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--cor-tipo);
+    opacity: 0.85;
+  }
+
+  &:hover {
+    background: var(--superficie-2);
+
+    .acoes {
+      opacity: 1;
+    }
+  }
+
+  &.concluido {
+    &::before {
+      opacity: 0.25;
+    }
+    .titulo {
+      color: var(--texto-3);
+      text-decoration: line-through;
+      text-decoration-color: var(--borda-forte);
+    }
+    .selo {
+      filter: grayscale(1);
+      opacity: 0.5;
+    }
+  }
+}
+
+.marcar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: 9px;
+  border: 1.5px solid var(--borda-forte);
+  border-radius: 7px;
+  background: var(--superficie);
+  color: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover {
+    border-color: var(--sucesso);
+    color: var(--sucesso);
+  }
+
+  &.marcado {
+    border-color: var(--sucesso);
+    background: var(--sucesso);
+    color: #fff;
+  }
+}
+
+.selo {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  color: var(--cor-tipo);
+  background: color-mix(in srgb, var(--cor-tipo) 11%, white);
+}
+
+.conteudo {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.linha-topo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.tipo {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cor-tipo);
+}
+
+.etiqueta {
+  height: 20px;
+  font-size: 0.7rem;
+}
+
+.titulo {
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: var(--tinta);
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--texto-2);
+
+  > span,
+  > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  app-icone {
+    color: var(--texto-3);
+  }
+}
+
+.processo {
+  border-radius: 6px;
+  min-width: 0;
+  transition: color 0.15s;
+
+  .mono {
+    white-space: nowrap;
+  }
+
+  &:hover {
+    color: var(--tinta);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .cliente {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.acoes {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 10px;
+  background: var(--superficie-2);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.item:focus-within .acoes {
+  opacity: 1;
+}
+
+// Em telas de toque (sem "hover") os botões ficam sempre visíveis, em linha
+@media (hover: none) {
+  .acoes {
+    position: static;
+    opacity: 1;
+    background: transparent;
+  }
+}
+
+@media (max-width: 560px) {
+  .selo {
+    display: none;
+  }
+}

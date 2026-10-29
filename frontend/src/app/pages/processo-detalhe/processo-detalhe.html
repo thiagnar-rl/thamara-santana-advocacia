@@ -1,0 +1,105 @@
+<div class="pagina">
+  <a routerLink="/processos" class="voltar">
+    <app-icone nome="voltar" [tamanho]="16" /> Processos
+  </a>
+
+  @if (detalhe(); as d) {
+    @let p = d.processo;
+
+    <header class="cabecalho">
+      <div class="titulos">
+        <div class="linha">
+          <span class="mono numero">{{ p.numero }}</span>
+          <span class="etiqueta {{ p.status }}">{{ rotuloStatus(p.status) }}</span>
+        </div>
+        <h1>{{ p.cliente }}</h1>
+        @if (p.parte_contraria) {
+          <p class="contra"><span>×</span> {{ p.parte_contraria }}</p>
+        }
+      </div>
+      <div class="acoes">
+        <button type="button" class="botao secundario" (click)="edicao.editarProcesso(p)">
+          <app-icone nome="editar" [tamanho]="16" /> Editar
+        </button>
+        <button type="button" class="botao perigo" title="Excluir processo" (click)="edicao.excluirProcesso(p)">
+          <app-icone nome="lixeira" [tamanho]="16" />
+        </button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <!-- Compromissos -->
+      <section class="cartao">
+        <header class="cartao-cabecalho">
+          <h2>Compromissos <span class="contador">{{ pendentes().length }}</span></h2>
+          <button type="button" class="botao pequeno" (click)="edicao.novoCompromisso({ processoId: p.id })">
+            <app-icone nome="mais" [tamanho]="15" [traco]="2.2" /> Adicionar
+          </button>
+        </header>
+
+        <div class="lista">
+          @for (c of pendentes(); track c.id) {
+            <app-compromisso-item
+              [compromisso]="c"
+              [mostrarData]="true"
+              [mostrarProcesso]="false"
+              (alternarStatus)="edicao.alternarStatus($event)"
+              (editar)="edicao.editarCompromisso($event)"
+              (excluir)="edicao.excluirCompromisso($event)"
+            />
+          } @empty {
+            <div class="vazio">
+              <span class="icone-vazio"><app-icone nome="calendario" [tamanho]="22" /></span>
+              <strong>Sem pendências</strong>
+              <p>Adicione audiências, recursos, manifestações ou despachos deste processo.</p>
+            </div>
+          }
+
+          @if (concluidos().length) {
+            <h3 class="separador">Concluídos · {{ concluidos().length }}</h3>
+            @for (c of concluidos(); track c.id) {
+              <app-compromisso-item
+                [compromisso]="c"
+                [mostrarData]="true"
+                [mostrarProcesso]="false"
+                (alternarStatus)="edicao.alternarStatus($event)"
+                (editar)="edicao.editarCompromisso($event)"
+                (excluir)="edicao.excluirCompromisso($event)"
+              />
+            }
+          }
+        </div>
+      </section>
+
+      <!-- Dados do processo -->
+      <aside class="cartao ficha">
+        <h2>Dados do processo</h2>
+        <dl>
+          <div>
+            <dt>Vara / Tribunal</dt>
+            <dd>{{ p.tribunal || '—' }}</dd>
+          </div>
+          <div>
+            <dt>Área</dt>
+            <dd>{{ p.area || '—' }}</dd>
+          </div>
+          <div>
+            <dt>Cadastrado em</dt>
+            <dd>{{ dataCurta(p.criado_em.slice(0, 10)) }}</dd>
+          </div>
+        </dl>
+
+        <div class="observacoes">
+          <h3>Observações</h3>
+          @if (p.observacoes) {
+            <p>{{ p.observacoes }}</p>
+          } @else {
+            <p class="suave">Nenhuma observação.</p>
+          }
+        </div>
+      </aside>
+    </div>
+  } @else {
+    <div class="carregando">Carregando processo...</div>
+  }
+</div>

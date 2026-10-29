@@ -1,0 +1,11 @@
+node_modules
+**/node_modules
+backend/data
+backend/.env
+backend/dist
+frontend/.angular
+frontend/dist
+docs
+*.log
+# Pasta da versão anterior da configuração (não usada com Vercel Services)
+api

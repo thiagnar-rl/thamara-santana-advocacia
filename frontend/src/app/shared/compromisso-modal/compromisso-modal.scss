@@ -1,0 +1,45 @@
+.tipos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+
+  @media (max-width: 560px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.opcao-tipo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 6px 12px;
+  border: 1.5px solid var(--borda);
+  border-radius: var(--raio-md);
+  background: var(--superficie);
+  color: var(--texto-2);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  app-icone {
+    color: var(--cor-tipo);
+  }
+
+  &:hover {
+    border-color: var(--cor-tipo);
+  }
+
+  &.selecionado {
+    border-color: var(--cor-tipo);
+    background: color-mix(in srgb, var(--cor-tipo) 9%, white);
+    color: var(--tinta);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--cor-tipo) 15%, transparent);
+  }
+}
+
+.opcional {
+  font-weight: 400;
+  color: var(--texto-3);
+}

@@ -1,0 +1,141 @@
+<div class="pagina">
+  <header class="cabecalho-pagina">
+    <div>
+      <p class="sobretitulo">Agenda</p>
+      <h1>Seus compromissos</h1>
+    </div>
+    <button type="button" class="botao" (click)="edicao.novoCompromisso({ data: diaSelecionado() })">
+      <app-icone nome="mais" [tamanho]="17" [traco]="2.2" /> Novo compromisso
+    </button>
+  </header>
+
+  <div class="layout">
+    <!-- Calendário -->
+    <aside class="cartao calendario">
+      <div class="cal-topo">
+        <h2>{{ tituloMes() }}</h2>
+        <div class="cal-nav">
+          <button type="button" class="botao-icone" title="Mês anterior" (click)="mudarMes(-1)">
+            <app-icone nome="esquerda" />
+          </button>
+          <button type="button" class="botao-icone" title="Próximo mês" (click)="mudarMes(1)">
+            <app-icone nome="direita" />
+          </button>
+        </div>
+      </div>
+
+      <div class="grade">
+        @for (d of diasSemana; track d) {
+          <span class="dia-semana">{{ d }}</span>
+        }
+        @for (cel of celulas(); track cel.data) {
+          <button
+            type="button"
+            class="cel"
+            [class.fora]="!cel.doMes"
+            [class.hoje]="cel.hoje"
+            [class.selecionado]="cel.data === diaSelecionado()"
+            [title]="cel.total ? cel.total + ' compromisso(s)' : ''"
+            (click)="selecionarDia(cel)"
+          >
+            {{ cel.dia }}
+            <span class="pontos">
+              @for (t of cel.tipos; track t) {
+                <i class="tipo-{{ t }}"></i>
+              }
+            </span>
+          </button>
+        }
+      </div>
+
+      <button type="button" class="botao secundario pequeno hoje-btn" (click)="irParaHoje()">Ir para hoje</button>
+
+      <div class="legenda">
+        @for (t of tipos; track t.valor) {
+          <span class="tipo-{{ t.valor }}"><i></i>{{ t.rotulo }}</span>
+        }
+      </div>
+    </aside>
+
+    <!-- Lista -->
+    <section class="coluna-lista">
+      <div class="filtros">
+        <div class="segmentos">
+          @for (p of periodos; track p.valor) {
+            <button
+              type="button"
+              [class.ativo]="!diaSelecionado() && periodo() === p.valor"
+              (click)="escolherPeriodo(p.valor)"
+            >
+              {{ p.rotulo }}
+            </button>
+          }
+        </div>
+
+        <div class="chips">
+          @for (t of tipos; track t.valor) {
+            <button
+              type="button"
+              class="chip tipo-{{ t.valor }}"
+              [class.ativo]="tipo() === t.valor"
+              (click)="escolherTipo(t.valor)"
+            >
+              <app-icone [nome]="t.icone" [tamanho]="14" />
+              {{ t.plural }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="cartao">
+        <header class="cartao-cabecalho">
+          <h2>
+            {{ tituloLista() }}
+            <span class="contador">{{ lista().length }}</span>
+          </h2>
+          @if (diaSelecionado()) {
+            <button type="button" class="botao fantasma pequeno" (click)="diaSelecionado.set(null)">
+              <app-icone nome="fechar" [tamanho]="14" /> Limpar dia
+            </button>
+          }
+        </header>
+
+        <div class="lista">
+          @if (carregando() && !lista().length) {
+            <div class="carregando">Carregando...</div>
+          } @else {
+            @for (g of grupos(); track g.data) {
+              @if (!diaSelecionado()) {
+                <div class="grupo-titulo">
+                  <strong>{{ g.titulo }}</strong>
+                  <span>{{ g.subtitulo }}</span>
+                </div>
+              }
+              @for (c of g.itens; track c.id) {
+                <app-compromisso-item
+                  [compromisso]="c"
+                  (alternarStatus)="edicao.alternarStatus($event)"
+                  (editar)="edicao.editarCompromisso($event)"
+                  (excluir)="edicao.excluirCompromisso($event)"
+                />
+              }
+            } @empty {
+              <div class="vazio">
+                <span class="icone-vazio"><app-icone nome="calendario" [tamanho]="22" /></span>
+                <strong>Nada por aqui</strong>
+                <p>Nenhum compromisso encontrado com esses filtros.</p>
+                <button
+                  type="button"
+                  class="botao secundario pequeno"
+                  (click)="edicao.novoCompromisso({ data: diaSelecionado() })"
+                >
+                  <app-icone nome="mais" [tamanho]="15" /> Adicionar compromisso
+                </button>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

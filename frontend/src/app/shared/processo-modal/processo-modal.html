@@ -1,0 +1,94 @@
+<div class="modal-fundo" (click)="fechar.emit()">
+  <form class="modal" (click)="$event.stopPropagation()" (ngSubmit)="salvar()">
+    <header class="modal-cabecalho">
+      <div>
+        <span class="sobretitulo">{{ editando ? 'Editar' : 'Novo' }}</span>
+        <h2>{{ editando ? 'Editar processo' : 'Novo processo' }}</h2>
+      </div>
+      <button type="button" class="botao-icone" title="Fechar" (click)="fechar.emit()">
+        <app-icone nome="fechar" />
+      </button>
+    </header>
+
+    <div class="modal-corpo">
+      <div class="campo">
+        <label for="numero">Número do processo</label>
+        <input
+          id="numero"
+          name="numero"
+          class="entrada mono"
+          [class.invalida]="campoInvalido() === 'numero'"
+          placeholder="0000000-00.0000.0.00.0000"
+          [(ngModel)]="form.numero"
+          autocomplete="off"
+          required
+        />
+      </div>
+
+      <div class="grade-campos">
+        <div class="campo">
+          <label for="cliente">Cliente</label>
+          <input id="cliente" name="cliente" class="entrada" [class.invalida]="campoInvalido() === 'cliente'" placeholder="Nome do cliente" [(ngModel)]="form.cliente" required />
+        </div>
+        <div class="campo">
+          <label for="parte">Parte contrária</label>
+          <input id="parte" name="parte" class="entrada" placeholder="Opcional" [(ngModel)]="form.parte_contraria" />
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="tribunal">Vara / Tribunal</label>
+        <input
+          id="tribunal"
+          name="tribunal"
+          class="entrada"
+          placeholder="Ex.: 3ª Vara do Trabalho de Campinas"
+          [(ngModel)]="form.tribunal"
+        />
+      </div>
+
+      <div class="grade-campos">
+        <div class="campo">
+          <label for="area">Área</label>
+          <input id="area" name="area" class="entrada" list="lista-areas" placeholder="Ex.: Cível" [(ngModel)]="form.area" />
+          <datalist id="lista-areas">
+            @for (a of areas; track a) {
+              <option [value]="a"></option>
+            }
+          </datalist>
+        </div>
+        <div class="campo">
+          <label for="status">Situação</label>
+          <select id="status" name="status" class="entrada" [(ngModel)]="form.status">
+            @for (s of status; track s.valor) {
+              <option [ngValue]="s.valor">{{ s.rotulo }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="obs">Observações</label>
+        <textarea
+          id="obs"
+          name="obs"
+          class="entrada"
+          placeholder="Resumo do caso, valores, contatos..."
+          [(ngModel)]="form.observacoes"
+        ></textarea>
+      </div>
+
+      @if (erro()) {
+        <div class="mensagem-erro"><app-icone nome="alerta" [tamanho]="16" /> {{ erro() }}</div>
+      }
+    </div>
+
+    <footer class="modal-rodape">
+      <button type="button" class="botao fantasma" (click)="fechar.emit()">Cancelar</button>
+      <button type="submit" class="botao" [disabled]="salvando()">
+        <app-icone nome="check" [tamanho]="16" />
+        {{ salvando() ? 'Salvando...' : 'Salvar' }}
+      </button>
+    </footer>
+  </form>
+</div>

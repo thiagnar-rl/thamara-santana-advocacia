@@ -1,0 +1,68 @@
+@let c = compromisso();
+
+<article class="item tipo-{{ c.tipo }}" [class.concluido]="concluido()">
+  <button
+    type="button"
+    class="marcar"
+    [class.marcado]="concluido()"
+    [attr.aria-label]="concluido() ? 'Marcar como pendente' : 'Marcar como concluído'"
+    [title]="concluido() ? 'Marcar como pendente' : 'Marcar como concluído'"
+    (click)="alternarStatus.emit(c)"
+  >
+    <app-icone nome="check" [tamanho]="13" [traco]="3" />
+  </button>
+
+  <div class="selo" [title]="tipo().rotulo">
+    <app-icone [nome]="tipo().icone" [tamanho]="17" />
+  </div>
+
+  <div class="conteudo" (click)="editar.emit(c)">
+    <div class="linha-topo">
+      <span class="tipo">{{ tipo().rotulo }}</span>
+      @if (c.prioridade === 'alta' && !concluido()) {
+        <span class="etiqueta alta">Prioridade alta</span>
+      }
+      @if (diasAtraso()) {
+        <span class="etiqueta atrasado">
+          {{ diasAtraso() === 1 ? 'Atrasado 1 dia' : 'Atrasado ' + diasAtraso() + ' dias' }}
+        </span>
+      }
+    </div>
+
+    <h3 class="titulo">{{ c.titulo }}</h3>
+
+    <div class="meta">
+      @if (mostrarData()) {
+        <span><app-icone nome="calendario" [tamanho]="14" /> {{ dataTexto() }}</span>
+      }
+      @if (c.hora) {
+        <span><app-icone nome="relogio" [tamanho]="14" /> {{ c.hora }}</span>
+      }
+      @if (c.local) {
+        <span><app-icone nome="local" [tamanho]="14" /> {{ c.local }}</span>
+      }
+      @if (mostrarProcesso() && c.processo_id) {
+        <a
+          class="processo"
+          [routerLink]="['/processos', c.processo_id]"
+          (click)="$event.stopPropagation()"
+        >
+          <app-icone nome="pasta" [tamanho]="14" />
+          <span class="mono">{{ c.processo_numero }}</span>
+          @if (c.processo_cliente) {
+            <span class="cliente">· {{ c.processo_cliente }}</span>
+          }
+        </a>
+      }
+    </div>
+  </div>
+
+  <div class="acoes">
+    <button type="button" class="botao-icone" title="Editar" (click)="editar.emit(c)">
+      <app-icone nome="editar" [tamanho]="16" />
+    </button>
+    <button type="button" class="botao-icone perigo" title="Excluir" (click)="excluir.emit(c)">
+      <app-icone nome="lixeira" [tamanho]="16" />
+    </button>
+  </div>
+</article>
