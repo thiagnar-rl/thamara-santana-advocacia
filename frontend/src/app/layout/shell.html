@@ -27,7 +27,8 @@
       <strong>{{ auth.usuario()?.nome }}</strong>
       <small>{{ auth.usuario()?.email }}</small>
     </div>
-    <button type="button" class="sair" title="Sair" (click)="auth.sair()">
+    <!-- [C2] Sair agora pede confirmação (sugestão: Thamara Santana) -->
+    <button type="button" class="sair" title="Sair" (click)="sair()">
       <app-icone nome="sair" [tamanho]="17" />
     </button>
   </div>

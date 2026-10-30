@@ -7,14 +7,25 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
-## [1.0.1] — em preparação
+## [1.1.0] — em preparação
+
+### Corrigido
+
+- **[C2] Confirmar antes de sair.** O botão "Sair" desconectava na hora. Agora ele pergunta antes e avisa se houver um formulário aberto.
+  - **Solicitado por:** Thamara Santana (cliente 3 — teste de usuário de 30/10/2026)
+  - **Ramo:** `correcao/C2-confirmar-saida`
+  - **Ficha:** [docs/solicitacoes/C2-confirmar-saida.md](docs/solicitacoes/C2-confirmar-saida.md)
+
+---
+
+## [1.0.1] — 29/10/2026
 
 ### Corrigido
 
 - **[C1] Número do processo no padrão CNJ.** O campo aceitava qualquer texto (ex.: `123abc`).
   Agora a máscara `0000000-00.0000.0.00.0000` é aplicada enquanto se digita ou cola o número, e o sistema recusa números fora do padrão, tanto na tela quanto no servidor.
   - **Solicitado por:** Mariana Couto (teste de usuário de 29/10/2026)
-  - **Ramo:** `correcao/C1-mascara-numero-processo`
+  - **Ramo:** `correcao/C1-mascara-numero-processo` · **Pull Request:** #1
   - **Ficha:** [docs/solicitacoes/C1-mascara-numero-processo.md](docs/solicitacoes/C1-mascara-numero-processo.md)
 
 ---

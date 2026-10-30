@@ -22,3 +22,6 @@ backend/data/
 .DS_Store
 Thumbs.db
 *.log
+
+# Scripts locais de publicacao (gerados para rodar no computador, nao vao para o GitHub)
+*.local.cmd

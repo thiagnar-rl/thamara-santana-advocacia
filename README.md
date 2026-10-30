@@ -67,6 +67,8 @@ Cada compromisso tem um **tipo** com cor própria:
 
 Clique no quadradinho ao lado de um compromisso para marcá-lo como **concluído**.
 
+Para sair do sistema, clique no ícone de saída ao lado do seu nome: o sistema pede confirmação antes.
+
 ---
 
 ## 4. Arquitetura MVC e estrutura das pastas
@@ -132,7 +134,7 @@ Projeto Advocacia/
 
 ## 5. Testes unitários
 
-São **88 testes** (67 no backend e 21 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
+São **90 testes** (67 no backend e 23 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
 
 ```bash
 npm test                                   # roda todos os testes
