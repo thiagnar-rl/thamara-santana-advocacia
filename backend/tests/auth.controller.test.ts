@@ -21,7 +21,7 @@ describe('AuthController', () => {
     const res = resposta();
     await AuthController.registrar(requisicao({ body: { ...cadastro, senha: '1' } }), res as never);
     assert.equal(res.statusCode, 400);
-    assert.match(res.corpo.erro, /pelo menos 6/);
+    assert.match(res.corpo.erro, /pelo menos 8/); // [C3]
   });
 
   it('registrar() devolve 409 para e-mail repetido', async () => {
@@ -29,6 +29,17 @@ describe('AuthController', () => {
     const res = resposta();
     await AuthController.registrar(requisicao({ body: { ...cadastro, email: 'THAMARA@teste.com' } }), res as never);
     assert.equal(res.statusCode, 409);
+  });
+
+  it('[C3] registrar() recusa senha fraca como "123456" (sugestão: Pedro Nogueira, teste 5)', async () => {
+    for (const senha of ['123456', '12345678', 'abcdefgh']) {
+      const res = resposta();
+      await AuthController.registrar(requisicao({ body: { ...cadastro, senha } }), res as never);
+      assert.equal(res.statusCode, 400, senha);
+    }
+    const ok = resposta();
+    await AuthController.registrar(requisicao({ body: { ...cadastro, senha: 'Pedro2026' } }), ok as never);
+    assert.equal(ok.statusCode, 201);
   });
 
   it('login() devolve 200 com a senha certa e 401 com a errada', async () => {

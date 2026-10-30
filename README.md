@@ -55,7 +55,7 @@ Para desligar, clique no terminal e aperte `Ctrl + C`.
 
 | Tela          | Para que serve                                                                                    |
 | ------------- | ------------------------------------------------------------------------------------------------- |
-| **Entrar / Criar conta** | Login com e-mail e senha, com o link **Esqueci minha senha**, que envia por e-mail um link para criar uma nova senha. |
+| **Entrar / Criar conta** | Login com e-mail e senha, com o link **Esqueci minha senha**, que envia por e-mail um link para criar uma nova senha. Senhas novas precisam ter **8 caracteres ou mais, com letras e números**. |
 | **Início**    | Resumo do dia: compromissos de hoje, próximos 7 dias, atrasados e pendências por tipo.            |
 | **Agenda**    | Calendário do mês com pontinhos coloridos + lista com filtros (próximos, atrasados, concluídos).  |
 | **Processos** | Cadastro de processos (número no padrão CNJ com máscara automática, cliente, parte contrária, vara, área, situação, observações). |
@@ -141,7 +141,7 @@ Projeto Advocacia/
 
 ## 5. Testes unitários
 
-São **126 testes** (94 no backend e 32 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
+São **130 testes** (96 no backend e 34 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
 
 ```bash
 npm test                                   # roda todos os testes

@@ -7,7 +7,18 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
-## [1.2.0] — em preparação
+## [1.2.1] — em preparação
+
+### Corrigido
+
+- **[C3] Senha forte.** O cadastro aceitava a senha "123456". Agora a senha exige **no mínimo 8 caracteres, com letras e números**, na tela e no servidor, no cadastro e no "Criar nova senha". Embaixo do campo aparece a lista das regras, com ✓ verde em cada uma cumprida. As contas antigas continuam entrando normalmente.
+  - **Solicitado por:** Pedro Nogueira (teste 5 — teste de usuário de 30/10/2026)
+  - **Ramo:** `correcao/C3-senha-forte`
+  - **Ficha:** [docs/solicitacoes/C3-senha-forte.md](docs/solicitacoes/C3-senha-forte.md)
+
+---
+
+## [1.2.0] — 30/10/2026
 
 ### Adicionado
 

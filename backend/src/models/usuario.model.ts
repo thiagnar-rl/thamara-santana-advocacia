@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { executar, um } from '../config/database';
-import { emailValido, texto } from '../utils/validacao';
+import { emailValido, problemaNaSenha, SENHA_MINIMA, texto } from '../utils/validacao';
 
 /**
  * MODEL — Usuário
@@ -21,7 +21,8 @@ export interface DadosCadastro {
   senha: string;
 }
 
-export const SENHA_MINIMA = 6;
+/** [C3] Agora 8 caracteres, com letras e números (ver utils/validacao.ts). */
+export { SENHA_MINIMA };
 
 export const UsuarioModel = {
   /** Valida os dados de cadastro (RF01). */
@@ -37,7 +38,7 @@ export const UsuarioModel = {
     if (!dados.nome) erro = 'Informe seu nome.';
     else if (dados.nome.length > 120) erro = 'O nome pode ter no máximo 120 caracteres.';
     else if (!emailValido(dados.email)) erro = 'Informe um e-mail válido.';
-    else if (dados.senha.length < SENHA_MINIMA) erro = `A senha precisa ter pelo menos ${SENHA_MINIMA} caracteres.`;
+    else erro = problemaNaSenha(dados.senha); // [C3] mín. 8, letras e números — sugestão de Pedro Nogueira
 
     return { dados, erro };
   },

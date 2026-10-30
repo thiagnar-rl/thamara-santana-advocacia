@@ -110,6 +110,11 @@ describe('[F3] Recuperação de senha (sugestão: Thamara Santana)', () => {
       await AuthController.redefinirSenha(requisicao({ body: { token, senha: '123' } }), curta as never);
       assert.equal(curta.statusCode, 400);
 
+      // [C3] A nova senha segue a regra forte: 8 caracteres, letras e números
+      const fraca = resposta();
+      await AuthController.redefinirSenha(requisicao({ body: { token, senha: '12345678' } }), fraca as never);
+      assert.equal(fraca.statusCode, 400);
+
       const ok = resposta();
       await AuthController.redefinirSenha(requisicao({ body: { token, senha: 'senha-nova-1' } }), ok as never);
       assert.equal(ok.statusCode, 200);

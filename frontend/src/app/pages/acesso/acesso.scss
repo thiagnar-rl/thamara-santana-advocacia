@@ -164,6 +164,30 @@
   }
 }
 
+/* [C3] Regras da senha forte (sugestão: Pedro Nogueira, teste 5) */
+.requisitos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.78rem;
+  color: var(--texto-3);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.15s;
+
+    &.ok {
+      color: var(--sucesso);
+      font-weight: 600;
+    }
+  }
+}
+
 /* [F3] Link "Esqueci minha senha" (sugestão: Thamara Santana) */
 .esqueci {
   align-self: flex-end;

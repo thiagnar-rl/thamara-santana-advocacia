@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { mensagemDeErro } from '../../core/auth.interceptor';
-import { validarAcesso } from '../../core/logica/formularios.logica';
+import { requisitosSenha, validarAcesso } from '../../core/logica/formularios.logica';
 import { Icone } from '../../shared/icone/icone';
 
 /** Tela de login e de criação de conta (o "modo" vem da rota). */
@@ -26,6 +26,7 @@ export class AcessoPage {
   protected email = '';
   protected senha = '';
 
+  protected readonly requisitosSenha = requisitosSenha; // [C3]
   protected readonly mostrarSenha = signal(false);
   protected readonly enviando = signal(false);
   protected readonly erro = signal('');

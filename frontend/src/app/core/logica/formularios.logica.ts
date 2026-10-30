@@ -56,13 +56,41 @@ export function validarProcesso(form: Pick<ProcessoForm, 'numero' | 'cliente'>):
   return OK;
 }
 
+/* ---------- [C3] Senha forte — solicitado por Pedro Nogueira (teste 5, 30/10/2026) ---------- */
+
+export const SENHA_MINIMA = 8;
+
+export interface RequisitoSenha {
+  rotulo: string;
+  ok: boolean;
+}
+
+/** Lista que aparece embaixo do campo de senha, com ✓ em cada regra cumprida. */
+export function requisitosSenha(senha: string | null | undefined): RequisitoSenha[] {
+  const s = senha ?? '';
+  return [
+    { rotulo: `${SENHA_MINIMA} caracteres ou mais`, ok: s.length >= SENHA_MINIMA },
+    { rotulo: 'Pelo menos uma letra', ok: /\p{L}/u.test(s) },
+    { rotulo: 'Pelo menos um número', ok: /\d/.test(s) },
+  ];
+}
+
+/** Mesma regra do servidor: devolve a mensagem de erro, ou null se a senha estiver boa. */
+export function problemaNaSenha(senha: string | null | undefined): string | null {
+  const s = senha ?? '';
+  if (s.length < SENHA_MINIMA) return `A senha precisa ter pelo menos ${SENHA_MINIMA} caracteres, com letras e números.`;
+  if (!/\p{L}/u.test(s)) return 'A senha precisa ter pelo menos uma letra.';
+  if (!/\d/.test(s)) return 'A senha precisa ter pelo menos um número.';
+  return null;
+}
+
 export function validarAcesso(
   modo: 'entrar' | 'cadastro',
   dados: { nome: string; email: string; senha: string },
 ): string | null {
   if (modo === 'cadastro' && !dados.nome.trim()) return 'Informe seu nome.';
   if (!dados.email.trim() || !dados.senha) return 'Preencha e-mail e senha.';
-  if (modo === 'cadastro' && dados.senha.length < 6) return 'A senha precisa ter pelo menos 6 caracteres.';
+  if (modo === 'cadastro') return problemaNaSenha(dados.senha); // [C3]
   return null;
 }
 
@@ -77,7 +105,8 @@ export function validarEmail(email: string | null | undefined): string | null {
 
 /** Confere a nova senha e a repetição antes de enviar. */
 export function validarNovaSenha(senha: string, confirmacao: string): string | null {
-  if (senha.length < 6) return 'A senha precisa ter pelo menos 6 caracteres.';
+  const problema = problemaNaSenha(senha); // [C3] mesma regra do cadastro
+  if (problema) return problema;
   if (senha !== confirmacao) return 'As duas senhas não são iguais.';
   return null;
 }

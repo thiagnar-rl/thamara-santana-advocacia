@@ -4,6 +4,8 @@ import {
   formatarNumeroCNJ,
   MENSAGEM_NUMERO_INVALIDO,
   numeroCNJValido,
+  problemaNaSenha,
+  requisitosSenha,
   validarAcesso,
   validarCompromisso,
   validarEmail,
@@ -58,7 +60,7 @@ describe('formularios.logica', () => {
     assert.equal(validarAcesso('cadastro', { nome: '', email: 'a@b.com', senha: '123456' }), 'Informe seu nome.');
     assert.equal(
       validarAcesso('cadastro', { nome: 'Ana', email: 'a@b.com', senha: '123' }),
-      'A senha precisa ter pelo menos 6 caracteres.',
+      'A senha precisa ter pelo menos 8 caracteres, com letras e números.',
     );
   });
 
@@ -68,9 +70,26 @@ describe('formularios.logica', () => {
     assert.equal(validarEmail(' thamara@advocacia.com.br '), null);
   });
 
-  it('[F3] validarNovaSenha() exige 6 caracteres e as duas senhas iguais', () => {
-    assert.equal(validarNovaSenha('123', '123'), 'A senha precisa ter pelo menos 6 caracteres.');
+  it('[F3] validarNovaSenha() exige a senha forte e as duas senhas iguais', () => {
+    assert.equal(validarNovaSenha('123', '123'), 'A senha precisa ter pelo menos 8 caracteres, com letras e números.');
     assert.equal(validarNovaSenha('senha123', 'senha124'), 'As duas senhas não são iguais.');
     assert.equal(validarNovaSenha('senha123', 'senha123'), null);
+  });
+
+  it('[C3] cadastro recusa "123456" e exige 8 caracteres com letras e números (sugestão: Pedro Nogueira, teste 5)', () => {
+    const cadastro = (senha: string) => validarAcesso('cadastro', { nome: 'Pedro', email: 'p@x.com', senha });
+    assert.equal(cadastro('123456'), 'A senha precisa ter pelo menos 8 caracteres, com letras e números.');
+    assert.equal(cadastro('12345678'), 'A senha precisa ter pelo menos uma letra.');
+    assert.equal(cadastro('abcdefgh'), 'A senha precisa ter pelo menos um número.');
+    assert.equal(cadastro('Pedro2026'), null);
+    // no login a regra não se aplica (contas antigas continuam entrando)
+    assert.equal(validarAcesso('entrar', { nome: '', email: 'p@x.com', senha: '123456' }), null);
+    assert.equal(problemaNaSenha('Ação2026'), null);
+  });
+
+  it('[C3] requisitosSenha() mostra cada regra cumprida', () => {
+    assert.deepEqual(requisitosSenha('abc1').map((r) => r.ok), [false, true, true]);
+    assert.deepEqual(requisitosSenha('abcdefg1').map((r) => r.ok), [true, true, true]);
+    assert.deepEqual(requisitosSenha('').map((r) => r.ok), [false, false, false]);
   });
 });

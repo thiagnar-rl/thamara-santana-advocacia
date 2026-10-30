@@ -62,6 +62,22 @@ export function normalizarNumeroCNJ(valor: unknown): string | null {
   return digitos.length === 20 ? formatarNumeroCNJ(digitos) : null;
 }
 
+/**
+ * [C3] Senha forte: no mínimo 8 caracteres, com pelo menos uma letra e um número.
+ * Solicitado por: Pedro Nogueira (teste 5, de 30/10/2026) — o sistema aceitava a senha "123456".
+ * Devolve a mensagem de erro, ou null se a senha estiver boa.
+ */
+export const SENHA_MINIMA = 8;
+
+export function problemaNaSenha(valor: unknown): string | null {
+  const senha = String(valor ?? '');
+  if (senha.length < SENHA_MINIMA) return `A senha precisa ter pelo menos ${SENHA_MINIMA} caracteres, com letras e números.`;
+  if (senha.length > 200) return 'A senha é muito longa.';
+  if (!/\p{L}/u.test(senha)) return 'A senha precisa ter pelo menos uma letra.';
+  if (!/\d/.test(senha)) return 'A senha precisa ter pelo menos um número.';
+  return null;
+}
+
 /** Verifica se o valor é um dos itens da lista. */
 export function umDe<T extends readonly string[]>(lista: T, valor: unknown): valor is T[number] {
   return typeof valor === 'string' && (lista as readonly string[]).includes(valor);

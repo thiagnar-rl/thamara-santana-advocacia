@@ -58,7 +58,7 @@
             name="senha"
             class="entrada"
             [type]="mostrarSenha() ? 'text' : 'password'"
-            [placeholder]="cadastro() ? 'Mínimo de 6 caracteres' : 'Sua senha'"
+            [placeholder]="cadastro() ? 'Mínimo de 8, com letras e números' : 'Sua senha'"
             [(ngModel)]="senha"
             [attr.autocomplete]="cadastro() ? 'new-password' : 'current-password'"
           />
@@ -71,6 +71,14 @@
             <app-icone [nome]="mostrarSenha() ? 'olhoFechado' : 'olho'" [tamanho]="17" />
           </button>
         </div>
+        @if (cadastro()) {
+          <!-- [C3] Regras da senha forte (sugestão: Pedro Nogueira, teste 5) -->
+          <ul class="requisitos" aria-label="Regras da senha">
+            @for (r of requisitosSenha(senha); track r.rotulo) {
+              <li [class.ok]="r.ok"><app-icone [nome]="r.ok ? 'check' : 'fechar'" [tamanho]="12" [traco]="2.4" /> {{ r.rotulo }}</li>
+            }
+          </ul>
+        }
         <!-- [F3] Esqueci minha senha — solicitado por Thamara Santana (30/10/2026) -->
         @if (!cadastro()) {
           <a class="esqueci" routerLink="/recuperar-senha" [queryParams]="email.trim() ? { email: email.trim() } : {}">

@@ -4,7 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { mensagemDeErro } from '../../core/auth.interceptor';
 import { AvisoService } from '../../core/aviso.service';
-import { validarEmail, validarNovaSenha } from '../../core/logica/formularios.logica';
+import { requisitosSenha, validarEmail, validarNovaSenha } from '../../core/logica/formularios.logica';
 import { Icone } from '../../shared/icone/icone';
 
 /**
@@ -39,6 +39,7 @@ export class RecuperarSenhaPage implements OnInit {
   protected senha = '';
   protected confirmacao = '';
 
+  protected readonly requisitosSenha = requisitosSenha; // [C3]
   protected readonly mostrarSenha = signal(false);
   protected readonly enviando = signal(false);
   protected readonly erro = signal('');

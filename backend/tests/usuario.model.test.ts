@@ -11,9 +11,9 @@ describe('UsuarioModel', () => {
     assert.equal(UsuarioModel.validarCadastro({ nome: 'Ana', email: 'x' }).erro, 'Informe um e-mail válido.');
     assert.equal(
       UsuarioModel.validarCadastro({ nome: 'Ana', email: 'ana@x.com', senha: '123' }).erro,
-      'A senha precisa ter pelo menos 6 caracteres.',
+      'A senha precisa ter pelo menos 8 caracteres, com letras e números.',
     );
-    const ok = UsuarioModel.validarCadastro({ nome: ' Ana ', email: 'ANA@X.COM', senha: '123456' });
+    const ok = UsuarioModel.validarCadastro({ nome: ' Ana ', email: 'ANA@X.COM', senha: 'senha123' });
     assert.equal(ok.erro, null);
     assert.equal(ok.dados.nome, 'Ana');
     assert.equal(ok.dados.email, 'ana@x.com'); // e-mail normalizado
