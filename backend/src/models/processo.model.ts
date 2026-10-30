@@ -11,6 +11,7 @@ export interface Processo {
   usuario_id: number;
   numero: string;
   cliente: string;
+  cliente_id: number | null; // [F6] vínculo com o cadastro de clientes
   parte_contraria: string | null;
   tribunal: string | null;
   area: string | null;
@@ -25,6 +26,8 @@ export interface Processo {
 export interface DadosProcesso {
   numero: string;
   cliente: string;
+  /** [F6] Cliente cadastrado (opcional). Solicitado por Thamara Santana (30/10/2026). */
+  cliente_id?: number | null;
   parte_contraria: string | null;
   tribunal: string | null;
   area: string | null;
@@ -59,6 +62,7 @@ export const ProcessoModel = {
     const dados: DadosProcesso = {
       numero: texto(b.numero) ?? '',
       cliente: texto(b.cliente) ?? '',
+      cliente_id: Number(b.cliente_id) > 0 ? Number(b.cliente_id) : null,
       parte_contraria: texto(b.parte_contraria),
       tribunal: texto(b.tribunal),
       area: texto(b.area),
@@ -103,6 +107,16 @@ export const ProcessoModel = {
     );
   },
 
+  /** [F6] Processos vinculados a um cliente. */
+  async listarDoCliente(usuarioId: number, clienteId: number, dataHoje: string): Promise<Processo[]> {
+    return await todos<Processo>(
+      `${SELECT_PROCESSO} WHERE p.usuario_id = ? AND p.cliente_id = ? ORDER BY p.atualizado_em DESC, p.id DESC`,
+      dataHoje,
+      usuarioId,
+      clienteId,
+    );
+  },
+
   async buscar(usuarioId: number, id: number, dataHoje: string): Promise<Processo | undefined> {
     return await um<Processo>(`${SELECT_PROCESSO} WHERE p.id = ? AND p.usuario_id = ?`, dataHoje, id, usuarioId);
   },
@@ -124,11 +138,12 @@ export const ProcessoModel = {
 
   async criar(usuarioId: number, d: DadosProcesso): Promise<number> {
     return (await executar(
-      `INSERT INTO processos (usuario_id, numero, cliente, parte_contraria, tribunal, area, status, observacoes)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO processos (usuario_id, numero, cliente, cliente_id, parte_contraria, tribunal, area, status, observacoes)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       usuarioId,
       d.numero,
       d.cliente,
+      d.cliente_id ?? null,
       d.parte_contraria,
       d.tribunal,
       d.area,
@@ -142,11 +157,12 @@ export const ProcessoModel = {
     return (
       (await executar(
         `UPDATE processos
-            SET numero = ?, cliente = ?, parte_contraria = ?, tribunal = ?, area = ?,
+            SET numero = ?, cliente = ?, cliente_id = ?, parte_contraria = ?, tribunal = ?, area = ?,
                 status = ?, observacoes = ?, atualizado_em = datetime('now', 'localtime')
           WHERE id = ? AND usuario_id = ?`,
         d.numero,
         d.cliente,
+        d.cliente_id ?? null,
         d.parte_contraria,
         d.tribunal,
         d.area,

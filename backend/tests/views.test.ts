@@ -12,6 +12,7 @@ const processo: Processo = {
   usuario_id: 7,
   numero: '1',
   cliente: 'Ana',
+  cliente_id: null,
   parte_contraria: null,
   tribunal: null,
   area: null,

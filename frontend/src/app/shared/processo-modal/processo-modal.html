@@ -34,7 +34,32 @@
       <div class="grade-campos">
         <div class="campo">
           <label for="cliente">Cliente</label>
-          <input id="cliente" name="cliente" class="entrada" [class.invalida]="campoInvalido() === 'cliente'" placeholder="Nome do cliente" [(ngModel)]="form.cliente" required />
+          <!-- [F6] Cliente ligado ao cadastro de clientes (sugestão: Thamara Santana) -->
+          <input
+            id="cliente"
+            name="cliente"
+            class="entrada"
+            list="lista-clientes"
+            [class.invalida]="campoInvalido() === 'cliente'"
+            placeholder="Digite ou escolha um cliente"
+            [(ngModel)]="form.cliente"
+            (ngModelChange)="aoDigitarCliente($event)"
+            autocomplete="off"
+            required
+          />
+          <datalist id="lista-clientes">
+            @for (c of clientes(); track c.id) {
+              <option [value]="c.nome">{{ c.tipo === 'juridica' ? c.cnpj : c.cpf }}</option>
+            }
+          </datalist>
+          @if (form.cliente_id) {
+            <small class="ajuda vinculado"><app-icone nome="check" [tamanho]="12" /> Cliente cadastrado</small>
+          } @else if (form.cliente.trim()) {
+            <small class="ajuda">
+              Sem cadastro.
+              <button type="button" class="link-cadastro" (click)="cadastrarCliente()">Cadastrar cliente</button>
+            </small>
+          }
         </div>
         <div class="campo">
           <label for="parte">Parte contrária</label>

@@ -1,0 +1,236 @@
+<!-- [F6] Formulário de cliente — solicitado por Thamara Santana (teste de 30/10/2026) -->
+<div class="modal-fundo" (click)="fechar.emit()">
+  <form class="modal modal-cliente" (click)="$event.stopPropagation()" (ngSubmit)="salvar()">
+    <header class="modal-cabecalho">
+      <div>
+        <span class="sobretitulo">{{ editando ? 'Editar' : 'Novo' }}</span>
+        <h2>{{ editando ? 'Editar cliente' : 'Novo cliente' }}</h2>
+      </div>
+      <button type="button" class="botao-icone" title="Fechar" (click)="fechar.emit()">
+        <app-icone nome="fechar" />
+      </button>
+    </header>
+
+    <div class="modal-corpo">
+      <!-- Tipo de pessoa -->
+      <div class="tipos-pessoa" role="radiogroup" aria-label="Tipo de cliente">
+        @for (t of tipos; track t.valor) {
+          <button
+            type="button"
+            class="opcao"
+            role="radio"
+            [attr.aria-checked]="form.tipo === t.valor"
+            [class.selecionado]="form.tipo === t.valor"
+            (click)="escolherTipo(t.valor)"
+          >
+            <app-icone [nome]="t.valor === 'fisica' ? 'usuario' : 'predio'" [tamanho]="20" />
+            <span>
+              <strong>{{ t.rotulo }}</strong>
+              <small>{{ t.valor === 'fisica' ? 'CPF, RG, nascimento' : 'CNPJ, inscrições, representante' }}</small>
+            </span>
+          </button>
+        }
+      </div>
+
+      <!-- 1. Identificação -->
+      <section class="secao">
+        <h3><span class="numero">1</span> {{ pj ? 'Dados da empresa' : 'Dados pessoais' }}</h3>
+
+        <div class="campo">
+          <label for="nome">{{ pj ? 'Razão social' : 'Nome completo' }}</label>
+          <input
+            id="nome"
+            name="nome"
+            class="entrada"
+            [class.invalida]="campoInvalido() === 'nome'"
+            [placeholder]="pj ? 'Ex.: Padaria Pão Bom Ltda.' : 'Ex.: Maria Aparecida Souza'"
+            [(ngModel)]="form.nome"
+            (ngModelChange)="campoInvalido() === 'nome' && limparErro()"
+            autocomplete="off"
+            required
+          />
+        </div>
+
+        @if (!pj) {
+          <div class="grade-campos">
+            <div class="campo">
+              <label for="cpf">CPF</label>
+              <input id="cpf" name="cpf" class="entrada mono" [class.invalida]="campoInvalido() === 'cpf'"
+                placeholder="000.000.000-00" inputmode="numeric" maxlength="14" autocomplete="off"
+                [value]="form.cpf ?? ''" (input)="mascarar($event, 'cpf', 'cpf')" />
+            </div>
+            <div class="campo">
+              <label for="rg">RG</label>
+              <input id="rg" name="rg" class="entrada mono" placeholder="Número e órgão emissor" [(ngModel)]="form.rg" autocomplete="off" />
+            </div>
+            <div class="campo">
+              <label for="nascimento">Data de nascimento</label>
+              <input id="nascimento" name="nascimento" type="date" class="entrada" [max]="hoje"
+                [class.invalida]="campoInvalido() === 'data_nascimento'" [(ngModel)]="form.data_nascimento" />
+              <small class="ajuda"><app-icone nome="bolo" [tamanho]="12" /> Usada no aviso de aniversário.</small>
+            </div>
+            <div class="campo">
+              <label for="nacionalidade">Nacionalidade</label>
+              <input id="nacionalidade" name="nacionalidade" class="entrada" placeholder="Ex.: brasileira" [(ngModel)]="form.nacionalidade" />
+            </div>
+            <div class="campo">
+              <label for="estado-civil">Estado civil</label>
+              <select id="estado-civil" name="estado_civil" class="entrada" [(ngModel)]="form.estado_civil">
+                <option [ngValue]="null">Selecione</option>
+                @for (e of estadosCivis; track e) {
+                  <option [ngValue]="e">{{ e }}</option>
+                }
+              </select>
+            </div>
+            <div class="campo">
+              <label for="profissao">Profissão</label>
+              <input id="profissao" name="profissao" class="entrada" placeholder="Ex.: Professora" [(ngModel)]="form.profissao" />
+            </div>
+          </div>
+        } @else {
+          <div class="grade-campos">
+            <div class="campo">
+              <label for="fantasia">Nome fantasia</label>
+              <input id="fantasia" name="fantasia" class="entrada" placeholder="Opcional" [(ngModel)]="form.nome_fantasia" />
+            </div>
+            <div class="campo">
+              <label for="cnpj">CNPJ</label>
+              <input id="cnpj" name="cnpj" class="entrada mono" [class.invalida]="campoInvalido() === 'cnpj'"
+                placeholder="00.000.000/0000-00" inputmode="numeric" maxlength="18" autocomplete="off"
+                [value]="form.cnpj ?? ''" (input)="mascarar($event, 'cnpj', 'cnpj')" />
+            </div>
+            <div class="campo">
+              <label for="ie">Inscrição estadual</label>
+              <input id="ie" name="ie" class="entrada mono" placeholder="Ou &quot;Isento&quot;" [(ngModel)]="form.inscricao_estadual" />
+            </div>
+            <div class="campo">
+              <label for="im">Inscrição municipal</label>
+              <input id="im" name="im" class="entrada mono" placeholder="Opcional" [(ngModel)]="form.inscricao_municipal" />
+            </div>
+            <div class="campo inteiro">
+              <label for="ramo">Ramo de atuação</label>
+              <input id="ramo" name="ramo" class="entrada" placeholder="Ex.: Comércio varejista de alimentos" [(ngModel)]="form.ramo_atuacao" />
+            </div>
+          </div>
+
+          <h4 class="subtitulo">Representante legal</h4>
+          <div class="grade-campos">
+            <div class="campo">
+              <label for="rep-nome">Nome</label>
+              <input id="rep-nome" name="rep_nome" class="entrada" placeholder="Nome completo" [(ngModel)]="form.representante_nome" />
+            </div>
+            <div class="campo">
+              <label for="rep-cpf">CPF</label>
+              <input id="rep-cpf" name="rep_cpf" class="entrada mono" [class.invalida]="campoInvalido() === 'representante_cpf'"
+                placeholder="000.000.000-00" inputmode="numeric" maxlength="14" autocomplete="off"
+                [value]="form.representante_cpf ?? ''" (input)="mascarar($event, 'representante_cpf', 'cpf')" />
+            </div>
+            <div class="campo">
+              <label for="rep-cargo">Cargo</label>
+              <input id="rep-cargo" name="rep_cargo" class="entrada" placeholder="Ex.: Sócio-administrador" [(ngModel)]="form.representante_cargo" />
+            </div>
+            <div class="campo">
+              <label for="rep-nasc">Data de nascimento</label>
+              <input id="rep-nasc" name="rep_nasc" type="date" class="entrada" [max]="hoje"
+                [class.invalida]="campoInvalido() === 'representante_nascimento'" [(ngModel)]="form.representante_nascimento" />
+              <small class="ajuda"><app-icone nome="bolo" [tamanho]="12" /> Usada no aviso de aniversário.</small>
+            </div>
+          </div>
+        }
+      </section>
+
+      <!-- 2. Contato e localização -->
+      <section class="secao">
+        <h3><span class="numero">2</span> Contato e localização</h3>
+
+        <div class="grade-campos">
+          <div class="campo">
+            <label for="celular">Celular</label>
+            <input id="celular" name="celular" class="entrada mono" [class.invalida]="campoInvalido() === 'celular'"
+              placeholder="(00) 00000-0000" inputmode="tel" maxlength="15"
+              [value]="form.celular ?? ''" (input)="mascarar($event, 'celular', 'telefone')" />
+          </div>
+          <div class="campo">
+            <label for="whatsapp">
+              WhatsApp
+              @if (form.celular && form.whatsapp !== form.celular) {
+                <button type="button" class="link-acao" (click)="usarCelularNoWhatsapp()">usar o celular</button>
+              }
+            </label>
+            <input id="whatsapp" name="whatsapp" class="entrada mono" [class.invalida]="campoInvalido() === 'whatsapp'"
+              placeholder="(00) 00000-0000" inputmode="tel" maxlength="15"
+              [value]="form.whatsapp ?? ''" (input)="mascarar($event, 'whatsapp', 'telefone')" />
+          </div>
+          <div class="campo">
+            <label for="telefone">Telefone fixo</label>
+            <input id="telefone" name="telefone" class="entrada mono" [class.invalida]="campoInvalido() === 'telefone'"
+              placeholder="(00) 0000-0000" inputmode="tel" maxlength="15"
+              [value]="form.telefone ?? ''" (input)="mascarar($event, 'telefone', 'telefone')" />
+          </div>
+          <div class="campo">
+            <label for="email">E-mail principal</label>
+            <input id="email" name="email" type="email" class="entrada" [class.invalida]="campoInvalido() === 'email'"
+              placeholder="para comunicações e notificações" [(ngModel)]="form.email" autocomplete="off" />
+          </div>
+        </div>
+
+        <h4 class="subtitulo">{{ pj ? 'Endereço da sede' : 'Endereço residencial' }}</h4>
+        <div class="grade-campos">
+          <div class="campo">
+            <label for="cep">CEP</label>
+            <input id="cep" name="cep" class="entrada mono" [class.invalida]="campoInvalido() === 'cep'"
+              placeholder="00000-000" inputmode="numeric" maxlength="9"
+              [value]="form.cep ?? ''" (input)="mascarar($event, 'cep', 'cep')" />
+            <small class="ajuda">{{ buscandoCep() ? 'Buscando endereço...' : 'Preenche rua, bairro e cidade.' }}</small>
+          </div>
+          <div class="campo">
+            <label for="uf">UF</label>
+            <select id="uf" name="uf" class="entrada" [(ngModel)]="form.uf">
+              <option [ngValue]="null">—</option>
+              @for (u of ufs; track u) {
+                <option [ngValue]="u">{{ u }}</option>
+              }
+            </select>
+          </div>
+          <div class="campo inteiro">
+            <label for="logradouro">Logradouro</label>
+            <input id="logradouro" name="logradouro" class="entrada" placeholder="Rua, avenida..." [(ngModel)]="form.logradouro" />
+          </div>
+          <div class="campo">
+            <label for="numero-end">Número</label>
+            <input id="numero-end" name="endereco_numero" class="entrada" placeholder="Ex.: 1000" [(ngModel)]="form.endereco_numero" />
+          </div>
+          <div class="campo">
+            <label for="complemento">Complemento</label>
+            <input id="complemento" name="complemento" class="entrada" placeholder="Apto, sala, bloco..." [(ngModel)]="form.complemento" />
+          </div>
+          <div class="campo">
+            <label for="bairro">Bairro</label>
+            <input id="bairro" name="bairro" class="entrada" [(ngModel)]="form.bairro" />
+          </div>
+          <div class="campo">
+            <label for="cidade">Cidade</label>
+            <input id="cidade" name="cidade" class="entrada" [(ngModel)]="form.cidade" />
+          </div>
+        </div>
+      </section>
+
+      <div class="campo">
+        <label for="obs-cliente">Observações</label>
+        <textarea id="obs-cliente" name="observacoes" class="entrada" placeholder="Como conheceu o escritório, preferências de contato..." [(ngModel)]="form.observacoes"></textarea>
+      </div>
+
+      @if (erro()) {
+        <div class="mensagem-erro"><app-icone nome="alerta" [tamanho]="16" /> {{ erro() }}</div>
+      }
+    </div>
+
+    <footer class="modal-rodape">
+      <button type="button" class="botao fantasma" (click)="fechar.emit()">Cancelar</button>
+      <button type="submit" class="botao" [disabled]="salvando()">
+        <app-icone nome="check" [tamanho]="16" />
+        {{ salvando() ? 'Salvando...' : 'Salvar cliente' }}
+      </button>
+    </footer>
+  </form>
+</div>

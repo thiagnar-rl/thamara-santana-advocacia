@@ -18,6 +18,7 @@ export interface Processo {
   id: number;
   numero: string;
   cliente: string;
+  cliente_id: number | null; // [F6] vínculo com o cadastro de clientes
   parte_contraria: string | null;
   tribunal: string | null;
   area: string | null;
@@ -31,7 +32,7 @@ export interface Processo {
 
 export type ProcessoForm = Pick<
   Processo,
-  'numero' | 'cliente' | 'parte_contraria' | 'tribunal' | 'area' | 'status' | 'observacoes'
+  'numero' | 'cliente' | 'cliente_id' | 'parte_contraria' | 'tribunal' | 'area' | 'status' | 'observacoes'
 >;
 
 export interface Compromisso {
@@ -81,4 +82,62 @@ export interface FiltroCompromissos {
   ate?: string | null;
   processoId?: number | null;
   periodo?: 'atrasados' | null;
+}
+
+/* ---------- [F6] Clientes — solicitado por Thamara Santana (teste de 30/10/2026) ---------- */
+
+export type TipoPessoa = 'fisica' | 'juridica';
+
+export interface Aniversario {
+  data: string; // AAAA-MM-DD do próximo aniversário
+  dias: number; // 0 = hoje
+  idade: number;
+}
+
+export interface ClienteForm {
+  tipo: TipoPessoa;
+  nome: string; // nome completo (PF) ou razão social (PJ)
+  // Pessoa física
+  nacionalidade: string | null;
+  estado_civil: string | null;
+  profissao: string | null;
+  rg: string | null;
+  cpf: string | null;
+  data_nascimento: string | null;
+  // Pessoa jurídica
+  nome_fantasia: string | null;
+  cnpj: string | null;
+  inscricao_estadual: string | null;
+  inscricao_municipal: string | null;
+  ramo_atuacao: string | null;
+  representante_nome: string | null;
+  representante_cpf: string | null;
+  representante_cargo: string | null;
+  representante_nascimento: string | null;
+  // Contato e localização
+  cep: string | null;
+  logradouro: string | null;
+  endereco_numero: string | null;
+  complemento: string | null;
+  bairro: string | null;
+  cidade: string | null;
+  uf: string | null;
+  telefone: string | null;
+  celular: string | null;
+  whatsapp: string | null;
+  email: string | null;
+  observacoes: string | null;
+}
+
+export interface Cliente extends ClienteForm {
+  id: number;
+  criado_em: string;
+  atualizado_em: string;
+  total_processos: number;
+  aniversario: Aniversario | null;
+}
+
+export interface ClienteDetalhe {
+  cliente: Cliente;
+  processos: Processo[];
 }

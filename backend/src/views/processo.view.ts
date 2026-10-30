@@ -12,6 +12,7 @@ export function processoView(p: Processo) {
     id: Number(p.id),
     numero: p.numero,
     cliente: p.cliente,
+    cliente_id: p.cliente_id == null ? null : Number(p.cliente_id), // [F6]
     parte_contraria: p.parte_contraria ?? null,
     tribunal: p.tribunal ?? null,
     area: p.area ?? null,

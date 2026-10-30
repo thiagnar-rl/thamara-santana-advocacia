@@ -279,6 +279,26 @@ textarea {
     font-size: 0.75rem;
     color: var(--texto-3);
   }
+
+  // [F6] Processo ligado a um cliente cadastrado / atalho para cadastrar
+  > .ajuda.vinculado {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--sucesso);
+    font-weight: 600;
+  }
+
+  .link-cadastro {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--dourado);
+    font-size: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 
 .entrada {

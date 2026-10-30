@@ -9,6 +9,18 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ## [1.1.0] — em preparação
 
+### Adicionado
+
+- **[F6] Cadastro individual de clientes com aviso de aniversário.** Há uma nova aba **Clientes** com:
+  - pessoa física: nome, nacionalidade, estado civil, profissão, RG, CPF e nascimento;
+  - pessoa jurídica: razão social, nome fantasia, CNPJ, inscrições, ramo e representante legal;
+  - contato e endereço com CEP, que preenche o endereço automaticamente.
+
+  Os aniversários dos próximos 7 dias aparecem na tela Início, no menu e na lista de clientes, com atalho para o WhatsApp. Os processos passam a se ligar ao cliente cadastrado.
+  - **Solicitado por:** Thamara Santana (cliente 3 — teste de usuário de 30/10/2026)
+  - **Ramo:** `melhoria/F6-cadastro-de-clientes`
+  - **Ficha:** [docs/solicitacoes/F6-cadastro-de-clientes.md](docs/solicitacoes/F6-cadastro-de-clientes.md)
+
 ### Corrigido
 
 - **[C2] Confirmar antes de sair.** O botão "Sair" desconectava na hora. Agora ele pergunta antes e avisa se houver um formulário aberto.

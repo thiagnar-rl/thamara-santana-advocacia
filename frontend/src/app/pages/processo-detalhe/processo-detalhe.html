@@ -13,6 +13,12 @@
           <span class="etiqueta {{ p.status }}">{{ rotuloStatus(p.status) }}</span>
         </div>
         <h1>{{ p.cliente }}</h1>
+        <!-- [F6] Atalho para a ficha do cliente (sugestão: Thamara Santana) -->
+        @if (p.cliente_id) {
+          <a class="ficha-cliente" [routerLink]="['/clientes', p.cliente_id]">
+            <app-icone nome="clientes" [tamanho]="14" /> Ver ficha do cliente
+          </a>
+        }
         @if (p.parte_contraria) {
           <p class="contra"><span>×</span> {{ p.parte_contraria }}</p>
         }

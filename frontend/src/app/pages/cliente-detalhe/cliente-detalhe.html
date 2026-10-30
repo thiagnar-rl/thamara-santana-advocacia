@@ -1,0 +1,169 @@
+<!-- [F6] Ficha do cliente — solicitado por Thamara Santana (teste de 30/10/2026) -->
+<div class="pagina">
+  <a routerLink="/clientes" class="voltar">
+    <app-icone nome="voltar" [tamanho]="16" /> Clientes
+  </a>
+
+  @if (detalhe(); as d) {
+    @let c = d.cliente;
+    @let pj = c.tipo === 'juridica';
+
+    <header class="cabecalho">
+      <div class="identidade">
+        <span class="avatar" [class.pj]="pj">
+          @if (pj) {
+            <app-icone nome="predio" [tamanho]="24" />
+          } @else {
+            {{ iniciais(c.nome) }}
+          }
+        </span>
+        <div>
+          <div class="linha">
+            <span class="etiqueta">{{ pj ? 'Pessoa jurídica' : 'Pessoa física' }}</span>
+            @if (aniversarioProximo(c.aniversario)) {
+              <span class="etiqueta aniversario">
+                <app-icone nome="bolo" [tamanho]="13" />
+                Aniversário {{ textoAniversario(c.aniversario).toLowerCase() }}
+                @if (!pj && c.aniversario) {
+                  · {{ c.aniversario.idade }} anos
+                }
+              </span>
+            }
+          </div>
+          <h1>{{ c.nome }}</h1>
+          @if (pj && c.nome_fantasia) {
+            <p class="fantasia">{{ c.nome_fantasia }}</p>
+          }
+        </div>
+      </div>
+      <div class="acoes">
+        @if (whatsapp(); as link) {
+          <a class="botao secundario" [href]="link" target="_blank" rel="noopener">
+            <app-icone nome="whatsapp" [tamanho]="16" /> WhatsApp
+          </a>
+        }
+        <button type="button" class="botao secundario" (click)="edicao.editarCliente(c)">
+          <app-icone nome="editar" [tamanho]="16" /> Editar
+        </button>
+        <button type="button" class="botao perigo" title="Excluir cliente" (click)="edicao.excluirCliente(c)">
+          <app-icone nome="lixeira" [tamanho]="16" />
+        </button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <div class="coluna">
+        <!-- 1. Identificação -->
+        <section class="cartao ficha">
+          <h2><span class="numero">1</span> {{ pj ? 'Dados da empresa' : 'Dados pessoais' }}</h2>
+          <dl>
+            @if (!pj) {
+              <div><dt>CPF</dt><dd class="mono">{{ c.cpf || '—' }}</dd></div>
+              <div><dt>RG</dt><dd class="mono">{{ c.rg || '—' }}</dd></div>
+              <div><dt>Nascimento</dt><dd>{{ c.data_nascimento ? dataCurta(c.data_nascimento) : '—' }}</dd></div>
+              <div><dt>Nacionalidade</dt><dd>{{ c.nacionalidade || '—' }}</dd></div>
+              <div><dt>Estado civil</dt><dd>{{ c.estado_civil || '—' }}</dd></div>
+              <div><dt>Profissão</dt><dd>{{ c.profissao || '—' }}</dd></div>
+            } @else {
+              <div><dt>CNPJ</dt><dd class="mono">{{ c.cnpj || '—' }}</dd></div>
+              <div><dt>Ramo de atuação</dt><dd>{{ c.ramo_atuacao || '—' }}</dd></div>
+              <div><dt>Inscrição estadual</dt><dd class="mono">{{ c.inscricao_estadual || '—' }}</dd></div>
+              <div><dt>Inscrição municipal</dt><dd class="mono">{{ c.inscricao_municipal || '—' }}</dd></div>
+            }
+          </dl>
+
+          @if (pj) {
+            <h3 class="subtitulo">Representante legal</h3>
+            <dl>
+              <div><dt>Nome</dt><dd>{{ c.representante_nome || '—' }}</dd></div>
+              <div><dt>CPF</dt><dd class="mono">{{ c.representante_cpf || '—' }}</dd></div>
+              <div><dt>Cargo</dt><dd>{{ c.representante_cargo || '—' }}</dd></div>
+              <div><dt>Nascimento</dt><dd>{{ c.representante_nascimento ? dataCurta(c.representante_nascimento) : '—' }}</dd></div>
+            </dl>
+          }
+        </section>
+
+        <!-- Processos do cliente -->
+        <section class="cartao">
+          <header class="cartao-cabecalho">
+            <h2>Processos <span class="contador">{{ d.processos.length }}</span></h2>
+            <button type="button" class="botao pequeno" (click)="edicao.novoProcesso({ cliente: c })">
+              <app-icone nome="mais" [tamanho]="15" [traco]="2.2" /> Novo processo
+            </button>
+          </header>
+          <div class="processos">
+            @for (p of d.processos; track p.id) {
+              <a class="processo" [routerLink]="['/processos', p.id]">
+                <div>
+                  <span class="mono numero">{{ p.numero }}</span>
+                  <small>{{ p.area || 'Sem área' }}{{ p.tribunal ? ' · ' + p.tribunal : '' }}</small>
+                </div>
+                <div class="direita">
+                  @if (p.proximo_compromisso) {
+                    <small>Próximo: {{ dataRelativa(p.proximo_compromisso) }}</small>
+                  }
+                  <span class="etiqueta {{ p.status }}">{{ rotuloStatus(p.status) }}</span>
+                </div>
+              </a>
+            } @empty {
+              <div class="vazio">
+                <span class="icone-vazio"><app-icone nome="pasta" [tamanho]="22" /></span>
+                <strong>Nenhum processo vinculado</strong>
+                <p>Cadastre um processo para este cliente ou vincule um existente pela tela do processo.</p>
+              </div>
+            }
+          </div>
+        </section>
+      </div>
+
+      <!-- 2. Contato e localização -->
+      <aside class="cartao ficha contato">
+        <h2><span class="numero">2</span> Contato e localização</h2>
+        <ul class="contatos">
+          <li>
+            <app-icone nome="telefone" [tamanho]="16" />
+            <div><small>Celular</small>
+              @if (c.celular) { <a [href]="'tel:' + c.celular">{{ c.celular }}</a> } @else { — }
+            </div>
+          </li>
+          <li>
+            <app-icone nome="whatsapp" [tamanho]="16" />
+            <div><small>WhatsApp</small>
+              @if (whatsapp() && c.whatsapp) { <a [href]="whatsapp()" target="_blank" rel="noopener">{{ c.whatsapp }}</a> } @else { {{ c.whatsapp || '—' }} }
+            </div>
+          </li>
+          <li>
+            <app-icone nome="telefone" [tamanho]="16" />
+            <div><small>Telefone fixo</small>
+              @if (c.telefone) { <a [href]="'tel:' + c.telefone">{{ c.telefone }}</a> } @else { — }
+            </div>
+          </li>
+          <li>
+            <app-icone nome="email" [tamanho]="16" />
+            <div><small>E-mail principal</small>
+              @if (c.email) { <a [href]="'mailto:' + c.email">{{ c.email }}</a> } @else { — }
+            </div>
+          </li>
+          <li>
+            <app-icone nome="local" [tamanho]="16" />
+            <div><small>{{ pj ? 'Sede' : 'Endereço' }}</small>
+              @if (mapa(); as link) { <a [href]="link" target="_blank" rel="noopener">{{ endereco() }}</a> } @else { — }
+            </div>
+          </li>
+        </ul>
+
+        <div class="observacoes">
+          <h3>Observações</h3>
+          @if (c.observacoes) {
+            <p>{{ c.observacoes }}</p>
+          } @else {
+            <p class="suave">Nenhuma observação.</p>
+          }
+        </div>
+        <p class="cadastro">Cliente desde {{ dataCurta(c.criado_em.slice(0, 10)) }}</p>
+      </aside>
+    </div>
+  } @else {
+    <div class="carregando">Carregando cliente...</div>
+  }
+</div>

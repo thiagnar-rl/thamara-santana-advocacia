@@ -63,6 +63,51 @@ export const ESQUEMA = `
     criado_em     TEXT    NOT NULL DEFAULT (datetime('now', 'localtime'))
   );
 
+  -- [F6] Cadastro de clientes (pessoa física ou jurídica) — solicitado por Thamara Santana (30/10/2026)
+  CREATE TABLE IF NOT EXISTS clientes (
+    id                        INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario_id                INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    tipo                      TEXT    NOT NULL DEFAULT 'fisica' CHECK (tipo IN ('fisica', 'juridica')),
+    nome                      TEXT    NOT NULL CHECK (length(trim(nome)) BETWEEN 1 AND 150), -- nome completo ou razão social
+    -- Pessoa física
+    nacionalidade             TEXT,
+    estado_civil              TEXT,
+    profissao                 TEXT,
+    rg                        TEXT,
+    cpf                       TEXT,                                         -- 000.000.000-00
+    data_nascimento           TEXT,                                         -- AAAA-MM-DD
+    -- Pessoa jurídica
+    nome_fantasia             TEXT,
+    cnpj                      TEXT,                                         -- 00.000.000/0000-00
+    inscricao_estadual        TEXT,
+    inscricao_municipal       TEXT,
+    ramo_atuacao              TEXT,
+    representante_nome        TEXT,
+    representante_cpf         TEXT,
+    representante_cargo       TEXT,
+    representante_nascimento  TEXT,                                         -- AAAA-MM-DD
+    -- Contato e localização
+    cep                       TEXT,                                         -- 00000-000
+    logradouro                TEXT,
+    endereco_numero           TEXT,
+    complemento               TEXT,
+    bairro                    TEXT,
+    cidade                    TEXT,
+    uf                        TEXT,
+    telefone                  TEXT,
+    celular                   TEXT,
+    whatsapp                  TEXT,
+    email                     TEXT,
+    observacoes               TEXT,
+    criado_em                 TEXT    NOT NULL DEFAULT (datetime('now', 'localtime')),
+    atualizado_em             TEXT    NOT NULL DEFAULT (datetime('now', 'localtime'))
+  );
+
+  -- [F6] CPF e CNPJ não se repetem para a mesma usuária
+  CREATE UNIQUE INDEX IF NOT EXISTS uq_clientes_usuario_cpf  ON clientes (usuario_id, cpf)  WHERE cpf IS NOT NULL;
+  CREATE UNIQUE INDEX IF NOT EXISTS uq_clientes_usuario_cnpj ON clientes (usuario_id, cnpj) WHERE cnpj IS NOT NULL;
+  CREATE INDEX IF NOT EXISTS idx_clientes_usuario_nome ON clientes (usuario_id, nome);
+
   -- Um mesmo usuário não pode cadastrar o mesmo número de processo duas vezes
   CREATE UNIQUE INDEX IF NOT EXISTS uq_processos_usuario_numero ON processos (usuario_id, numero);
 
@@ -144,6 +189,12 @@ async function prepararEsquema(banco: Banco): Promise<void> {
   if (!colunas.some((c) => c.name === 'concluido_em')) {
     await banco.script('ALTER TABLE compromissos ADD COLUMN concluido_em TEXT');
   }
+  // [F6] Bancos da versão 1.0 não tinham o vínculo processo → cliente.
+  const colunasProcesso = await banco.todos<{ name: string }>('PRAGMA table_info(processos)', []);
+  if (!colunasProcesso.some((c) => c.name === 'cliente_id')) {
+    await banco.script('ALTER TABLE processos ADD COLUMN cliente_id INTEGER REFERENCES clientes(id) ON DELETE SET NULL');
+  }
+  await banco.script('CREATE INDEX IF NOT EXISTS idx_processos_cliente ON processos (cliente_id)');
 }
 
 /* ---------- Conexão atual ---------- */
