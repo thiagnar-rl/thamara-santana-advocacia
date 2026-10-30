@@ -108,6 +108,18 @@ export const ESQUEMA = `
   CREATE UNIQUE INDEX IF NOT EXISTS uq_clientes_usuario_cnpj ON clientes (usuario_id, cnpj) WHERE cnpj IS NOT NULL;
   CREATE INDEX IF NOT EXISTS idx_clientes_usuario_nome ON clientes (usuario_id, nome);
 
+  -- [F3] Pedidos de recuperação de senha ("Esqueci minha senha") — solicitado por Thamara Santana (30/10/2026).
+  -- Guarda só o HASH do código enviado por e-mail; o código vale 1 hora e só pode ser usado uma vez.
+  CREATE TABLE IF NOT EXISTS recuperacoes_senha (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario_id  INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    token_hash  TEXT    NOT NULL UNIQUE,              -- SHA-256 do código
+    criado_em   TEXT    NOT NULL,                     -- ISO 8601 (UTC)
+    expira_em   TEXT    NOT NULL,                     -- ISO 8601 (UTC)
+    usado_em    TEXT                                  -- preenchido quando a senha é trocada
+  );
+  CREATE INDEX IF NOT EXISTS idx_recuperacoes_usuario ON recuperacoes_senha (usuario_id, criado_em);
+
   -- Um mesmo usuário não pode cadastrar o mesmo número de processo duas vezes
   CREATE UNIQUE INDEX IF NOT EXISTS uq_processos_usuario_numero ON processos (usuario_id, numero);
 

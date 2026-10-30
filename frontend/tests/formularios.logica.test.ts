@@ -6,6 +6,8 @@ import {
   numeroCNJValido,
   validarAcesso,
   validarCompromisso,
+  validarEmail,
+  validarNovaSenha,
   validarProcesso,
 } from '../src/app/core/logica/formularios.logica';
 
@@ -58,5 +60,17 @@ describe('formularios.logica', () => {
       validarAcesso('cadastro', { nome: 'Ana', email: 'a@b.com', senha: '123' }),
       'A senha precisa ter pelo menos 6 caracteres.',
     );
+  });
+
+  it('[F3] validarEmail() confere o e-mail do "Esqueci minha senha" (sugestão: Thamara Santana)', () => {
+    assert.equal(validarEmail(''), 'Informe o e-mail da sua conta.');
+    assert.equal(validarEmail('thamara@'), 'Informe um e-mail válido.');
+    assert.equal(validarEmail(' thamara@advocacia.com.br '), null);
+  });
+
+  it('[F3] validarNovaSenha() exige 6 caracteres e as duas senhas iguais', () => {
+    assert.equal(validarNovaSenha('123', '123'), 'A senha precisa ter pelo menos 6 caracteres.');
+    assert.equal(validarNovaSenha('senha123', 'senha124'), 'As duas senhas não são iguais.');
+    assert.equal(validarNovaSenha('senha123', 'senha123'), null);
   });
 });

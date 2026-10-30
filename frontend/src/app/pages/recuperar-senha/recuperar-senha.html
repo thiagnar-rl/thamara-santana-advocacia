@@ -1,0 +1,108 @@
+<!-- [F3] "Esqueci minha senha" — solicitado por Thamara Santana (teste de 30/10/2026) -->
+<div class="tela">
+  <section class="vitrine">
+    <div class="centro">
+      <img class="logo-completa" src="marca/logo-completa.png" alt="Thamara Santana — Advocacia e Consultoria Jurídica" />
+      <p class="lema">Processos, prazos e audiências — tudo no seu lugar.</p>
+    </div>
+    <ul class="tipos">
+      <li class="tipo-audiencia"><span></span>Audiências</li>
+      <li class="tipo-recurso"><span></span>Recursos</li>
+      <li class="tipo-manifestacao"><span></span>Manifestações</li>
+      <li class="tipo-despacho"><span></span>Despachos</li>
+    </ul>
+  </section>
+
+  <section class="formulario">
+    @if (modo() === 'recuperar') {
+      <!-- 1) Pedir o link -->
+      @if (!enviado()) {
+        <form class="caixa" (ngSubmit)="pedirLink()">
+          <div class="marca-mobile">
+            <img src="marca/monograma.png" alt="" />
+            <span class="nome">Thamara Santana</span>
+            <span class="sub">Advocacia e Consultoria Jurídica</span>
+          </div>
+
+          <span class="icone-topo"><app-icone nome="email" [tamanho]="22" /></span>
+          <h2>Esqueci minha senha</h2>
+          <p class="suave subtitulo">Informe o e-mail da sua conta. Vamos enviar um link para você criar uma nova senha.</p>
+
+          <div class="campo">
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" class="entrada" placeholder="voce@exemplo.com"
+              [(ngModel)]="emailDigitado" autocomplete="email" />
+          </div>
+
+          @if (erro()) {
+            <div class="mensagem-erro"><app-icone nome="alerta" [tamanho]="16" /> {{ erro() }}</div>
+          }
+
+          <button type="submit" class="botao enviar" [disabled]="enviando()">
+            {{ enviando() ? 'Enviando...' : 'Enviar link' }}
+          </button>
+
+          <p class="troca">Lembrou a senha? <a routerLink="/entrar">Entrar</a></p>
+        </form>
+      } @else {
+        <!-- 2) Confirmação: confira seu e-mail -->
+        <div class="caixa">
+          <span class="icone-topo sucesso"><app-icone nome="check" [tamanho]="22" [traco]="2.2" /></span>
+          <h2>Confira seu e-mail</h2>
+          <p class="suave subtitulo">{{ enviado() }}</p>
+          <ul class="dicas">
+            <li><app-icone nome="relogio" [tamanho]="15" /> O link vale por <strong>1 hora</strong> e só pode ser usado uma vez.</li>
+            <li><app-icone nome="email" [tamanho]="15" /> Procure por <strong>"Criar nova senha — Thamara Santana Advocacia"</strong>.</li>
+          </ul>
+          <a routerLink="/entrar" class="botao enviar">Voltar para entrar</a>
+          <p class="troca">Não recebeu? <button type="button" class="link" (click)="pedirDeNovo()">Enviar de novo</button></p>
+        </div>
+      }
+    } @else {
+      <!-- 3) Criar a nova senha (aberto pelo link do e-mail) -->
+      <form class="caixa" (ngSubmit)="salvarNovaSenha()">
+        <span class="icone-topo"><app-icone nome="olhoFechado" [tamanho]="22" /></span>
+        <h2>Criar nova senha</h2>
+
+        @if (!token()) {
+          <p class="suave subtitulo">Este endereço está incompleto. Abra o link exatamente como chegou no e-mail ou peça um novo.</p>
+          <a routerLink="/recuperar-senha" class="botao enviar">Pedir novo link</a>
+        } @else {
+          <p class="suave subtitulo">Escolha uma senha nova para entrar no sistema.</p>
+
+          <div class="campo">
+            <label for="senha">Nova senha</label>
+            <div class="senha">
+              <input id="senha" name="senha" class="entrada" [type]="mostrarSenha() ? 'text' : 'password'"
+                placeholder="Mínimo de 6 caracteres" [(ngModel)]="senha" autocomplete="new-password" />
+              <button type="button" class="botao-icone" [title]="mostrarSenha() ? 'Esconder senha' : 'Mostrar senha'"
+                (click)="mostrarSenha.set(!mostrarSenha())">
+                <app-icone [nome]="mostrarSenha() ? 'olhoFechado' : 'olho'" [tamanho]="17" />
+              </button>
+            </div>
+          </div>
+
+          <div class="campo">
+            <label for="confirmacao">Repita a nova senha</label>
+            <input id="confirmacao" name="confirmacao" class="entrada" [type]="mostrarSenha() ? 'text' : 'password'"
+              placeholder="Digite a mesma senha" [(ngModel)]="confirmacao" autocomplete="new-password" />
+          </div>
+
+          @if (erro()) {
+            <div class="mensagem-erro"><app-icone nome="alerta" [tamanho]="16" /> {{ erro() }}</div>
+          }
+
+          @if (linkInvalido()) {
+            <a routerLink="/recuperar-senha" class="botao enviar">Pedir novo link</a>
+          } @else {
+            <button type="submit" class="botao enviar" [disabled]="enviando()">
+              {{ enviando() ? 'Salvando...' : 'Salvar nova senha e entrar' }}
+            </button>
+          }
+        }
+
+        <p class="troca"><a routerLink="/entrar">Voltar para entrar</a></p>
+      </form>
+    }
+  </section>
+</div>

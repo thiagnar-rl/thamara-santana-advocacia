@@ -17,6 +17,21 @@ export const routes: Routes = [
     data: { modo: 'cadastro' },
     loadComponent: () => import('./pages/acesso/acesso').then((m) => m.AcessoPage),
   },
+  // [F3] Esqueci minha senha — solicitado por Thamara Santana (30/10/2026)
+  {
+    path: 'recuperar-senha',
+    canActivate: [somenteVisitante],
+    title: 'Esqueci minha senha · Thamara Santana',
+    data: { modo: 'recuperar' },
+    loadComponent: () => import('./pages/recuperar-senha/recuperar-senha').then((m) => m.RecuperarSenhaPage),
+  },
+  {
+    // Aberta pelo link do e-mail (funciona mesmo se alguém já estiver logado no navegador)
+    path: 'redefinir-senha',
+    title: 'Criar nova senha · Thamara Santana',
+    data: { modo: 'redefinir' },
+    loadComponent: () => import('./pages/recuperar-senha/recuperar-senha').then((m) => m.RecuperarSenhaPage),
+  },
   {
     path: '',
     component: Shell,

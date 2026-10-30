@@ -1,0 +1,56 @@
+/* [F3] Telas "Esqueci minha senha" / "Criar nova senha" — solicitado por Thamara Santana (30/10/2026).
+   O restante do visual vem de ../acesso/acesso.scss (mesmo layout da tela de entrada). */
+
+.icone-topo {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--dourado-suave);
+  color: var(--dourado);
+
+  &.sucesso {
+    background: var(--sucesso-suave);
+    color: var(--sucesso);
+  }
+}
+
+.dicas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: var(--raio-sm);
+  background: var(--superficie-2);
+  border: 1px solid var(--borda);
+  list-style: none;
+  font-size: 0.86rem;
+  color: var(--texto-2);
+
+  li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  app-icone {
+    margin-top: 2px;
+    color: var(--dourado);
+  }
+}
+
+a.botao.enviar {
+  text-decoration: none;
+}
+
+.link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--tinta);
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
