@@ -9,7 +9,7 @@
 | **Prioridade** | Alta |
 | **Ramo no Git** | `correcao/C2-confirmar-saida` |
 | **Versão** | 1.1.0 |
-| **Status** | Implementada — aguardando merge e publicação |
+| **Status** | Publicada em 30/10/2026 — merge `eab86ab`, versão v1.1.0 |
 
 ---
 

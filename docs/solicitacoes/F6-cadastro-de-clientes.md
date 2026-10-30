@@ -9,7 +9,7 @@
 | **Prioridade** | Alta |
 | **Ramo no Git** | `melhoria/F6-cadastro-de-clientes` |
 | **Versão** | 1.1.0 |
-| **Status** | Implementada — aguardando merge e publicação |
+| **Status** | Publicada em 30/10/2026 — versão v1.1.0 |
 
 ---
 
