@@ -1,5 +1,5 @@
 import { executar, Parametro, todos, um } from '../config/database';
-import { STATUS_PROCESSO, StatusProcesso, texto, umDe } from '../utils/validacao';
+import { STATUS_PROCESSO, StatusProcesso, normalizarNumeroCNJ, texto, umDe } from '../utils/validacao';
 
 /**
  * MODEL — Processo
@@ -47,6 +47,10 @@ const SELECT_PROCESSO = `
   FROM processos p
 `;
 
+/** [C1] Mensagem exibida quando o número não segue o padrão CNJ. */
+export const MENSAGEM_NUMERO_INVALIDO =
+  'Número do processo inválido. Use o padrão CNJ: 0000000-00.0000.0.00.0000 (20 dígitos).';
+
 export const ProcessoModel = {
   /** Valida os campos do formulário de processo. */
   validar(corpo: unknown): { dados: DadosProcesso; erro: string | null } {
@@ -62,9 +66,13 @@ export const ProcessoModel = {
       observacoes: texto(b.observacoes),
     };
 
+    // [C1] Número no padrão CNJ — solicitado por Mariana Couto (teste de 29/10/2026).
+    const numeroCNJ = normalizarNumeroCNJ(dados.numero);
+    if (numeroCNJ) dados.numero = numeroCNJ;
+
     let erro: string | null = null;
     if (!dados.numero) erro = 'Informe o número do processo.';
-    else if (dados.numero.length > 40) erro = 'O número do processo pode ter no máximo 40 caracteres.';
+    else if (!numeroCNJ) erro = MENSAGEM_NUMERO_INVALIDO;
     else if (!dados.cliente) erro = 'Informe o nome do cliente.';
     else if (dados.cliente.length > 150) erro = 'O nome do cliente pode ter no máximo 150 caracteres.';
     else if (!umDe(STATUS_PROCESSO, status)) erro = 'Status inválido.';

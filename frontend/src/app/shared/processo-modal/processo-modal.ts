@@ -5,7 +5,7 @@ import { ApiService } from '../../core/api.service';
 import { mensagemDeErro } from '../../core/auth.interceptor';
 import { AvisoService } from '../../core/aviso.service';
 import { EdicaoProcesso } from '../../core/edicao.service';
-import { validarProcesso } from '../../core/logica/formularios.logica';
+import { formatarNumeroCNJ, validarProcesso } from '../../core/logica/formularios.logica';
 import { ProcessoForm } from '../../core/models';
 import { AREAS, STATUS_PROCESSO } from '../../core/rotulos';
 import { Icone } from '../icone/icone';
@@ -57,6 +57,21 @@ export class ProcessoModal implements OnInit {
         status: p.status,
         observacoes: p.observacoes ?? '',
       };
+    }
+  }
+
+  /**
+   * [C1] Aplica a máscara CNJ enquanto a usuária digita ou cola o número.
+   * Solicitado por: Mariana Couto (teste de usuário de 29/10/2026).
+   */
+  protected digitarNumero(evento: Event): void {
+    const campo = evento.target as HTMLInputElement;
+    const formatado = formatarNumeroCNJ(campo.value);
+    campo.value = formatado;
+    this.form.numero = formatado;
+    if (this.campoInvalido() === 'numero') {
+      this.campoInvalido.set(null);
+      this.erro.set('');
     }
   }
 

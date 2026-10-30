@@ -273,6 +273,12 @@ textarea {
     font-weight: 600;
     color: var(--texto-2);
   }
+
+  // [C1] Texto de ajuda abaixo de um campo (ex.: padrão CNJ do número do processo)
+  > .ajuda {
+    font-size: 0.75rem;
+    color: var(--texto-3);
+  }
 }
 
 .entrada {

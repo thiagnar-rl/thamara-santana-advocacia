@@ -1,7 +1,7 @@
 import { beforeEach, describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { criarCompromisso, criarProcesso, criarUsuario, novoBanco } from './helpers';
-import { ProcessoModel } from '../src/models/processo.model';
+import { MENSAGEM_NUMERO_INVALIDO, ProcessoModel } from '../src/models/processo.model';
 import { CompromissoModel } from '../src/models/compromisso.model';
 
 const HOJE = '2026-10-28';
@@ -18,12 +18,26 @@ describe('ProcessoModel', () => {
 
   it('validar() exige número e cliente e confere a situação', async () => {
     assert.equal(ProcessoModel.validar({}).erro, 'Informe o número do processo.');
-    assert.equal(ProcessoModel.validar({ numero: '1' }).erro, 'Informe o nome do cliente.');
-    assert.equal(ProcessoModel.validar({ numero: '1', cliente: 'A', status: 'perdido' }).erro, 'Status inválido.');
-    const ok = ProcessoModel.validar({ numero: ' 1 ', cliente: 'A', tribunal: '' });
+    assert.equal(ProcessoModel.validar({ numero: '0001234-56.2026.8.26.0100' }).erro, 'Informe o nome do cliente.');
+    assert.equal(ProcessoModel.validar({ numero: '0001234-56.2026.8.26.0100', cliente: 'A', status: 'perdido' }).erro, 'Status inválido.');
+    const ok = ProcessoModel.validar({ numero: ' 0001234-56.2026.8.26.0100 ', cliente: 'A', tribunal: '' });
     assert.equal(ok.erro, null);
     assert.equal(ok.dados.status, 'ativo'); // padrão
     assert.equal(ok.dados.tribunal, null); // vazio vira null
+  });
+
+  describe('[C1] número no padrão CNJ (sugestão: Mariana Couto, 29/10/2026)', () => {
+    it('recusa texto livre, letras e quantidade errada de dígitos', () => {
+      for (const numero of ['123abc', '123', 'A-1', '0001234-56.2026.8.26.010', '0001234-56.2026.8.26.01000']) {
+        assert.equal(ProcessoModel.validar({ numero, cliente: 'A' }).erro, MENSAGEM_NUMERO_INVALIDO, numero);
+      }
+    });
+
+    it('aceita o número formatado e formata quando vierem só os 20 dígitos', () => {
+      assert.equal(ProcessoModel.validar({ numero: '0001234-56.2026.8.26.0100', cliente: 'A' }).dados.numero, '0001234-56.2026.8.26.0100');
+      assert.equal(ProcessoModel.validar({ numero: '00012345620268260100', cliente: 'A' }).dados.numero, '0001234-56.2026.8.26.0100');
+      assert.equal(ProcessoModel.validar({ numero: '0001234 56 2026 8 26 0100', cliente: 'A' }).dados.numero, '0001234-56.2026.8.26.0100');
+    });
   });
 
   it('listar() mostra só os processos da própria usuária (RNF02)', async () => {
@@ -66,11 +80,11 @@ describe('ProcessoModel', () => {
 
   it('atualizar() e excluir() não alteram processos de outra usuária', async () => {
     const id = await criarProcesso(ana);
-    const { dados } = ProcessoModel.validar({ numero: 'Novo', cliente: 'Novo' });
+    const { dados } = ProcessoModel.validar({ numero: '0000001-11.2024.8.26.0001', cliente: 'Novo' });
     assert.equal((await ProcessoModel.atualizar(bia, id, dados)), false);
     assert.equal((await ProcessoModel.excluir(bia, id)), false);
     assert.equal((await ProcessoModel.atualizar(ana, id, dados)), true);
-    assert.equal((await ProcessoModel.buscar(ana, id, HOJE))!.numero, 'Novo');
+    assert.equal((await ProcessoModel.buscar(ana, id, HOJE))!.numero, '0000001-11.2024.8.26.0001');
   });
 
   it('excluir() apaga os compromissos do processo em cascata (RN06)', async () => {
