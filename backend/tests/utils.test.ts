@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { formatarISO, inicioDoMes, somarDias } from '../src/utils/datas';
-import { dataValida, emailValido, horaValida, normalizarNumeroCNJ, texto, TIPOS, umDe } from '../src/utils/validacao';
+import { dataValida, emailValido, horaValida, normalizarNumeroCNJ, problemaNaSenha, texto, TIPOS, umDe } from '../src/utils/validacao';
 
 describe('utils/validacao', () => {
   it('texto() apara espaços e transforma vazio em null', async () => {
@@ -44,6 +44,15 @@ describe('utils/validacao', () => {
     assert.equal(normalizarNumeroCNJ('1002345-67.2026.8.26.010'), null); // 19 dígitos
     assert.equal(normalizarNumeroCNJ(''), null);
     assert.equal(normalizarNumeroCNJ(null), null);
+  });
+
+  it('[C3] problemaNaSenha() exige 8 caracteres, letras e números (sugestão: Pedro Nogueira)', () => {
+    assert.equal(problemaNaSenha('123456'), 'A senha precisa ter pelo menos 8 caracteres, com letras e números.');
+    assert.equal(problemaNaSenha('12345678'), 'A senha precisa ter pelo menos uma letra.');
+    assert.equal(problemaNaSenha('abcdefgh'), 'A senha precisa ter pelo menos um número.');
+    assert.equal(problemaNaSenha('senha123'), null);
+    assert.equal(problemaNaSenha('Ação2026'), null); // letras acentuadas contam como letra
+    assert.equal(problemaNaSenha(undefined), 'A senha precisa ter pelo menos 8 caracteres, com letras e números.');
   });
 
   it('umDe() verifica se o valor pertence à lista', async () => {

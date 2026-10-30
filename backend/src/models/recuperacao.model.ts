@@ -1,7 +1,8 @@
 import crypto from 'node:crypto';
 import bcrypt from 'bcryptjs';
 import { executar, todos, um } from '../config/database';
-import { SENHA_MINIMA, Usuario } from './usuario.model';
+import { problemaNaSenha } from '../utils/validacao';
+import { Usuario } from './usuario.model';
 
 /**
  * MODEL — Recuperação de senha ("Esqueci minha senha")
@@ -66,12 +67,9 @@ export const RecuperacaoModel = {
     return Number(pedido.usuario_id);
   },
 
-  /** Valida a nova senha (mesma regra do cadastro). */
+  /** Valida a nova senha — mesma regra do cadastro ([C3]: mín. 8, letras e números). */
   validarSenha(senha: unknown): string | null {
-    const s = String(senha ?? '');
-    if (s.length < SENHA_MINIMA) return `A senha precisa ter pelo menos ${SENHA_MINIMA} caracteres.`;
-    if (s.length > 200) return 'A senha é muito longa.';
-    return null;
+    return problemaNaSenha(senha);
   },
 
   /**
