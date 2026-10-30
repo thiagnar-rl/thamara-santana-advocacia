@@ -9,7 +9,8 @@
 | **Prioridade** | Média |
 | **Ramo no Git** | `correcao/C1-mascara-numero-processo` |
 | **Versão** | 1.0.1 |
-| **Status** | Implementada — aguardando merge no `main` e publicação |
+| **Status** | Publicada em 29/10/2026 |
+| **Pull Request** | [#1](https://github.com/thiagnar-rl/thamara-santana-advocacia/pull/1) — commit `2d9d323`, merge `03302e5` |
 
 ---
 
