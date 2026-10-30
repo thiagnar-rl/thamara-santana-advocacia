@@ -7,7 +7,25 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
-## [1.1.0] — em preparação
+## [1.2.0] — em preparação
+
+### Adicionado
+
+- **[F3] "Esqueci minha senha".** A tela de entrada ganhou o link **Esqueci minha senha**. O sistema envia por e-mail um link que vale 1 hora e é de uso único. Pelo link, a usuária cria uma nova senha e já entra no sistema.
+
+  Segurança:
+  - a resposta não revela quais e-mails têm conta;
+  - o banco guarda só o hash do código;
+  - há um limite de 3 pedidos a cada 15 minutos.
+
+  O envio é pelo Gmail, com "senha de app" (variáveis `SMTP_USUARIO` e `SMTP_SENHA`).
+  - **Solicitado por:** Thamara Santana (cliente 3 — teste de usuário de 30/10/2026)
+  - **Ramo:** `melhoria/F3-esqueci-minha-senha`
+  - **Ficha:** [docs/solicitacoes/F3-esqueci-minha-senha.md](docs/solicitacoes/F3-esqueci-minha-senha.md)
+
+---
+
+## [1.1.0] — 30/10/2026
 
 ### Adicionado
 

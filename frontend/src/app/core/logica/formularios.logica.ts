@@ -65,3 +65,19 @@ export function validarAcesso(
   if (modo === 'cadastro' && dados.senha.length < 6) return 'A senha precisa ter pelo menos 6 caracteres.';
   return null;
 }
+
+/* ---------- [F3] Esqueci minha senha — solicitado por Thamara Santana (30/10/2026) ---------- */
+
+export function validarEmail(email: string | null | undefined): string | null {
+  const e = (email ?? '').trim();
+  if (!e) return 'Informe o e-mail da sua conta.';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) return 'Informe um e-mail válido.';
+  return null;
+}
+
+/** Confere a nova senha e a repetição antes de enviar. */
+export function validarNovaSenha(senha: string, confirmacao: string): string | null {
+  if (senha.length < 6) return 'A senha precisa ter pelo menos 6 caracteres.';
+  if (senha !== confirmacao) return 'As duas senhas não são iguais.';
+  return null;
+}

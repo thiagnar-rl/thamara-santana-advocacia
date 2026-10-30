@@ -164,6 +164,18 @@
   }
 }
 
+/* [F3] Link "Esqueci minha senha" (sugestão: Thamara Santana) */
+.esqueci {
+  align-self: flex-end;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--dourado);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .enviar {
   height: 48px;
   margin-top: 4px;

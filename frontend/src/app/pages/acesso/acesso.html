@@ -71,6 +71,12 @@
             <app-icone [nome]="mostrarSenha() ? 'olhoFechado' : 'olho'" [tamanho]="17" />
           </button>
         </div>
+        <!-- [F3] Esqueci minha senha — solicitado por Thamara Santana (30/10/2026) -->
+        @if (!cadastro()) {
+          <a class="esqueci" routerLink="/recuperar-senha" [queryParams]="email.trim() ? { email: email.trim() } : {}">
+            Esqueci minha senha
+          </a>
+        }
       </div>
 
       @if (erro()) {

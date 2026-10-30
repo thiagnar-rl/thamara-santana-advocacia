@@ -34,6 +34,18 @@ export class AuthService {
       .pipe(tap((r) => this.salvarSessao(r)));
   }
 
+  /** [F3] Pede o link de recuperação por e-mail. Solicitado por Thamara Santana (30/10/2026). */
+  esqueciSenha(email: string): Observable<{ mensagem: string }> {
+    return this.http.post<{ mensagem: string }>('/api/auth/esqueci-senha', { email });
+  }
+
+  /** [F3] Cria a nova senha com o código do link e já entra no sistema. */
+  redefinirSenha(token: string, senha: string): Observable<RespostaAuth> {
+    return this.http
+      .post<RespostaAuth>('/api/auth/redefinir-senha', { token, senha })
+      .pipe(tap((r) => this.salvarSessao(r)));
+  }
+
   sair(): void {
     localStorage.removeItem(CHAVE_TOKEN);
     localStorage.removeItem(CHAVE_USUARIO);

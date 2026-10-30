@@ -55,7 +55,7 @@ Para desligar, clique no terminal e aperte `Ctrl + C`.
 
 | Tela          | Para que serve                                                                                    |
 | ------------- | ------------------------------------------------------------------------------------------------- |
-| **Entrar / Criar conta** | Login com e-mail e senha.                                                              |
+| **Entrar / Criar conta** | Login com e-mail e senha, com o link **Esqueci minha senha**, que envia por e-mail um link para criar uma nova senha. |
 | **Início**    | Resumo do dia: compromissos de hoje, próximos 7 dias, atrasados e pendências por tipo.            |
 | **Agenda**    | Calendário do mês com pontinhos coloridos + lista com filtros (próximos, atrasados, concluídos).  |
 | **Processos** | Cadastro de processos (número no padrão CNJ com máscara automática, cliente, parte contrária, vara, área, situação, observações). |
@@ -123,6 +123,8 @@ Projeto Advocacia/
 | ------ | --------------------------------- | --------------------------------- |
 | POST   | `/api/auth/registrar`             | Criar conta                       |
 | POST   | `/api/auth/login`                 | Entrar                            |
+| POST   | `/api/auth/esqueci-senha`         | Envia o link de nova senha por e-mail |
+| POST   | `/api/auth/redefinir-senha`       | Cria a nova senha com o código do link |
 | GET    | `/api/dashboard`                  | Dados da tela inicial             |
 | GET    | `/api/processos`                  | Listar (`?busca=` `?status=`)     |
 | GET    | `/api/processos/:id`              | Processo + compromissos           |
@@ -139,7 +141,7 @@ Projeto Advocacia/
 
 ## 5. Testes unitários
 
-São **116 testes** (86 no backend e 30 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
+São **126 testes** (94 no backend e 32 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
 
 ```bash
 npm test                                   # roda todos os testes
@@ -197,6 +199,8 @@ o arquivo `vercel.json` já traz essa configuração.
 | `TURSO_AUTH_TOKEN` | o token do passo 1 |
 | `JWT_SECRET` | o texto gerado no passo 2 |
 | `PERMITIR_CADASTRO` | `true` |
+| `SMTP_USUARIO` | e-mail Gmail que envia o link do "Esqueci minha senha" |
+| `SMTP_SENHA` | **senha de app** do Gmail (16 letras), criada em <https://myaccount.google.com/apppasswords>. Não é a senha normal |
 
 **5. Publicar a versão final:**
 
