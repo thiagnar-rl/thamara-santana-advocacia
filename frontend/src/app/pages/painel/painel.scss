@@ -168,3 +168,75 @@ a.numero:hover {
     }
   }
 }
+
+/* ---------- [F6] Aniversários (sugestão: Thamara Santana) ---------- */
+
+.aniversarios h2 app-icone {
+  color: var(--dourado);
+}
+
+.lista-aniversarios {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0 12px 14px;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--raio-sm);
+
+    &.hoje {
+      background: var(--dourado-suave);
+
+      small {
+        color: var(--dourado);
+        font-weight: 700;
+      }
+    }
+  }
+
+  .nome {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    strong {
+      font-size: 0.9rem;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    small {
+      font-size: 0.78rem;
+      color: var(--texto-3);
+    }
+
+    &:hover strong {
+      text-decoration: underline;
+    }
+  }
+
+  .whats {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #e6f4ea;
+    color: #1e8e4e;
+  }
+
+  .nenhum {
+    font-size: 0.86rem;
+    color: var(--texto-3);
+  }
+}

@@ -1,6 +1,9 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {
+  Cliente,
+  ClienteDetalhe,
+  ClienteForm,
   Compromisso,
   CompromissoForm,
   Dashboard,
@@ -10,6 +13,7 @@ import {
   ProcessoForm,
   StatusCompromisso,
   StatusProcesso,
+  TipoPessoa,
 } from './models';
 
 @Injectable({ providedIn: 'root' })
@@ -56,6 +60,35 @@ export class ApiService {
 
   excluirProcesso(id: number) {
     return this.http.delete<void>(`${this.base}/processos/${id}`);
+  }
+
+  /* ---------- [F6] Clientes — solicitado por Thamara Santana (30/10/2026) ---------- */
+
+  listarClientes(busca = '', tipo: TipoPessoa | null = null) {
+    let params = new HttpParams();
+    if (busca) params = params.set('busca', busca);
+    if (tipo) params = params.set('tipo', tipo);
+    return this.http.get<Cliente[]>(`${this.base}/clientes`, { params });
+  }
+
+  aniversariantes(dias = 7) {
+    return this.http.get<Cliente[]>(`${this.base}/clientes/aniversariantes`, { params: { dias } });
+  }
+
+  obterCliente(id: number) {
+    return this.http.get<ClienteDetalhe>(`${this.base}/clientes/${id}`);
+  }
+
+  criarCliente(dados: ClienteForm) {
+    return this.http.post<Cliente>(`${this.base}/clientes`, dados);
+  }
+
+  atualizarCliente(id: number, dados: ClienteForm) {
+    return this.http.put<Cliente>(`${this.base}/clientes/${id}`, dados);
+  }
+
+  excluirCliente(id: number) {
+    return this.http.delete<void>(`${this.base}/clientes/${id}`);
   }
 
   /* ---------- Compromissos ---------- */

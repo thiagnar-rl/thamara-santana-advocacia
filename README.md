@@ -60,6 +60,7 @@ Para desligar, clique no terminal e aperte `Ctrl + C`.
 | **Agenda**    | Calendário do mês com pontinhos coloridos + lista com filtros (próximos, atrasados, concluídos).  |
 | **Processos** | Cadastro de processos (número no padrão CNJ com máscara automática, cliente, parte contrária, vara, área, situação, observações). |
 | **Processo**  | Ficha do processo com todos os compromissos ligados a ele.                                        |
+| **Clientes**  | Cadastro de pessoas físicas e jurídicas (documentos, representante legal, contatos e endereço com busca por CEP), ficha com os processos do cliente e **aviso de aniversário**. |
 
 Cada compromisso tem um **tipo** com cor própria:
 
@@ -67,7 +68,7 @@ Cada compromisso tem um **tipo** com cor própria:
 
 Clique no quadradinho ao lado de um compromisso para marcá-lo como **concluído**.
 
-Para sair do sistema, clique no ícone de saída ao lado do seu nome: o sistema pede confirmação antes.
+Os aniversários de clientes dos próximos 7 dias aparecem na tela **Início**, com atalho para mandar parabéns pelo WhatsApp. Para sair do sistema, clique no ícone de saída ao lado do seu nome: o sistema pede confirmação antes.
 
 ---
 
@@ -97,7 +98,7 @@ Projeto Advocacia/
 │   │   ├── server.ts         ← liga o servidor
 │   │   ├── app.ts            ← monta o Express (middlewares + rotas)
 │   │   ├── config/           ← variáveis de ambiente e banco (tabelas)
-│   │   ├── models/           ← MODEL: usuário, processo, compromisso, painel
+│   │   ├── models/           ← MODEL: usuário, cliente, processo, compromisso, painel
 │   │   ├── views/            ← VIEW: formato do JSON devolvido
 │   │   ├── controllers/      ← CONTROLLER: recebe as requisições
 │   │   ├── routes/           ← liga cada URL ao seu controller
@@ -129,12 +130,16 @@ Projeto Advocacia/
 | GET    | `/api/compromissos`               | Listar (`?tipo=` `?status=` `?de=` `?ate=` `?periodo=atrasados`) |
 | POST / PUT / DELETE | `/api/compromissos[/:id]` | Criar / editar / excluir       |
 | PATCH  | `/api/compromissos/:id/status`    | Marcar concluído / pendente       |
+| GET    | `/api/clientes`                   | Listar (`?busca=` `?tipo=fisica\|juridica`) |
+| GET    | `/api/clientes/aniversariantes`   | Aniversários de hoje até `?dias=` (padrão 7) |
+| GET    | `/api/clientes/:id`               | Cliente + processos dele          |
+| POST / PUT / DELETE | `/api/clientes[/:id]` | Criar / editar / excluir          |
 
 ---
 
 ## 5. Testes unitários
 
-São **90 testes** (67 no backend e 23 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
+São **116 testes** (86 no backend e 30 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
 
 ```bash
 npm test                                   # roda todos os testes

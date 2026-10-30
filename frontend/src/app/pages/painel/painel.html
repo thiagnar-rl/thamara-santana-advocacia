@@ -88,6 +88,36 @@
       </div>
 
       <aside class="coluna-lateral">
+        <!-- [F6] Aviso de aniversários (sugestão: Thamara Santana) -->
+        <section class="cartao aniversarios">
+          <header class="cartao-cabecalho">
+            <h2><app-icone nome="bolo" [tamanho]="18" /> Aniversários</h2>
+            <a routerLink="/clientes" class="botao fantasma pequeno">Clientes</a>
+          </header>
+          <ul class="lista-aniversarios">
+            @for (c of aniversariantes(); track c.id) {
+              <li [class.hoje]="c.aniversario?.dias === 0">
+                <a class="nome" [routerLink]="['/clientes', c.id]">
+                  <strong>{{ c.nome }}</strong>
+                  <small>
+                    {{ textoAniversario(c.aniversario) }}
+                    @if (c.tipo === 'juridica' && c.representante_nome) {
+                      · {{ c.representante_nome }}
+                    }
+                  </small>
+                </a>
+                @if (parabens(c); as link) {
+                  <a class="whats" [href]="link" target="_blank" rel="noopener" title="Enviar parabéns pelo WhatsApp">
+                    <app-icone nome="whatsapp" [tamanho]="15" />
+                  </a>
+                }
+              </li>
+            } @empty {
+              <li class="nenhum">Nenhum aniversário nos próximos 7 dias.</li>
+            }
+          </ul>
+        </section>
+
         <!-- Atrasados -->
         @if (d.atrasados.length) {
           <section class="cartao atrasados">

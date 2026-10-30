@@ -17,6 +17,12 @@
       <a [routerLink]="item.rota" routerLinkActive="ativo" class="link">
         <app-icone [nome]="item.icone" [tamanho]="19" />
         <span>{{ item.rotulo }}</span>
+        @if (item.rota === '/clientes' && aniversariosHoje()) {
+          <!-- [F6] aviso de aniversário -->
+          <span class="bolinha" [title]="aniversariosHoje() === 1 ? '1 aniversário hoje' : aniversariosHoje() + ' aniversários hoje'">
+            {{ aniversariosHoje() }}
+          </span>
+        }
       </a>
     }
   </nav>
@@ -44,6 +50,10 @@
 
 @if (edicao.processo(); as dados) {
   <app-processo-modal [dados]="dados" (fechar)="edicao.processo.set(null)" />
+}
+
+@if (edicao.cliente(); as dados) {
+  <app-cliente-modal [dados]="dados" (fechar)="edicao.cliente.set(null)" />
 }
 
 @if (confirmacao.pedido(); as pedido) {

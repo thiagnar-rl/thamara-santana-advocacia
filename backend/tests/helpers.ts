@@ -4,6 +4,7 @@
  */
 import '../src/config/env';
 import { criarBancoLocal, definirBanco } from '../src/config/database';
+import { ClienteModel, DadosCliente } from '../src/models/cliente.model';
 import { CompromissoModel, DadosCompromisso } from '../src/models/compromisso.model';
 import { DadosProcesso, ProcessoModel } from '../src/models/processo.model';
 import { UsuarioModel } from '../src/models/usuario.model';
@@ -74,6 +75,46 @@ export function criarProcesso(usuarioId: number, extra: Partial<DadosProcesso> =
     observacoes: null,
     ...extra,
   });
+}
+
+/** [F6] Dados completos de um cliente pessoa física válido (para os testes). */
+export function dadosCliente(extra: Partial<DadosCliente> = {}): DadosCliente {
+  return {
+    tipo: 'fisica',
+    nome: 'Maria Aparecida Souza',
+    nacionalidade: 'brasileira',
+    estado_civil: 'Casado(a)',
+    profissao: 'Professora',
+    rg: '12.345.678-9',
+    cpf: '529.982.247-25',
+    data_nascimento: '1985-11-02',
+    nome_fantasia: null,
+    cnpj: null,
+    inscricao_estadual: null,
+    inscricao_municipal: null,
+    ramo_atuacao: null,
+    representante_nome: null,
+    representante_cpf: null,
+    representante_cargo: null,
+    representante_nascimento: null,
+    cep: '01310-100',
+    logradouro: 'Avenida Paulista',
+    endereco_numero: '1000',
+    complemento: 'Apto 12',
+    bairro: 'Bela Vista',
+    cidade: 'São Paulo',
+    uf: 'SP',
+    telefone: '(11) 3333-4444',
+    celular: '(11) 98888-7777',
+    whatsapp: '(11) 98888-7777',
+    email: 'maria@exemplo.com',
+    observacoes: null,
+    ...extra,
+  };
+}
+
+export function criarCliente(usuarioId: number, extra: Partial<DadosCliente> = {}): Promise<number> {
+  return ClienteModel.criar(usuarioId, dadosCliente(extra));
 }
 
 export function criarCompromisso(usuarioId: number, extra: Partial<DadosCompromisso> = {}): Promise<number> {

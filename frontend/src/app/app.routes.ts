@@ -44,6 +44,18 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/processo-detalhe/processo-detalhe').then((m) => m.ProcessoDetalhePage),
       },
+      // [F6] Clientes — solicitado por Thamara Santana (30/10/2026)
+      {
+        path: 'clientes',
+        title: 'Clientes · Thamara Santana',
+        loadComponent: () => import('./pages/clientes/clientes').then((m) => m.ClientesPage),
+      },
+      {
+        path: 'clientes/:id',
+        title: 'Cliente · Thamara Santana',
+        loadComponent: () =>
+          import('./pages/cliente-detalhe/cliente-detalhe').then((m) => m.ClienteDetalhePage),
+      },
     ],
   },
   { path: '**', redirectTo: '' },

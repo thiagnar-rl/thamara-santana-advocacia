@@ -1,0 +1,231 @@
+/* [F6] Tela Clientes — solicitado por Thamara Santana (30/10/2026) */
+
+.aviso-aniversario {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border: 1px solid color-mix(in srgb, var(--dourado) 35%, white);
+  border-radius: var(--raio);
+  background: var(--dourado-suave);
+
+  .icone-bolo {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--superficie);
+    color: var(--dourado);
+  }
+
+  &.festa .icone-bolo {
+    background: var(--tinta);
+    color: var(--dourado-claro);
+  }
+
+  .texto {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+
+    strong {
+      color: var(--tinta);
+    }
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 30px;
+    padding: 0 6px 0 12px;
+    border-radius: 99px;
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    font-size: 0.84rem;
+
+    a:first-child {
+      font-weight: 600;
+      color: var(--tinta);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    small {
+      color: var(--dourado);
+      font-weight: 700;
+    }
+  }
+
+  .whats {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #e6f4ea;
+    color: #1e8e4e;
+  }
+}
+
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.busca {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+  max-width: 420px;
+
+  app-icone {
+    position: absolute;
+    left: 14px;
+    top: 13px;
+    color: var(--texto-3);
+    pointer-events: none;
+  }
+
+  .entrada {
+    padding-left: 42px;
+  }
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 16px;
+}
+
+.cliente {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    border-color 0.15s;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: var(--borda-forte);
+    box-shadow:
+      0 1px 2px rgba(29, 28, 33, 0.04),
+      0 14px 30px -10px rgba(29, 28, 33, 0.18);
+  }
+
+  .topo {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .avatar {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--tinta);
+    color: var(--dourado-claro);
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    &.pj {
+      border-radius: 12px;
+      background: var(--dourado-suave);
+      color: var(--dourado);
+    }
+  }
+
+  .nomes {
+    flex: 1;
+    min-width: 0;
+
+    h3 {
+      font-family: var(--fonte-titulo);
+      font-weight: 500;
+      font-size: 1.15rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    small {
+      font-size: 0.78rem;
+      color: var(--texto-3);
+    }
+  }
+
+  .contatos {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.84rem;
+    color: var(--texto-2);
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    app-icone {
+      color: var(--texto-3);
+    }
+  }
+
+  footer {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px dashed var(--borda);
+    font-size: 0.8rem;
+    color: var(--texto-2);
+  }
+
+  .processos {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    strong {
+      color: var(--tinta);
+    }
+
+    &.zero,
+    &.zero strong {
+      color: var(--texto-3);
+    }
+  }
+}
+
+.etiqueta.aniversario {
+  background: var(--dourado-suave);
+  color: #8a6a37;
+}
+
+.vazio-cartao {
+  grid-column: 1 / -1;
+}

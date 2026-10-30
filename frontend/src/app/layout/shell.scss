@@ -129,6 +129,25 @@
   }
 }
 
+.link {
+  position: relative;
+}
+
+/* [F6] Aniversários de hoje no menu "Clientes" */
+.bolinha {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  margin-left: auto;
+  padding: 0 5px;
+  border-radius: 99px;
+  background: var(--dourado-claro);
+  color: var(--tinta);
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
 .usuario {
   display: flex;
   align-items: center;
@@ -241,8 +260,15 @@
     flex-direction: column;
     gap: 2px;
     height: auto;
-    padding: 8px 12px;
+    padding: 8px 6px; /* [F6] cabe o 4º item (Clientes) em telas de 360px */
     font-size: 0.7rem;
+  }
+
+  .bolinha {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    margin: 0;
   }
 
   .novo {

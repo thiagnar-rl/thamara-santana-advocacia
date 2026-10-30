@@ -1,0 +1,238 @@
+/* [F6] Ficha do cliente — solicitado por Thamara Santana (30/10/2026) */
+
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--texto-2);
+
+  &:hover {
+    color: var(--tinta);
+  }
+}
+
+.cabecalho {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+
+  .identidade {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  .avatar {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--tinta);
+    color: var(--dourado-claro);
+    font-size: 1.1rem;
+    font-weight: 700;
+
+    &.pj {
+      border-radius: 16px;
+      background: var(--dourado-suave);
+      color: var(--dourado);
+    }
+  }
+
+  .linha {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .fantasia {
+    margin-top: 4px;
+    color: var(--texto-2);
+  }
+
+  .acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+.etiqueta.aniversario {
+  background: var(--dourado-suave);
+  color: #8a6a37;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 20px;
+  align-items: start;
+
+  @media (max-width: 960px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.coluna {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ficha {
+  padding: 20px;
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .numero {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--tinta);
+    color: var(--dourado-claro);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px 20px;
+    margin: 0;
+  }
+
+  dt,
+  .subtitulo,
+  .observacoes h3,
+  small {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--texto-3);
+  }
+
+  dd {
+    margin: 2px 0 0;
+    font-weight: 500;
+    color: var(--tinta);
+  }
+
+  .subtitulo {
+    margin: 20px 0 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--borda);
+  }
+}
+
+.contato {
+  .contatos {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      gap: 12px;
+    }
+
+    app-icone {
+      margin-top: 3px;
+      color: var(--dourado);
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      font-weight: 500;
+      color: var(--tinta);
+      overflow-wrap: anywhere;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .observacoes {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--borda);
+
+    h3 {
+      margin-bottom: 6px;
+    }
+
+    p {
+      white-space: pre-line;
+      font-size: 0.9rem;
+    }
+  }
+
+  .cadastro {
+    margin-top: 16px;
+    font-size: 0.78rem;
+    color: var(--texto-3);
+  }
+}
+
+.processos {
+  padding: 0 8px 10px;
+
+  .processo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    border-radius: var(--raio-sm);
+    transition: background 0.15s;
+
+    &:hover {
+      background: var(--superficie-2);
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .numero {
+      color: var(--tinta);
+      font-weight: 600;
+    }
+
+    small {
+      font-size: 0.8rem;
+      color: var(--texto-3);
+    }
+
+    .direita {
+      align-items: flex-end;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+  }
+}

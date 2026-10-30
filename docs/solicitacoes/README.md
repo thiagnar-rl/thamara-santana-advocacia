@@ -10,6 +10,9 @@ Cada pedido de cliente/usuário recebe um código e uma ficha nesta pasta.
 | [C1](C1-mascara-numero-processo.md) | 29/10/2026 | Mariana Couto | Máscara e validação do número do processo no padrão CNJ | `correcao/C1-mascara-numero-processo` | Publicada em 29/10/2026 (PR #1, v1.0.1) |
 | [C2](C2-confirmar-saida.md) | 30/10/2026 | Thamara Santana (cliente 3) — já apontado por Juliana Prado na planilha de 29/10 | Confirmar antes de sair do sistema | `correcao/C2-confirmar-saida` | Implementada — aguardando merge e publicação |
 | C3 | 29/10/2026 | Pedro Nogueira | Exigir senha mais forte no cadastro | — | Pendente |
+| [F6](F6-cadastro-de-clientes.md) | 30/10/2026 | Thamara Santana (cliente 3) | Cadastro individual de clientes (PF/PJ) com aviso de aniversário, integrado aos processos | `melhoria/F6-cadastro-de-clientes` | Implementada — aguardando merge e publicação |
+
+> F1 a F5 são as sugestões de funcionalidades da planilha de testes de 29/10 (anexos, lembretes, "esqueci minha senha", exportar PDF e tela de perfil), ainda não pedidas formalmente.
 
 ## Como registrar um novo pedido
 

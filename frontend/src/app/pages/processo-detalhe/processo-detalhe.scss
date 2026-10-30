@@ -48,6 +48,21 @@
   }
 }
 
+/* [F6] Atalho para a ficha do cliente */
+.ficha-cliente {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--dourado);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 320px;

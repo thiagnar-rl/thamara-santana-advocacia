@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { exigirLogin } from '../middlewares/auth.middleware';
 import authRoutes from './auth.routes';
+import clientesRoutes from './clientes.routes';
 import compromissosRoutes from './compromissos.routes';
 import dashboardRoutes from './dashboard.routes';
 import processosRoutes from './processos.routes';
@@ -19,5 +20,6 @@ api.use('/auth', authRoutes);
 api.use('/processos', exigirLogin, processosRoutes);
 api.use('/compromissos', exigirLogin, compromissosRoutes);
 api.use('/dashboard', exigirLogin, dashboardRoutes);
+api.use('/clientes', exigirLogin, clientesRoutes); // [F6]
 
 export default api;

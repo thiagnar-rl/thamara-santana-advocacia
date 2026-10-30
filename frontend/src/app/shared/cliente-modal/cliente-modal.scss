@@ -1,0 +1,116 @@
+/* [F6] Formulário de cliente — solicitado por Thamara Santana (30/10/2026) */
+
+.modal-cliente {
+  max-width: 760px;
+}
+
+.tipos-pessoa {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.opcao {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--borda);
+  border-radius: var(--raio-md);
+  background: var(--superficie);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  app-icone {
+    color: var(--texto-3);
+  }
+
+  span {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+  }
+
+  strong {
+    font-size: 0.92rem;
+    color: var(--tinta);
+  }
+
+  small {
+    font-size: 0.76rem;
+    color: var(--texto-3);
+  }
+
+  &:hover {
+    border-color: var(--borda-forte);
+  }
+
+  &.selecionado {
+    border-color: var(--dourado);
+    background: var(--dourado-suave);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--dourado) 15%, transparent);
+
+    app-icone {
+      color: var(--dourado);
+    }
+  }
+}
+
+.secao {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 18px;
+  border-top: 1px solid var(--borda);
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+  }
+
+  .numero {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--tinta);
+    color: var(--dourado-claro);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+}
+
+.subtitulo {
+  margin-top: 4px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-3);
+}
+
+.ajuda {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.link-acao {
+  margin-left: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--dourado);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}

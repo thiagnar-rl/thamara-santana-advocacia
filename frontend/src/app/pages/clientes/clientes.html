@@ -1,0 +1,124 @@
+<!-- [F6] Tela Clientes — solicitado por Thamara Santana (teste de 30/10/2026) -->
+<div class="pagina">
+  <header class="cabecalho-pagina">
+    <div>
+      <p class="sobretitulo">Relacionamento</p>
+      <h1>Clientes</h1>
+    </div>
+    <button type="button" class="botao" (click)="edicao.novoCliente()">
+      <app-icone nome="mais" [tamanho]="17" [traco]="2.2" /> Novo cliente
+    </button>
+  </header>
+
+  <!-- Aviso de aniversários -->
+  @if (aniversariantes().length) {
+    <section class="aviso-aniversario" [class.festa]="hoje().length">
+      <span class="icone-bolo"><app-icone nome="bolo" [tamanho]="22" /></span>
+      <div class="texto">
+        <strong>
+          @if (hoje().length) {
+            Hoje é aniversário de {{ hoje().length === 1 ? hoje()[0].nome : hoje().length + ' clientes' }}!
+          } @else {
+            Aniversários nos próximos 7 dias
+          }
+        </strong>
+        <div class="chips">
+          @for (c of aniversariantes(); track c.id) {
+            <span class="chip">
+              <a [routerLink]="['/clientes', c.id]">{{ c.nome }}</a>
+              <small>{{ textoAniversario(c.aniversario) }}</small>
+              @if (parabens(c); as link) {
+                <a class="whats" [href]="link" target="_blank" rel="noopener" title="Enviar parabéns pelo WhatsApp">
+                  <app-icone nome="whatsapp" [tamanho]="14" />
+                </a>
+              }
+            </span>
+          }
+        </div>
+      </div>
+    </section>
+  }
+
+  <div class="barra">
+    <label class="busca">
+      <app-icone nome="busca" [tamanho]="18" />
+      <input
+        class="entrada"
+        type="search"
+        placeholder="Buscar por nome, CPF/CNPJ, e-mail ou cidade..."
+        (input)="digitar($any($event.target).value)"
+      />
+    </label>
+
+    <div class="segmentos">
+      <button type="button" [class.ativo]="tipo() === null" (click)="tipo.set(null)">Todos</button>
+      @for (t of tipos; track t.valor) {
+        <button type="button" [class.ativo]="tipo() === t.valor" (click)="tipo.set(t.valor)">{{ t.rotulo }}</button>
+      }
+    </div>
+  </div>
+
+  @if (carregando() && !clientes().length) {
+    <div class="carregando">Carregando clientes...</div>
+  } @else {
+    <div class="grade">
+      @for (c of clientes(); track c.id) {
+        <a class="cartao cliente" [routerLink]="['/clientes', c.id]">
+          <div class="topo">
+            <span class="avatar" [class.pj]="c.tipo === 'juridica'">
+              @if (c.tipo === 'juridica') {
+                <app-icone nome="predio" [tamanho]="18" />
+              } @else {
+                {{ iniciais(c.nome) }}
+              }
+            </span>
+            <div class="nomes">
+              <h3>{{ c.nome }}</h3>
+              <small>
+                {{ c.tipo === 'juridica' ? 'Pessoa jurídica' : 'Pessoa física' }}
+                @if (documento(c); as doc) {
+                  · <span class="mono">{{ doc }}</span>
+                }
+              </small>
+            </div>
+            @if (aniversarioProximo(c.aniversario)) {
+              <span class="etiqueta aniversario" [title]="'Aniversário ' + textoAniversario(c.aniversario)">
+                <app-icone nome="bolo" [tamanho]="13" /> {{ textoAniversario(c.aniversario) }}
+              </span>
+            }
+          </div>
+
+          <div class="contatos">
+            @if (c.celular || c.whatsapp) {
+              <span><app-icone nome="telefone" [tamanho]="14" /> {{ c.celular || c.whatsapp }}</span>
+            }
+            @if (c.email) {
+              <span><app-icone nome="email" [tamanho]="14" /> {{ c.email }}</span>
+            }
+            @if (c.cidade) {
+              <span><app-icone nome="local" [tamanho]="14" /> {{ c.cidade }}{{ c.uf ? '/' + c.uf : '' }}</span>
+            }
+          </div>
+
+          <footer>
+            <span class="processos" [class.zero]="!c.total_processos">
+              <app-icone nome="pasta" [tamanho]="14" />
+              <strong>{{ c.total_processos }}</strong> {{ c.total_processos === 1 ? 'processo' : 'processos' }}
+            </span>
+          </footer>
+        </a>
+      } @empty {
+        <div class="cartao vazio-cartao">
+          <div class="vazio">
+            <span class="icone-vazio"><app-icone nome="clientes" [tamanho]="22" /></span>
+            <strong>Nenhum cliente encontrado</strong>
+            <p>Cadastre seus clientes para ligar processos, ter os contatos à mão e receber o aviso de aniversário.</p>
+            <button type="button" class="botao secundario pequeno" (click)="edicao.novoCliente()">
+              <app-icone nome="mais" [tamanho]="15" /> Cadastrar cliente
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
