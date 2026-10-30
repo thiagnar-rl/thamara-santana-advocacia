@@ -9,7 +9,7 @@
 | **Prioridade** | Alta (sem isso, quem esquece a senha perde o acesso) |
 | **Ramo no Git** | `melhoria/F3-esqueci-minha-senha` |
 | **Versão** | 1.2.0 |
-| **Status** | Implementada — aguardando merge e publicação |
+| **Status** | Publicada em 30/10/2026 (v1.2.0). Envio por Gmail configurado na Vercel e testado no site em 30/10/2026 |
 
 ---
 
