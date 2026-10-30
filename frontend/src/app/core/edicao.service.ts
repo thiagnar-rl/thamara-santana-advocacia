@@ -30,6 +30,11 @@ export class EdicaoService {
   readonly compromisso = signal<EdicaoCompromisso | null>(null);
   readonly processo = signal<EdicaoProcesso | null>(null);
 
+  /** Algum formulário está aberto? (usado na confirmação de saída — [C2]) */
+  formularioAberto(): boolean {
+    return !!(this.compromisso() || this.processo());
+  }
+
   novoCompromisso(opcoes: { processoId?: number | null; data?: string | null } = {}): void {
     this.compromisso.set({
       compromisso: null,

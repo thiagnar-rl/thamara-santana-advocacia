@@ -4,6 +4,7 @@ import { AuthService } from '../core/auth.service';
 import { ConfirmacaoService } from '../core/confirmacao.service';
 import { EdicaoService } from '../core/edicao.service';
 import { iniciais } from '../core/logica/painel.logica';
+import { perguntaSaida } from '../core/logica/sessao.logica';
 import { Confirmacao } from '../shared/confirmacao/confirmacao';
 import { CompromissoModal } from '../shared/compromisso-modal/compromisso-modal';
 import { Icone } from '../shared/icone/icone';
@@ -29,5 +30,18 @@ export class Shell {
   ];
 
   protected readonly iniciais = computed(() => iniciais(this.auth.usuario()?.nome));
+
+  /**
+   * [C2] Pede confirmação antes de sair do sistema.
+   * Solicitado por: Thamara Santana (teste de 30/10/2026) — antes, "Sair" desconectava na hora.
+   */
+  protected async sair(): Promise<void> {
+    const sim = await this.confirmacao.perguntar({
+      ...perguntaSaida(this.edicao.formularioAberto()),
+      icone: 'sair',
+      tom: 'neutro',
+    });
+    if (sim) this.auth.sair();
+  }
 
 }

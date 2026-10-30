@@ -11,7 +11,9 @@ import { Icone } from '../icone/icone';
     <div class="modal-fundo" (click)="pedido().responder(false)">
       <div class="modal confirmacao" role="alertdialog" aria-modal="true" (click)="$event.stopPropagation()">
         <div class="corpo">
-          <span class="icone-perigo"><app-icone nome="alerta" [tamanho]="22" /></span>
+          <span class="icone-perigo" [class.neutro]="pedido().tom === 'neutro'">
+            <app-icone [nome]="pedido().tom === 'neutro' ? pedido().icone : 'alerta'" [tamanho]="22" />
+          </span>
           <div>
             <h2>{{ pedido().titulo }}</h2>
             <p>{{ pedido().mensagem }}</p>
@@ -22,8 +24,13 @@ import { Icone } from '../icone/icone';
         </div>
         <footer class="modal-rodape">
           <button type="button" class="botao fantasma" (click)="pedido().responder(false)">Cancelar</button>
-          <button type="button" class="botao perigo-cheio" (click)="pedido().responder(true)">
-            <app-icone nome="lixeira" [tamanho]="16" /> {{ pedido().botao }}
+          <button
+            type="button"
+            class="botao"
+            [class.perigo-cheio]="pedido().tom === 'perigo'"
+            (click)="pedido().responder(true)"
+          >
+            <app-icone [nome]="pedido().icone" [tamanho]="16" /> {{ pedido().botao }}
           </button>
         </footer>
       </div>
@@ -47,6 +54,11 @@ import { Icone } from '../icone/icone';
       border-radius: 12px;
       background: var(--perigo-suave);
       color: var(--perigo);
+    }
+    /* [C2] Confirmação que não é exclusão (ex.: sair do sistema) */
+    .icone-perigo.neutro {
+      background: var(--dourado-suave);
+      color: var(--dourado);
     }
     h2 {
       font-family: var(--fonte-titulo);
