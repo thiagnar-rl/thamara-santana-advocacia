@@ -1,0 +1,3 @@
+# [F7] Site institucional: o sistema interno (/sistema) não deve aparecer no Google
+User-agent: *
+Disallow: /sistema

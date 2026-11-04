@@ -7,7 +7,24 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
-## [1.2.1] — em preparação
+## [1.3.0] — 04/11/2026
+
+### Adicionado
+
+- **[F7] Site institucional.** O endereço principal agora abre o site do escritório. O site tem:
+  - apresentação, **Sobre mim** (com foto), **Áreas de atuação** (Família, Patrimônio e Sucessões com a Dra. Thamara, e as demais áreas com a equipe) e **Como funciona o atendimento**;
+  - **Contato** com WhatsApp, Instagram, e-mail e mapa do Google;
+  - aba **Notícias** com publicações do escritório e notícias jurídicas atualizadas automaticamente (STJ, ConJur e Agência Brasil), separadas por área;
+  - menu **Publicações** no sistema, onde a advogada escreve os textos que aparecem no site.
+
+  O sistema continua igual, agora em **/sistema** (botão "Área restrita"). Os endereços antigos redirecionam sozinhos.
+  - **Solicitado por:** Thiago Rinaldi Luna (pedido de 04/11/2026)
+  - **Ramo:** `melhoria/F7-site-institucional`
+  - **Ficha:** [docs/solicitacoes/F7-site-institucional.md](docs/solicitacoes/F7-site-institucional.md)
+
+---
+
+## [1.2.1] — 30/10/2026
 
 ### Corrigido
 

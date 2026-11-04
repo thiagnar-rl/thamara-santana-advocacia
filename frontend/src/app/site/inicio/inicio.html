@@ -1,0 +1,213 @@
+<!-- [F7] Página inicial do site — solicitado por Thiago Rinaldi Luna (04/11/2026) -->
+
+<!-- ===== Apresentação ===== -->
+<section class="hero">
+  <div class="balanca" style="background-image: url(site/balanca.webp)" aria-hidden="true"></div>
+  <div class="s-container conteudo-hero">
+    <p class="s-sobretitulo">Advocacia e Consultoria Jurídica</p>
+    <h1>Decisões sobre família e patrimônio, tomadas com <em>clareza</em>.</h1>
+    <p class="chamada">
+      Orientação jurídica para que cada família entenda o que a lei permite, as consequências de cada escolha e o que
+      precisa ser formalizado.
+    </p>
+    <div class="acoes">
+      <a class="s-botao ouro" [href]="whatsapp" target="_blank" rel="noopener">
+        <app-icone nome="whatsapp" [tamanho]="19" [traco]="2" /> Conversar pelo WhatsApp
+      </a>
+      <a class="s-botao contorno-claro" routerLink="/" fragment="sobre">Conheça o escritório</a>
+    </div>
+  </div>
+
+  <div class="s-container faixa">
+    <span><app-icone nome="balanca" [tamanho]="18" /> {{ escritorio.advogada }} · {{ escritorio.oab }}</span>
+    <span><app-icone nome="local" [tamanho]="18" /> {{ contato.cidadesAtendidas.join(' · ') }}</span>
+    <span><app-icone nome="globo" [tamanho]="18" /> Atendimento presencial e online</span>
+  </div>
+</section>
+
+<!-- ===== Sobre mim ===== -->
+<section id="sobre" class="s-secao sobre">
+  <div class="s-container grade-sobre">
+    <figure class="foto">
+      <picture>
+        <source srcset="site/thamara.webp" type="image/webp" />
+        <img src="site/thamara.jpg" [alt]="'Foto de ' + escritorio.advogada" width="720" height="900" loading="lazy" />
+      </picture>
+      <figcaption>
+        <strong>Dra. Thamara Santana</strong>
+        <span>{{ escritorio.oab }}</span>
+      </figcaption>
+    </figure>
+
+    <div class="texto-sobre">
+      <p class="s-sobretitulo">Sobre mim</p>
+      <h2 class="s-titulo">Família, patrimônio e sucessões, com <em>escuta</em> e método.</h2>
+      @for (p of sobre.paragrafos; track $index) {
+        <p class="paragrafo">{{ p }}</p>
+      }
+
+      <ul class="principios">
+        @for (item of sobre.principios; track item.titulo) {
+          <li>
+            <span class="marcador"><app-icone nome="check" [tamanho]="16" [traco]="2.4" /></span>
+            <div>
+              <strong>{{ item.titulo }}</strong>
+              <span>{{ item.texto }}</span>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Áreas de atuação ===== -->
+<section id="atuacao" class="s-secao s-escuro atuacao">
+  <div class="s-container">
+    <p class="s-sobretitulo">Áreas de atuação</p>
+    <h2 class="s-titulo">Cada área com quem se <em>dedica</em> a ela.</h2>
+    <p class="s-intro">
+      A Dra. Thamara conduz pessoalmente os casos de Família, Patrimônio e Sucessões. As demais áreas são atendidas pela
+      equipe do escritório, com profissionais que acompanham aquele ramo do Direito no dia a dia.
+    </p>
+
+    <div class="grade-areas">
+      <article class="area principal">
+        <span class="selo">Atuação da Dra. Thamara</span>
+        <span class="icone-area"><app-icone [nome]="principal.icone" [tamanho]="26" /></span>
+        <h3>{{ principal.nome }}</h3>
+        <p>{{ principal.descricao }}</p>
+        <ul>
+          @for (item of principal.itens ?? []; track item) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+      </article>
+
+      <div class="equipe">
+        <p class="rotulo-equipe">Equipe do escritório</p>
+        @for (a of equipe; track a.chave) {
+          <article class="area">
+            <span class="icone-area"><app-icone [nome]="a.icone" [tamanho]="22" /></span>
+            <div>
+              <h3>{{ a.nome }}</h3>
+              <p>{{ a.descricao }}</p>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Como funciona o atendimento ===== -->
+<section class="s-secao etapas">
+  <div class="s-container">
+    <p class="s-sobretitulo">Atendimento</p>
+    <h2 class="s-titulo">Como funciona</h2>
+    <ol class="grade-etapas">
+      @for (e of etapas; track e.titulo; let i = $index) {
+        <li>
+          <span class="numero">0{{ i + 1 }}</span>
+          <h3>{{ e.titulo }}</h3>
+          <p>{{ e.texto }}</p>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- ===== Notícias ===== -->
+<section class="s-secao noticias">
+  <div class="s-container">
+    <div class="cabecalho-noticias">
+      <div>
+        <p class="s-sobretitulo">Notícias e atualizações</p>
+        <h2 class="s-titulo">O que muda no Direito, todos os dias</h2>
+      </div>
+      <a class="s-botao contorno" routerLink="/noticias">Ver todas <app-icone nome="seta" [tamanho]="17" /></a>
+    </div>
+
+    <div class="grade-noticias">
+      @if (carregando()) {
+        <div class="s-esqueleto"></div>
+        <div class="s-esqueleto"></div>
+        <div class="s-esqueleto"></div>
+      } @else {
+        @for (d of destaques(); track d.chave) {
+          <article class="s-cartao-noticia" [class.escritorio]="!!d.rota">
+            <div class="meta">
+              <span class="fonte">{{ d.origem }}</span>
+              <span>{{ d.quando }}</span>
+              @if (d.area) {
+                <span class="s-area">{{ d.area }}</span>
+              }
+            </div>
+            <h3>
+              @if (d.rota) {
+                <a class="cobre" [routerLink]="d.rota">{{ d.titulo }}</a>
+              } @else {
+                <a class="cobre" [href]="d.link" target="_blank" rel="noopener">{{ d.titulo }}</a>
+              }
+            </h3>
+            @if (d.resumo) {
+              <p>{{ d.resumo }}</p>
+            }
+            <span class="ler">
+              {{ d.rota ? 'Ler publicação' : 'Ler no site de origem' }}
+              <app-icone [nome]="d.rota ? 'seta' : 'externo'" [tamanho]="15" />
+            </span>
+          </article>
+        } @empty {
+          <p class="sem-noticias">As notícias do dia aparecem aqui em instantes. Enquanto isso, veja a aba <a routerLink="/noticias">Notícias</a>.</p>
+        }
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== Contato ===== -->
+<section id="contato" class="s-secao s-escuro contato">
+  <div class="s-container grade-contato">
+    <div>
+      <p class="s-sobretitulo">Contato</p>
+      <h2 class="s-titulo">Vamos <em>conversar</em> sobre o seu caso?</h2>
+      <p class="s-intro">
+        Atendimento presencial no escritório em Guarujá, com atuação em {{ cidadesVizinhas }}.
+        Também atendemos online, onde você estiver.
+      </p>
+
+      <div class="canais">
+        <a class="canal destaque" [href]="whatsapp" target="_blank" rel="noopener">
+          <span class="icone-canal"><app-icone nome="whatsapp" [tamanho]="22" /></span>
+          <span><small>WhatsApp</small>{{ contato.whatsappExibicao }}</span>
+        </a>
+        <a class="canal" [href]="instagram" target="_blank" rel="noopener">
+          <span class="icone-canal"><app-icone nome="instagram" [tamanho]="22" /></span>
+          <span><small>Instagram</small>{{ '@' + contato.instagram }}</span>
+        </a>
+        <a class="canal" [href]="'mailto:' + contato.email">
+          <span class="icone-canal"><app-icone nome="email" [tamanho]="22" /></span>
+          <span><small>E-mail</small>{{ contato.email }}</span>
+        </a>
+        <a class="canal" [href]="comoChegar" target="_blank" rel="noopener">
+          <span class="icone-canal"><app-icone nome="local" [tamanho]="22" /></span>
+          <span><small>Escritório</small>{{ contato.endereco.linha1 }} · {{ contato.endereco.linha2 }}</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="mapa">
+      <iframe
+        [src]="mapa"
+        title="Mapa com a localização do escritório em Guarujá"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      ></iframe>
+      <a class="s-botao ouro como-chegar" [href]="comoChegar" target="_blank" rel="noopener">
+        <app-icone nome="local" [tamanho]="18" /> Como chegar
+      </a>
+    </div>
+  </div>
+</section>

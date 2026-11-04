@@ -26,11 +26,13 @@ export class Shell {
   protected confirmacao = inject(ConfirmacaoService);
   private api = inject(ApiService);
 
-  protected readonly menu = [
-    { rota: '/inicio', rotulo: 'Início', icone: 'painel' },
-    { rota: '/agenda', rotulo: 'Agenda', icone: 'calendario' },
-    { rota: '/processos', rotulo: 'Processos', icone: 'pasta' },
-    { rota: '/clientes', rotulo: 'Clientes', icone: 'clientes' }, // [F6]
+  /** "curto" = nome usado na barra inferior do celular, quando o normal não cabe. */
+  protected readonly menu: { rota: string; rotulo: string; curto?: string; icone: string }[] = [
+    { rota: '/sistema/inicio', rotulo: 'Início', icone: 'painel' },
+    { rota: '/sistema/agenda', rotulo: 'Agenda', icone: 'calendario' },
+    { rota: '/sistema/processos', rotulo: 'Processos', icone: 'pasta' },
+    { rota: '/sistema/clientes', rotulo: 'Clientes', icone: 'clientes' }, // [F6]
+    { rota: '/sistema/publicacoes', rotulo: 'Publicações', curto: 'Notícias', icone: 'jornal' }, // [F7]
   ];
 
   /** [F6] Quantos clientes fazem aniversário hoje (bolinha dourada no menu "Clientes"). */

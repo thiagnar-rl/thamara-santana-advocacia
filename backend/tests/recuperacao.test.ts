@@ -76,7 +76,7 @@ describe('[F3] Recuperação de senha (sugestão: Thamara Santana)', () => {
       assert.equal(enviados.length, 1);
       assert.equal(enviados[0].para, 'ana@teste.com');
       assert.match(enviados[0].texto, /^Olá, Ana!/);
-      assert.match(enviados[0].texto, /https:\/\/meusite\.exemplo\/redefinir-senha\?token=/);
+      assert.match(enviados[0].texto, /https:\/\/meusite\.exemplo\/sistema\/redefinir-senha\?token=/);
     });
 
     it('esqueciSenha() não revela se o e-mail existe e recusa e-mail inválido', async () => {

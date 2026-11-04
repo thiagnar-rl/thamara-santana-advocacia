@@ -1,0 +1,93 @@
+<!-- [F7] Aba Notícias do site — solicitado por Thiago Rinaldi Luna (04/11/2026) -->
+<section class="topo-pagina s-escuro">
+  <div class="s-container">
+    <p class="s-sobretitulo">Notícias e atualizações</p>
+    <h1 class="s-titulo">O que muda no <em>Direito</em>, todos os dias</h1>
+    <p class="s-intro">
+      Publicações do escritório e as principais notícias de tribunais e veículos jurídicos, separadas pelas áreas em que
+      atuamos e atualizadas automaticamente ao longo do dia.
+    </p>
+  </div>
+</section>
+
+<div class="s-container corpo">
+  <nav class="filtros" aria-label="Filtrar por área">
+    <button type="button" [class.ativo]="area() === null" (click)="escolher(null)">Todas</button>
+    @for (a of areas(); track a.chave) {
+      <button type="button" [class.ativo]="area() === a.chave" (click)="escolher(a.chave)">{{ a.nome }}</button>
+    }
+  </nav>
+
+  @if (carregando() && !dados()) {
+    <div class="grade">
+      @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+        <div class="s-esqueleto"></div>
+      }
+    </div>
+  } @else if (falhou()) {
+    <div class="estado">
+      <app-icone nome="alerta" [tamanho]="28" />
+      <strong>Não foi possível carregar as notícias agora.</strong>
+      <button type="button" class="s-botao contorno" (click)="carregar()">Tentar de novo</button>
+    </div>
+  } @else if (dados(); as d) {
+    <div [class.atualizando]="carregando()">
+      @if (d.publicacoes.length) {
+        <h2 class="titulo-bloco"><span class="pino"></span> Do escritório</h2>
+        <div class="grade">
+          @for (p of d.publicacoes; track p.id) {
+            <article class="s-cartao-noticia escritorio">
+              <div class="meta">
+                <span class="fonte">Thamara Santana Advocacia</span>
+                <span>{{ dataCurta(p.publicado_em) }}</span>
+                @if (p.area_nome) {
+                  <span class="s-area">{{ p.area_nome }}</span>
+                }
+              </div>
+              <h3><a class="cobre" [routerLink]="['/noticias', p.id]">{{ p.titulo }}</a></h3>
+              <p>{{ p.resumo }}</p>
+              <span class="ler">Ler publicação <app-icone nome="seta" [tamanho]="15" /></span>
+            </article>
+          }
+        </div>
+      }
+
+      <div class="cabecalho-bloco">
+        <h2 class="titulo-bloco"><span class="pino"></span> Atualizações jurídicas</h2>
+        @if (d.atualizado_em) {
+          <span class="atualizado">Atualizado {{ tempoRelativo(d.atualizado_em) }}</span>
+        }
+      </div>
+
+      <div class="grade">
+        @for (n of d.noticias; track n.id) {
+          <article class="s-cartao-noticia">
+            <div class="meta">
+              <span class="fonte">{{ n.fonte }}</span>
+              <span>{{ tempoRelativo(n.publicado_em) }}</span>
+              @if (n.area_nome) {
+                <span class="s-area">{{ n.area_nome }}</span>
+              }
+            </div>
+            <h3><a class="cobre" [href]="n.link" target="_blank" rel="noopener">{{ n.titulo }}</a></h3>
+            @if (n.resumo) {
+              <p>{{ n.resumo }}</p>
+            }
+            <span class="ler">Ler no site de origem <app-icone nome="externo" [tamanho]="15" /></span>
+          </article>
+        } @empty {
+          <div class="estado">
+            <app-icone nome="jornal" [tamanho]="28" />
+            <strong>Nenhuma notícia {{ area() ? 'desta área' : '' }} por enquanto.</strong>
+            <p>As fontes são consultadas várias vezes ao dia. Volte mais tarde.</p>
+          </div>
+        }
+      </div>
+
+      <p class="nota">
+        As notícias jurídicas são reproduzidas por título e resumo, com link para a íntegra no site de origem (STJ, ConJur e
+        Agência Brasil). {{ aviso }}
+      </p>
+    </div>
+  }
+</div>

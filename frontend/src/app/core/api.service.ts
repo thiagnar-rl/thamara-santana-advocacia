@@ -8,9 +8,14 @@ import {
   CompromissoForm,
   Dashboard,
   FiltroCompromissos,
+  ListaPublicacoes,
+  NoticiasSite,
   Processo,
   ProcessoDetalhe,
   ProcessoForm,
+  Publicacao,
+  PublicacaoForm,
+  PublicacaoSite,
   StatusCompromisso,
   StatusProcesso,
   TipoPessoa,
@@ -117,5 +122,36 @@ export class ApiService {
 
   excluirCompromisso(id: number) {
     return this.http.delete<void>(`${this.base}/compromissos/${id}`);
+  }
+
+  /* ---------- [F7] Publicações do escritório (área restrita) ---------- */
+
+  listarPublicacoes() {
+    return this.http.get<ListaPublicacoes>(`${this.base}/publicacoes`);
+  }
+
+  criarPublicacao(dados: PublicacaoForm) {
+    return this.http.post<Publicacao>(`${this.base}/publicacoes`, dados);
+  }
+
+  atualizarPublicacao(id: number, dados: PublicacaoForm) {
+    return this.http.put<Publicacao>(`${this.base}/publicacoes/${id}`, dados);
+  }
+
+  excluirPublicacao(id: number) {
+    return this.http.delete<void>(`${this.base}/publicacoes/${id}`);
+  }
+
+  /* ---------- [F7] Site público (sem login) ---------- */
+
+  noticiasDoSite(area: string | null = null, limite?: number) {
+    let params = new HttpParams();
+    if (area) params = params.set('area', area);
+    if (limite) params = params.set('limite', String(limite));
+    return this.http.get<NoticiasSite>(`${this.base}/publico/noticias`, { params });
+  }
+
+  publicacaoDoSite(id: number) {
+    return this.http.get<PublicacaoSite>(`${this.base}/publico/publicacoes/${id}`);
   }
 }

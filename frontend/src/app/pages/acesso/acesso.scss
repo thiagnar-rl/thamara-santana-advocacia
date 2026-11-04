@@ -220,6 +220,20 @@
   }
 }
 
+/* [F7] Voltar ao site */
+.voltar-site {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  color: var(--texto-3);
+
+  &:hover {
+    color: var(--tinta);
+  }
+}
+
 /* ---------- Celular / tela estreita ---------- */
 
 @media (max-width: 900px) {

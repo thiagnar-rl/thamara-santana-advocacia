@@ -9,7 +9,7 @@
 | **Prioridade** | Média (segurança) |
 | **Ramo no Git** | `correcao/C3-senha-forte` |
 | **Versão** | 1.2.1 |
-| **Status** | Implementada — aguardando merge e publicação |
+| **Status** | Publicada em 30/10/2026 (v1.2.1). Conferida no site: `123456` é recusada no cadastro e no "Criar nova senha" |
 
 ---
 

@@ -1,5 +1,5 @@
 <aside class="lateral">
-  <a routerLink="/inicio" class="marca" title="Thamara Santana — Advocacia e Consultoria Jurídica">
+  <a routerLink="/sistema/inicio" class="marca" title="Thamara Santana — Advocacia e Consultoria Jurídica">
     <img class="logo" src="marca/monograma.png" alt="" />
     <span class="textos">
       <span class="nome">Thamara Santana</span>
@@ -16,8 +16,8 @@
     @for (item of menu; track item.rota) {
       <a [routerLink]="item.rota" routerLinkActive="ativo" class="link">
         <app-icone [nome]="item.icone" [tamanho]="19" />
-        <span>{{ item.rotulo }}</span>
-        @if (item.rota === '/clientes' && aniversariosHoje()) {
+        <span class="rotulo" [attr.data-curto]="item.curto ?? item.rotulo">{{ item.rotulo }}</span>
+        @if (item.rota === '/sistema/clientes' && aniversariosHoje()) {
           <!-- [F6] aviso de aniversário -->
           <span class="bolinha" [title]="aniversariosHoje() === 1 ? '1 aniversário hoje' : aniversariosHoje() + ' aniversários hoje'">
             {{ aniversariosHoje() }}
@@ -26,6 +26,12 @@
       </a>
     }
   </nav>
+
+  <!-- [F7] Atalho para o site público do escritório -->
+  <a routerLink="/" class="ver-site" target="_blank">
+    <app-icone nome="globo" [tamanho]="17" />
+    <span>Ver o site</span>
+  </a>
 
   <div class="usuario">
     <span class="avatar">{{ iniciais() }}</span>

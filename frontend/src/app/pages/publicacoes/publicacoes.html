@@ -1,0 +1,125 @@
+<!-- [F7] Publicações do escritório (aparecem na aba Notícias do site) — pedido de Thiago Rinaldi Luna (04/11/2026) -->
+<div class="pagina">
+  <header class="cabecalho-pagina">
+    <div>
+      <p class="sobretitulo">Site do escritório</p>
+      <h1>Publicações</h1>
+      <p class="suave subtitulo">Escreva notícias e artigos. Os publicados aparecem na aba Notícias do site.</p>
+    </div>
+    <div class="acoes-topo">
+      <a class="botao secundario" routerLink="/noticias" target="_blank"><app-icone nome="globo" [tamanho]="17" /> Ver no site</a>
+      <button type="button" class="botao" (click)="nova()"><app-icone nome="mais" [tamanho]="17" [traco]="2.2" /> Nova publicação</button>
+    </div>
+  </header>
+
+  @if (!apareceNoSite()) {
+    <p class="mensagem-erro alerta-site">
+      <app-icone nome="alerta" [tamanho]="18" />
+      Esta conta não está autorizada a publicar no site do escritório. Os textos ficam salvos aqui, mas não aparecem
+      para o público.
+    </p>
+  }
+
+  @if (carregando()) {
+    <p class="carregando">Carregando...</p>
+  } @else {
+    <div class="lista">
+      @for (p of lista(); track p.id) {
+        <article class="cartao item">
+          <div class="info">
+            <div class="etiquetas">
+              <span class="etiqueta" [class.ativo]="p.publicada">{{ p.publicada ? 'Publicada' : 'Rascunho' }}</span>
+              @if (p.area_nome) {
+                <span class="area">{{ p.area_nome }}</span>
+              }
+              <span class="data">
+                {{ p.publicada ? 'Publicada em ' + dataCurta(p.publicado_em) : 'Editada em ' + dataCurta(p.atualizado_em) }}
+              </span>
+            </div>
+            <h2>{{ p.titulo }}</h2>
+            <p class="suave">{{ p.resumo || p.conteudo }}</p>
+          </div>
+          <div class="botoes">
+            @if (p.publicada) {
+              <a class="botao-icone" [routerLink]="['/noticias', p.id]" target="_blank" title="Ver no site">
+                <app-icone nome="externo" [tamanho]="17" />
+              </a>
+            }
+            <button type="button" class="botao-icone" title="Editar" (click)="editar(p)"><app-icone nome="editar" [tamanho]="17" /></button>
+            <button type="button" class="botao-icone perigo" title="Excluir" (click)="excluir(p)"><app-icone nome="lixeira" [tamanho]="17" /></button>
+          </div>
+        </article>
+      } @empty {
+        <div class="cartao vazio">
+          <span class="icone-vazio"><app-icone nome="jornal" [tamanho]="24" /></span>
+          <strong>Nenhuma publicação ainda</strong>
+          <p>Compartilhe orientações e novidades com quem visita o site. As notícias dos tribunais já aparecem lá automaticamente.</p>
+          <button type="button" class="botao" (click)="nova()">Escrever a primeira</button>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+@if (editando(); as e) {
+  <div class="modal-fundo" (click)="fecharEditor()">
+    <form class="modal editor" (click)="$event.stopPropagation()" (ngSubmit)="salvar()" novalidate>
+      <div class="modal-cabecalho">
+        <div>
+          <p class="sobretitulo">Publicação</p>
+          <h2>{{ e.id ? 'Editar publicação' : 'Nova publicação' }}</h2>
+        </div>
+        <button type="button" class="botao-icone" title="Fechar" (click)="fecharEditor()"><app-icone nome="fechar" /></button>
+      </div>
+
+      <div class="modal-corpo">
+        @if (erro(); as mensagem) {
+          <p class="mensagem-erro"><app-icone nome="alerta" [tamanho]="17" /> {{ mensagem }}</p>
+        }
+
+        <div class="campo">
+          <label for="pub-titulo">Título</label>
+          <input id="pub-titulo" class="entrada" name="titulo" [(ngModel)]="e.dados.titulo" maxlength="150" placeholder="Ex.: Inventário extrajudicial: quando é possível?" />
+          <span class="ajuda" [class.excedeu]="contar(e.dados.titulo, 150).excedeu">{{ contar(e.dados.titulo, 150).texto }}</span>
+        </div>
+
+        <div class="campo">
+          <label for="pub-area">Área de atuação</label>
+          <select id="pub-area" class="entrada" name="area" [(ngModel)]="e.dados.area">
+            <option [ngValue]="null">Geral (sem área)</option>
+            @for (a of areas; track a.chave) {
+              <option [ngValue]="a.chave">{{ a.nome }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="pub-resumo">Resumo <small class="suave">(opcional — aparece no cartão da notícia)</small></label>
+          <textarea id="pub-resumo" class="entrada" name="resumo" rows="2" [(ngModel)]="e.dados.resumo" maxlength="300"></textarea>
+          <span class="ajuda" [class.excedeu]="contar(e.dados.resumo, 300).excedeu">{{ contar(e.dados.resumo, 300).texto }}</span>
+        </div>
+
+        <div class="campo">
+          <label for="pub-texto">Texto</label>
+          <textarea id="pub-texto" class="entrada texto-longo" name="conteudo" [(ngModel)]="e.dados.conteudo" placeholder="Deixe uma linha em branco para começar um novo parágrafo."></textarea>
+          <span class="ajuda" [class.excedeu]="contar(e.dados.conteudo, 20000).excedeu">{{ contar(e.dados.conteudo, 20000).texto }}</span>
+        </div>
+
+        <label class="publicar">
+          <input type="checkbox" name="publicada" [(ngModel)]="e.dados.publicada" />
+          <span>
+            <strong>Publicar no site</strong>
+            <small class="suave">Desmarcado, fica como rascunho — só você vê.</small>
+          </span>
+        </label>
+      </div>
+
+      <div class="modal-rodape">
+        <button type="button" class="botao fantasma" (click)="fecharEditor()">Cancelar</button>
+        <button type="submit" class="botao" [disabled]="salvando()">
+          {{ salvando() ? 'Salvando...' : e.dados.publicada ? 'Salvar e publicar' : 'Salvar rascunho' }}
+        </button>
+      </div>
+    </form>
+  </div>
+}

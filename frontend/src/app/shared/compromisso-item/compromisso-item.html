@@ -44,7 +44,7 @@
       @if (mostrarProcesso() && c.processo_id) {
         <a
           class="processo"
-          [routerLink]="['/processos', c.processo_id]"
+          [routerLink]="['/sistema/processos', c.processo_id]"
           (click)="$event.stopPropagation()"
         >
           <app-icone nome="pasta" [tamanho]="14" />

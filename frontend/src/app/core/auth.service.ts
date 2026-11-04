@@ -50,7 +50,7 @@ export class AuthService {
     localStorage.removeItem(CHAVE_TOKEN);
     localStorage.removeItem(CHAVE_USUARIO);
     this.usuario.set(null);
-    this.router.navigate(['/entrar']);
+    this.router.navigate(['/sistema/entrar']);
   }
 
   private salvarSessao(r: RespostaAuth): void {

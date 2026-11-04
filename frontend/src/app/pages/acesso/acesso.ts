@@ -42,7 +42,7 @@ export class AcessoPage {
       : this.auth.entrar(this.email, this.senha);
 
     requisicao.subscribe({
-      next: () => this.router.navigate(['/inicio']),
+      next: () => this.router.navigate(['/sistema/inicio']),
       error: (e) => {
         this.erro.set(mensagemDeErro(e));
         this.enviando.set(false);

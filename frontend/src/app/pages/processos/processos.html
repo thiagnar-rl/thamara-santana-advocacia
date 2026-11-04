@@ -35,7 +35,7 @@
   } @else {
     <div class="grade">
       @for (p of processos(); track p.id) {
-        <a class="cartao processo" [routerLink]="['/processos', p.id]">
+        <a class="cartao processo" [routerLink]="['/sistema/processos', p.id]">
           <div class="topo">
             <span class="mono numero">{{ p.numero }}</span>
             <span class="etiqueta {{ p.status }}">{{ rotuloStatus(p.status) }}</span>

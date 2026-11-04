@@ -142,7 +142,7 @@ export class ProcessoModal implements OnInit {
         this.avisos.sucesso(atual ? 'Processo atualizado' : 'Processo cadastrado');
         this.api.avisarMudanca();
         this.fechar.emit();
-        if (!atual) this.router.navigate(['/processos', salvo.id]);
+        if (!atual) this.router.navigate(['/sistema/processos', salvo.id]);
       },
       error: (e) => {
         this.erro.set(mensagemDeErro(e));

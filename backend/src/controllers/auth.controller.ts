@@ -72,7 +72,8 @@ export const AuthController = {
     if (usuario) {
       const token = await RecuperacaoModel.criar(usuario);
       if (token) {
-        const link = `${enderecoDoSite()}/redefinir-senha?token=${encodeURIComponent(token)}`;
+        // [F7] O sistema agora fica em /sistema (o endereço antigo continua funcionando)
+        const link = `${enderecoDoSite()}/sistema/redefinir-senha?token=${encodeURIComponent(token)}`;
         try {
           await enviarEmail(emailRecuperacaoView(usuario.nome, usuario.email, link));
         } catch (erro) {

@@ -216,6 +216,25 @@
   min-width: 0;
 }
 
+/* [F7] Atalho "Ver o site" */
+.ver-site {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+  margin-top: 10px;
+  padding: 0 12px;
+  border: 1px dashed rgba(214, 180, 108, 0.3);
+  border-radius: 10px;
+  font-size: 0.86rem;
+  color: var(--dourado-claro);
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgba(214, 180, 108, 0.08);
+  }
+}
+
 /* ---------- Celular: menu vira barra inferior ---------- */
 @media (max-width: 720px) {
   :host {
@@ -238,6 +257,7 @@
   }
 
   .marca,
+  .ver-site,
   .usuario .dados,
   .usuario .avatar {
     display: none;
@@ -260,8 +280,22 @@
     flex-direction: column;
     gap: 2px;
     height: auto;
-    padding: 8px 6px; /* [F6] cabe o 4º item (Clientes) em telas de 360px */
-    font-size: 0.7rem;
+    flex: 1;
+    min-width: 0;
+    padding: 8px 2px; /* [F7] cabem os 5 itens em telas de 360px */
+    font-size: 0.64rem;
+    border-radius: 10px;
+
+    /* No celular mostra o nome curto (ex.: "Notícias" em vez de "Publicações") */
+    .rotulo {
+      font-size: 0;
+
+      &::after {
+        content: attr(data-curto);
+        font-size: 0.64rem;
+        white-space: nowrap;
+      }
+    }
   }
 
   .bolinha {

@@ -120,6 +120,42 @@ export const ESQUEMA = `
   );
   CREATE INDEX IF NOT EXISTS idx_recuperacoes_usuario ON recuperacoes_senha (usuario_id, criado_em);
 
+  -- [F7] Site institucional — solicitado por Thiago Rinaldi Luna (04/11/2026).
+  -- Publicações (notícias e artigos) que a advogada escreve pelo sistema e aparecem no site.
+  CREATE TABLE IF NOT EXISTS publicacoes (
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario_id     INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    titulo         TEXT    NOT NULL CHECK (length(trim(titulo)) BETWEEN 5 AND 150),
+    resumo         TEXT,
+    conteudo       TEXT    NOT NULL,
+    area           TEXT,                                -- área de atuação (opcional)
+    publicada      INTEGER NOT NULL DEFAULT 0 CHECK (publicada IN (0, 1)),
+    publicado_em   TEXT,                                -- ISO 8601 (UTC), na primeira publicação
+    criado_em      TEXT    NOT NULL,                    -- ISO 8601 (UTC)
+    atualizado_em  TEXT    NOT NULL                     -- ISO 8601 (UTC)
+  );
+  CREATE INDEX IF NOT EXISTS idx_publicacoes_site ON publicacoes (publicada, publicado_em);
+  CREATE INDEX IF NOT EXISTS idx_publicacoes_usuario ON publicacoes (usuario_id, atualizado_em);
+
+  -- [F7] Notícias jurídicas coletadas automaticamente das fontes (STJ, ConJur...) — guardadas em cache.
+  CREATE TABLE IF NOT EXISTS noticias_externas (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    fonte         TEXT    NOT NULL,                     -- sigla da fonte (ex.: STJ)
+    titulo        TEXT    NOT NULL,
+    link          TEXT    NOT NULL UNIQUE,
+    resumo        TEXT,
+    area          TEXT,                                 -- área de atuação identificada (ou NULL)
+    publicado_em  TEXT    NOT NULL,                     -- ISO 8601 (UTC)
+    coletado_em   TEXT    NOT NULL                      -- ISO 8601 (UTC)
+  );
+  CREATE INDEX IF NOT EXISTS idx_noticias_data ON noticias_externas (publicado_em);
+
+  -- [F7] Pequenos registros do site (ex.: quando as notícias foram atualizadas pela última vez).
+  CREATE TABLE IF NOT EXISTS site_metadados (
+    chave  TEXT PRIMARY KEY,
+    valor  TEXT
+  );
+
   -- Um mesmo usuário não pode cadastrar o mesmo número de processo duas vezes
   CREATE UNIQUE INDEX IF NOT EXISTS uq_processos_usuario_numero ON processos (usuario_id, numero);
 

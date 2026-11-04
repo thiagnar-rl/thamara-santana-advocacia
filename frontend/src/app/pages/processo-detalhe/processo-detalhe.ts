@@ -50,7 +50,7 @@ export class ProcessoDetalhePage {
       next: (d) => this.detalhe.set(d),
       error: (e) => {
         if (e instanceof HttpErrorResponse && e.status === 404) {
-          this.router.navigate(['/processos']);
+          this.router.navigate(['/sistema/processos']);
           return;
         }
         this.avisos.erro(mensagemDeErro(e));

@@ -1,0 +1,54 @@
+<!-- [F7] Publicação do escritório — solicitado por Thiago Rinaldi Luna (04/11/2026) -->
+<div class="s-container leitura">
+  <a routerLink="/noticias" class="voltar"><app-icone nome="voltar" [tamanho]="17" /> Todas as notícias</a>
+
+  @switch (estado()) {
+    @case ('carregando') {
+      <div class="s-esqueleto alto"></div>
+    }
+    @case ('nao-encontrada') {
+      <div class="estado">
+        <app-icone nome="jornal" [tamanho]="30" />
+        <strong>Esta publicação não está disponível.</strong>
+        <a class="s-botao contorno" routerLink="/noticias">Ver outras notícias</a>
+      </div>
+    }
+    @case ('ok') {
+      @if (publicacao(); as p) {
+        <article>
+          <header>
+            @if (p.area_nome) {
+              <span class="s-area">{{ p.area_nome }}</span>
+            }
+            <h1>{{ p.titulo }}</h1>
+            <p class="meta">
+              Por <strong>Dra. Thamara Santana</strong> · {{ data() }} · {{ leitura() }}
+            </p>
+          </header>
+
+          <div class="texto">
+            @for (paragrafo of paragrafos(); track $index) {
+              <p>{{ paragrafo }}</p>
+            }
+          </div>
+        </article>
+
+        <aside class="autora">
+          <picture>
+            <source srcset="site/thamara.webp" type="image/webp" />
+            <img src="site/thamara.jpg" alt="" width="72" height="90" loading="lazy" />
+          </picture>
+          <div>
+            <strong>{{ escritorio.advogada }}</strong>
+            <span>Advogada · {{ escritorio.oab }}</span>
+          </div>
+          <a class="s-botao escuro" [href]="whatsapp" target="_blank" rel="noopener">
+            <app-icone nome="whatsapp" [tamanho]="18" /> Falar com o escritório
+          </a>
+        </aside>
+
+        <p class="aviso">{{ aviso }}</p>
+      }
+    }
+  }
+</div>

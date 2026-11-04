@@ -1,0 +1,118 @@
+/* [F7] Aba Notícias do site institucional */
+
+.topo-pagina {
+  padding: 88px 0 72px;
+
+  @media (max-width: 640px) {
+    padding: 64px 0 52px;
+  }
+}
+
+.corpo {
+  padding-top: 40px;
+  padding-bottom: 96px;
+}
+
+.filtros {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 36px;
+  scrollbar-width: thin;
+
+  button {
+    flex-shrink: 0;
+    height: 40px;
+    padding: 0 18px;
+    border: 1px solid var(--borda-forte);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--texto-2);
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: var(--tinta);
+      color: var(--tinta);
+    }
+
+    &.ativo {
+      border-color: var(--tinta);
+      background: var(--tinta);
+      color: #fff;
+    }
+  }
+}
+
+.cabecalho-bloco {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.titulo-bloco {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0 22px;
+  font-family: var(--fonte-titulo);
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.pino {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ouro-gradiente);
+  box-shadow: 0 0 0 5px var(--dourado-suave);
+}
+
+.atualizado {
+  font-size: 0.84rem;
+  color: var(--texto-3);
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 22px;
+  margin-bottom: 48px;
+
+  @media (max-width: 400px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.atualizando {
+  opacity: 0.55;
+  transition: opacity 0.2s;
+}
+
+.estado {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 56px 20px;
+  border: 1px dashed var(--borda-forte);
+  border-radius: 18px;
+  text-align: center;
+  color: var(--texto-3);
+
+  strong {
+    color: var(--texto);
+  }
+}
+
+.nota {
+  max-width: 760px;
+  font-size: 0.82rem;
+  color: var(--texto-3);
+}

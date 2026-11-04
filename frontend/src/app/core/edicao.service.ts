@@ -87,7 +87,7 @@ export class EdicaoService {
     this.api.excluirCliente(c.id).subscribe({
       next: () => {
         this.avisos.sucesso('Cliente excluído');
-        this.router.navigate(['/clientes']).then(() => this.api.avisarMudanca());
+        this.router.navigate(['/sistema/clientes']).then(() => this.api.avisarMudanca());
       },
       error: (e) => this.avisos.erro(mensagemDeErro(e)),
     });
@@ -134,7 +134,7 @@ export class EdicaoService {
     this.api.excluirProcesso(p.id).subscribe({
       next: () => {
         this.avisos.sucesso('Processo excluído');
-        this.router.navigate(['/processos']).then(() => this.api.avisarMudanca());
+        this.router.navigate(['/sistema/processos']).then(() => this.api.avisarMudanca());
       },
       error: (e) => this.avisos.erro(mensagemDeErro(e)),
     });
