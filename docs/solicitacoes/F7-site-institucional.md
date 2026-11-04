@@ -8,8 +8,8 @@
 | **Origem** | Pedido de 04/11/2026, com timbre, logo, foto e dados de contato enviados por ele |
 | **Prioridade** | Alta |
 | **Ramo no Git** | `melhoria/F7-site-institucional` |
-| **Versão** | 1.3.0 |
-| **Status** | Pronta para publicar |
+| **Versão** | 1.3.0, com ajuste na 1.3.1 |
+| **Status** | Publicada em 04/11/2026 (v1.3.0). Ajuste das fontes de notícias na v1.3.1 |
 
 ---
 
@@ -131,3 +131,14 @@ No GitHub, abra o merge do ramo `melhoria/F7-site-institucional` e use **Revert*
 1. No **registro.br**, compre `thamarasantana.adv.br` no CPF da Dra. Thamara. O `.adv.br` exige inscrição na OAB e custa cerca de R$ 40 por ano.
 2. Na Vercel, abra **Settings → Domains → Add** e digite o domínio. A Vercel mostra os registros de DNS que devem ser criados no registro.br.
 3. Na Vercel, ajuste `APP_URL=https://thamarasantana.adv.br` e faça um **Redeploy**, para que o link do e-mail "Esqueci minha senha" use o domínio novo.
+
+## 7. Ajuste depois de publicar (v1.3.1)
+
+**Problema visto no site publicado:** o STJ respondeu no teste local, mas na Vercel deu tempo esgotado. Os servidores da Vercel ficam fora do Brasil e o site do STJ não responde a eles. Com isso, o site no ar mostrava só 4 notícias, que vinham do ConJur e da Agência Brasil.
+
+**Correção:**
+- Entraram buscas por área no **Google Notícias** (Família, Previdenciário, Trabalhista, Consumidor e Criminal). Elas consideram só os últimos 3 dias e só sites jurídicos e oficiais de confiança: STJ, STF, TST, CNJ, ConJur, Migalhas, IBDFAM, JOTA, Agência Brasil e gov.br.
+- Cada notícia mostra o **site de origem** (ex.: "IBDFAM", "Migalhas") e o link leva à matéria original.
+- O feed direto do STJ continua na lista. Quando ele responder, entra também.
+- Quando a lista de fontes muda, o site busca as notícias na hora, sem esperar as 3 horas.
+- **Ramo:** `correcao/F7-mais-fontes-de-noticias`. **Testes:** 150 (110 backend + 40 frontend).

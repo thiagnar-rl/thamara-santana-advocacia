@@ -2,6 +2,7 @@ import { beforeEach, describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { criarUsuario, novoBanco, requisicao, resposta } from './helpers';
 import { FONTES_NOTICIAS } from '../src/config/site';
+import { executar } from '../src/config/database';
 import { Buscador, classificarArea, NoticiaModel, precisaColetar } from '../src/models/noticia.model';
 import { PublicacaoModel } from '../src/models/publicacao.model';
 import { SiteController } from '../src/controllers/site.controller';
@@ -55,11 +56,13 @@ describe('[F7] Notícias jurídicas automáticas', () => {
     assert.match(situacao[0].erro!, /503/);
     assert.ok(situacao.slice(1).every((s) => s.ok && s.itens === 3));
 
-    // Só aparecem no site as que combinam com alguma área (2 por fonte que respondeu)
-    const lista = await NoticiaModel.listar();
-    assert.equal(lista.length, (FONTES_NOTICIAS.length - 1) * 2);
-    assert.equal(lista[0].area, 'consumidor'); // a mais recente primeiro
-    assert.equal((await NoticiaModel.listar({ area: 'familia' })).length, FONTES_NOTICIAS.length - 1);
+    // Só aparecem no site as que combinam com alguma área: 2 por feed direto que respondeu;
+    // nas buscas por área, a notícia sem área identificada fica com a área da busca (3 cada)
+    const respondeu = FONTES_NOTICIAS.slice(1);
+    const esperado = respondeu.reduce((total, f) => total + (f.area ? 3 : 2), 0);
+    const lista = await NoticiaModel.listar({ limite: 60 });
+    assert.equal(lista.length, esperado);
+    assert.equal((await NoticiaModel.listar({ area: 'familia', limite: 60 })).length, respondeu.length + 1); // +1: a sem área da busca de Família
 
     // Salvar os mesmos links de novo não duplica
     const novos = await NoticiaModel.salvarItens('X', [{ titulo: 'Divórcio', link: 'https://ex.com/2/1', resumo: null, data: null }], new Date());
@@ -73,6 +76,11 @@ describe('[F7] Notícias jurídicas automáticas', () => {
     assert.equal(chamadas.length, FONTES_NOTICIAS.length); // a segunda chamada não buscou
     await NoticiaModel.atualizarSePreciso(buscadorFalso(chamadas), new Date('2026-11-04T15:30:00Z'));
     assert.equal(chamadas.length, FONTES_NOTICIAS.length * 2);
+
+    // Se a lista de fontes mudar, busca na hora (sem esperar as 3 horas)
+    await executar("UPDATE site_metadados SET valor = '[]' WHERE chave = 'noticias.situacao_fontes'");
+    await NoticiaModel.atualizarSePreciso(buscadorFalso(chamadas), new Date('2026-11-04T15:31:00Z'));
+    assert.equal(chamadas.length, FONTES_NOTICIAS.length * 3);
   });
 
   it('SiteController: notícias e publicações públicas, sem expor usuario_id; rascunho não aparece', async () => {

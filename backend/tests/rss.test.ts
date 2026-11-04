@@ -25,6 +25,20 @@ describe('[F7] Leitura de feeds RSS/Atom', () => {
     assert.equal(itens[0].data, '2026-11-03T17:30:00.000Z');
   });
 
+  it('lerFeed() no formato do Google Notícias: separa o site de origem e descarta resumo repetido', () => {
+    const google = `<rss><channel><item>
+      <title>Herança digital entra na pauta do STJ - IBDFAM</title>
+      <link>https://news.google.com/rss/articles/abc?oc=5</link>
+      <pubDate>Wed, 04 Nov 2026 15:48:04 GMT</pubDate>
+      <description>&lt;a href="https://news.google.com/rss/articles/abc"&gt;Herança digital entra na pauta do STJ&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;font color="#6f6f6f"&gt;IBDFAM&lt;/font&gt;</description>
+      <source url="https://ibdfam.org.br">IBDFAM</source>
+    </item></channel></rss>`;
+    const [item] = lerFeed(google);
+    assert.equal(item.titulo, 'Herança digital entra na pauta do STJ');
+    assert.equal(item.fonte, 'IBDFAM');
+    assert.equal(item.resumo, null);
+  });
+
   it('lerFeed() também entende o formato Atom', () => {
     const atom = `<feed xmlns="http://www.w3.org/2005/Atom">
       <entry><title type="html">Nova regra do INSS</title>
