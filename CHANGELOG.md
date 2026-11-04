@@ -7,6 +7,17 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
+## [1.3.2] — 04/11/2026
+
+### Corrigido
+
+- **[F7] Notícias repetidas e nomes de sites padronizados.** Depois da v1.3.1, a mesma matéria às vezes aparecia duas vezes: uma vinda do feed do site e outra da busca do Google. Agora aparece uma vez só. Os nomes dos sites também ficaram padronizados ("Consultor Jurídico" → ConJur, "stf noticias" → STF).
+  - **Solicitado por:** Thiago Rinaldi Luna (ajuste do pedido F7, conferido no site publicado em 04/11/2026)
+  - **Ramo:** `correcao/F7-noticias-repetidas`
+  - **Ficha:** [docs/solicitacoes/F7-site-institucional.md](docs/solicitacoes/F7-site-institucional.md) (seção 8)
+
+---
+
 ## [1.3.1] — 04/11/2026
 
 ### Corrigido

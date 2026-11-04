@@ -53,6 +53,42 @@ export type Buscador = (url: string, opcoes: { signal: AbortSignal; headers: Rec
 const CHAVE_ULTIMA_COLETA = 'noticias.ultima_coleta';
 const CHAVE_SITUACAO = 'noticias.situacao_fontes';
 
+/** Nomes padronizados dos sites (o Google Notícias às vezes escreve "Consultor Jurídico", "stf noticias"...). */
+const NOMES_DE_FONTES: Record<string, string> = {
+  'consultor juridico': 'ConJur',
+  conjur: 'ConJur',
+  'stf noticias': 'STF',
+  stf: 'STF',
+  'portal cnj': 'CNJ',
+  cnj: 'CNJ',
+  stj: 'STJ',
+  tst: 'TST',
+  migalhas: 'Migalhas',
+  ibdfam: 'IBDFAM',
+  jota: 'JOTA',
+  'agencia brasil': 'Agência Brasil',
+};
+
+export function nomeDaFonte(fonte: string): string {
+  return NOMES_DE_FONTES[normalizar(fonte).trim()] ?? fonte;
+}
+
+/**
+ * Tira notícias repetidas: a mesma matéria pode chegar pelo feed do site e pela busca do Google
+ * (com títulos um pouco diferentes). Repetida = mesmo site e mesmo horário, ou mesmo começo de título.
+ */
+export function semRepetidas<T extends { fonte: string; titulo: string; publicado_em: string }>(lista: T[]): T[] {
+  const vistos = new Set<string>();
+  return lista.filter((n) => {
+    const porHorario = `${nomeDaFonte(n.fonte)}|${n.publicado_em}`;
+    const porTitulo = normalizar(n.titulo).replace(/[^a-z0-9]+/g, ' ').trim().slice(0, 45);
+    if (vistos.has(porHorario) || vistos.has(porTitulo)) return false;
+    vistos.add(porHorario);
+    vistos.add(porTitulo);
+    return true;
+  });
+}
+
 /** Descobre a área de atuação de uma notícia pelo título e resumo (ou null se nenhuma combinar). */
 export function classificarArea(titulo: string, resumo: string | null = null): string | null {
   const texto = normalizar(`${titulo} ${resumo ?? ''}`);
@@ -180,18 +216,19 @@ export const NoticiaModel = {
   },
 
   /** Notícias que aparecem no site: só as de alguma área de atuação, das mais novas para as mais antigas. */
-  listar(filtro: { area?: string | null; limite?: number } = {}): Promise<NoticiaExterna[]> {
+  async listar(filtro: { area?: string | null; limite?: number } = {}): Promise<NoticiaExterna[]> {
     const limite = Math.min(Math.max(filtro.limite ?? 30, 1), 60);
-    if (filtro.area) {
-      return todos<NoticiaExterna>(
-        'SELECT * FROM noticias_externas WHERE area = ? ORDER BY publicado_em DESC, id DESC LIMIT ?',
-        filtro.area,
-        limite,
-      );
-    }
-    return todos<NoticiaExterna>(
-      'SELECT * FROM noticias_externas WHERE area IS NOT NULL ORDER BY publicado_em DESC, id DESC LIMIT ?',
-      limite,
-    );
+    // Busca o dobro para sobrar depois de tirar as repetidas
+    const linhas = filtro.area
+      ? await todos<NoticiaExterna>(
+          'SELECT * FROM noticias_externas WHERE area = ? ORDER BY publicado_em DESC, id DESC LIMIT ?',
+          filtro.area,
+          limite * 2,
+        )
+      : await todos<NoticiaExterna>(
+          'SELECT * FROM noticias_externas WHERE area IS NOT NULL ORDER BY publicado_em DESC, id DESC LIMIT ?',
+          limite * 2,
+        );
+    return semRepetidas(linhas.map((n) => ({ ...n, fonte: nomeDaFonte(n.fonte) }))).slice(0, limite);
   },
 };
