@@ -3,16 +3,16 @@ import assert from 'node:assert/strict';
 import { criarUsuario, novoBanco, requisicao, resposta } from './helpers';
 import { FONTES_NOTICIAS } from '../src/config/site';
 import { executar } from '../src/config/database';
-import { Buscador, classificarArea, NoticiaModel, precisaColetar } from '../src/models/noticia.model';
+import { Buscador, classificarArea, nomeDaFonte, NoticiaModel, precisaColetar, semRepetidas } from '../src/models/noticia.model';
 import { PublicacaoModel } from '../src/models/publicacao.model';
 import { SiteController } from '../src/controllers/site.controller';
 
 /** Feed falso: uma notícia de família, uma de consumidor e uma de outro assunto. */
 function feed(prefixo: string) {
   return `<rss><channel>
-    <item><title>Divórcio e partilha de bens: STJ fixa tese</title><link>https://ex.com/${prefixo}/1</link><pubDate>Mon, 02 Nov 2026 10:00:00 GMT</pubDate></item>
-    <item><title>Plano de saúde deve cobrir tratamento</title><link>https://ex.com/${prefixo}/2</link><pubDate>Tue, 03 Nov 2026 10:00:00 GMT</pubDate></item>
-    <item><title>Tribunal inaugura nova sede administrativa</title><link>https://ex.com/${prefixo}/3</link><pubDate>Wed, 04 Nov 2026 10:00:00 GMT</pubDate></item>
+    <item><title>Caso ${prefixo}: Divórcio e partilha de bens: STJ fixa tese</title><link>https://ex.com/${prefixo}/1</link><pubDate>Mon, 02 Nov 2026 10:00:00 GMT</pubDate></item>
+    <item><title>Caso ${prefixo}: Plano de saúde deve cobrir tratamento</title><link>https://ex.com/${prefixo}/2</link><pubDate>Tue, 03 Nov 2026 10:00:00 GMT</pubDate></item>
+    <item><title>Caso ${prefixo}: Tribunal inaugura nova sede administrativa</title><link>https://ex.com/${prefixo}/3</link><pubDate>Wed, 04 Nov 2026 10:00:00 GMT</pubDate></item>
   </channel></rss>`;
 }
 
@@ -39,6 +39,19 @@ describe('[F7] Notícias jurídicas automáticas', () => {
     assert.equal(classificarArea('Companhia aérea indenizará passageiro por voo cancelado'), 'consumidor');
     assert.equal(classificarArea('STF concede habeas corpus a réu primário'), 'criminal');
     assert.equal(classificarArea('Empresa amplia sucesso de vendas'), null); // "empresa" não é "presa"; "sucesso" não é "sucessão"
+  });
+
+  it('semRepetidas() e nomeDaFonte(): a mesma matéria vinda do feed e do Google aparece uma vez só', () => {
+    const lista = [
+      { fonte: 'Consultor Jurídico', titulo: 'Cassação de aposentadoria na improbidade', publicado_em: '2026-11-04T20:22:49.000Z' },
+      { fonte: 'ConJur', titulo: 'Cassação de aposentadoria nas ações de improbidade: pode o Judiciário?', publicado_em: '2026-11-04T20:22:49.000Z' },
+      { fonte: 'Migalhas', titulo: 'TST: Correios respondem por condições de trabalho', publicado_em: '2026-11-04T17:31:00.000Z' },
+      { fonte: 'TST', titulo: 'TST: Correios respondem por condições de trabalho!', publicado_em: '2026-11-04T18:00:00.000Z' },
+    ];
+    assert.deepEqual(semRepetidas(lista).map((n) => n.fonte), ['Consultor Jurídico', 'Migalhas']);
+    assert.equal(nomeDaFonte('stf noticias'), 'STF');
+    assert.equal(nomeDaFonte('Consultor Jurídico'), 'ConJur');
+    assert.equal(nomeDaFonte('Revista Nova'), 'Revista Nova');
   });
 
   it('precisaColetar() respeita o intervalo de 3 horas', () => {

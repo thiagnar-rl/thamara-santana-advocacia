@@ -8,8 +8,8 @@
 | **Origem** | Pedido de 04/11/2026, com timbre, logo, foto e dados de contato enviados por ele |
 | **Prioridade** | Alta |
 | **Ramo no Git** | `melhoria/F7-site-institucional` |
-| **Versão** | 1.3.0, com ajuste na 1.3.1 |
-| **Status** | Publicada em 04/11/2026 (v1.3.0). Ajuste das fontes de notícias na v1.3.1 |
+| **Versão** | 1.3.0, com ajustes na 1.3.1 e 1.3.2 |
+| **Status** | Publicada em 04/11/2026 (v1.3.0). Ajustes nas notícias na v1.3.1 e v1.3.2 |
 
 ---
 
@@ -142,3 +142,14 @@ No GitHub, abra o merge do ramo `melhoria/F7-site-institucional` e use **Revert*
 - O feed direto do STJ continua na lista. Quando ele responder, entra também.
 - Quando a lista de fontes muda, o site busca as notícias na hora, sem esperar as 3 horas.
 - **Ramo:** `correcao/F7-mais-fontes-de-noticias`. **Testes:** 150 (110 backend + 40 frontend).
+
+## 8. Segundo ajuste (v1.3.2)
+
+**Conferido no site publicado depois da v1.3.1:**
+- As notícias passaram a aparecer em todas as áreas: 60 na aba Notícias, vindas de ConJur, Migalhas, TST, STF, STJ, CNJ e Agência Brasil.
+- Mas a mesma matéria às vezes aparecia duas vezes (uma do feed do ConJur e outra da busca do Google), e alguns sites vinham com nomes diferentes ("Consultor Jurídico", "stf noticias").
+
+**Correção:**
+- Notícias do mesmo site com o mesmo horário, ou com o mesmo começo de título, aparecem uma vez só.
+- Os nomes dos sites ficaram padronizados.
+- **Ramo:** `correcao/F7-noticias-repetidas`. **Testes:** 151 (111 backend + 40 frontend).

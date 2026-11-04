@@ -161,7 +161,7 @@ Projeto Advocacia/
 
 ## 5. Testes unitários
 
-São **150 testes** (110 no backend e 40 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
+São **151 testes** (111 no backend e 40 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
 
 ```bash
 npm test                                   # roda todos os testes
