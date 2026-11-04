@@ -1,6 +1,9 @@
 # ⚖️ Thamara Santana — Advocacia e Consultoria Jurídica
 
-Sistema de gestão do escritório **Thamara Santana Advocacia e Consultoria Jurídica**, simples e elegante, para organizar **processos, audiências, recursos, manifestações e despachos**.
+Site e sistema de gestão do escritório **Thamara Santana Advocacia e Consultoria Jurídica**:
+
+- **Site público** (`/`): apresentação, sobre, áreas de atuação, notícias jurídicas diárias e contato com WhatsApp, Instagram e mapa.
+- **Sistema** (`/sistema`, área restrita): organiza **processos, audiências, recursos, manifestações, despachos e clientes**, e é onde a advogada escreve as publicações do site.
 
 - **Frontend:** Angular 20 · TypeScript · SCSS
 - **Backend:** Node.js · Express 5 · TypeScript · SQLite
@@ -51,7 +54,19 @@ Para desligar, clique no terminal e aperte `Ctrl + C`.
 
 ---
 
-## 3. O que o sistema faz
+## 3. O que o site e o sistema fazem
+
+### Site público ([F7])
+
+| Página | Conteúdo |
+| ------ | -------- |
+| **Início** (`/`) | Apresentação, **Sobre mim**, **Áreas de atuação**, **Como funciona o atendimento**, as 3 notícias mais recentes e **Contato** com mapa. |
+| **Notícias** (`/noticias`) | Publicações do escritório e notícias jurídicas do dia (STJ, ConJur e Agência Brasil), com filtro por área. |
+| **Publicação** (`/noticias/:id`) | Texto completo de uma publicação do escritório. |
+
+Os textos, telefones e endereços do site ficam todos em **`frontend/src/app/site/conteudo.ts`**. As fontes de notícias e as palavras de cada área ficam em **`backend/src/config/site.ts`**.
+
+### Sistema (`/sistema`)
 
 | Tela          | Para que serve                                                                                    |
 | ------------- | ------------------------------------------------------------------------------------------------- |
@@ -61,6 +76,7 @@ Para desligar, clique no terminal e aperte `Ctrl + C`.
 | **Processos** | Cadastro de processos (número no padrão CNJ com máscara automática, cliente, parte contrária, vara, área, situação, observações). |
 | **Processo**  | Ficha do processo com todos os compromissos ligados a ele.                                        |
 | **Clientes**  | Cadastro de pessoas físicas e jurídicas (documentos, representante legal, contatos e endereço com busca por CEP), ficha com os processos do cliente e **aviso de aniversário**. |
+| **Publicações** | Textos da advogada para a aba Notícias do site: publicar ou deixar como rascunho. |
 
 Cada compromisso tem um **tipo** com cor própria:
 
@@ -136,12 +152,16 @@ Projeto Advocacia/
 | GET    | `/api/clientes/aniversariantes`   | Aniversários de hoje até `?dias=` (padrão 7) |
 | GET    | `/api/clientes/:id`               | Cliente + processos dele          |
 | POST / PUT / DELETE | `/api/clientes[/:id]` | Criar / editar / excluir          |
+| GET / POST / PUT / DELETE | `/api/publicacoes[/:id]` | Publicações do site (com login) |
+| GET    | `/api/publico/noticias`           | **Público:** publicações + notícias do dia (`?area=`) |
+| GET    | `/api/publico/publicacoes/:id`    | **Público:** uma publicação do escritório |
+| GET    | `/api/publico/noticias/fontes`    | **Público:** situação de cada fonte na última busca |
 
 ---
 
 ## 5. Testes unitários
 
-São **130 testes** (96 no backend e 34 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
+São **149 testes** (109 no backend e 40 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
 
 ```bash
 npm test                                   # roda todos os testes
@@ -201,6 +221,7 @@ o arquivo `vercel.json` já traz essa configuração.
 | `PERMITIR_CADASTRO` | `true` |
 | `SMTP_USUARIO` | e-mail Gmail que envia o link do "Esqueci minha senha" |
 | `SMTP_SENHA` | **senha de app** do Gmail (16 letras), criada em <https://myaccount.google.com/apppasswords>. Não é a senha normal |
+| `SITE_AUTORES` | *(opcional, [F7])* e-mail(s) das contas que podem publicar na aba Notícias do site. Sem ela, vale a conta mais antiga |
 
 **5. Publicar a versão final:**
 
@@ -209,7 +230,7 @@ npm run deploy
 ```
 
 A Vercel mostra o endereço do site (algo como `https://thamara-santana-advocacia.vercel.app`).
-Abra, clique em **Criar conta** e cadastre a conta da advogada.
+Abra o site, clique em **Área restrita → Criar conta** e cadastre a conta da advogada.
 
 **6. Fechar o cadastro (importante):** como o site fica na internet, troque `PERMITIR_CADASTRO`
 para `false` nas variáveis da Vercel e rode `npm run deploy` de novo. Assim ninguém mais consegue criar conta.

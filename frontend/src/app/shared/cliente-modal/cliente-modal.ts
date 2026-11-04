@@ -146,7 +146,7 @@ export class ClienteModal implements OnInit {
         this.api.avisarMudanca();
         this.fechar.emit();
         if (aoSalvar) aoSalvar(salvo);
-        else if (!atual) this.router.navigate(['/clientes', salvo.id]);
+        else if (!atual) this.router.navigate(['/sistema/clientes', salvo.id]);
       },
       error: (e) => {
         this.erro.set(mensagemDeErro(e));

@@ -78,7 +78,7 @@ export class ClienteDetalhePage {
       next: (d) => this.detalhe.set(d),
       error: (e) => {
         if (e instanceof HttpErrorResponse && e.status === 404) {
-          this.router.navigate(['/clientes']);
+          this.router.navigate(['/sistema/clientes']);
           return;
         }
         this.avisos.erro(mensagemDeErro(e));

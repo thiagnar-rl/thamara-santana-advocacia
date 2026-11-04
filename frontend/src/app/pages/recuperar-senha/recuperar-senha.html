@@ -42,7 +42,7 @@
             {{ enviando() ? 'Enviando...' : 'Enviar link' }}
           </button>
 
-          <p class="troca">Lembrou a senha? <a routerLink="/entrar">Entrar</a></p>
+          <p class="troca">Lembrou a senha? <a routerLink="/sistema/entrar">Entrar</a></p>
         </form>
       } @else {
         <!-- 2) Confirmação: confira seu e-mail -->
@@ -54,7 +54,7 @@
             <li><app-icone nome="relogio" [tamanho]="15" /> O link vale por <strong>1 hora</strong> e só pode ser usado uma vez.</li>
             <li><app-icone nome="email" [tamanho]="15" /> Procure por <strong>"Criar nova senha — Thamara Santana Advocacia"</strong>.</li>
           </ul>
-          <a routerLink="/entrar" class="botao enviar">Voltar para entrar</a>
+          <a routerLink="/sistema/entrar" class="botao enviar">Voltar para entrar</a>
           <p class="troca">Não recebeu? <button type="button" class="link" (click)="pedirDeNovo()">Enviar de novo</button></p>
         </div>
       }
@@ -66,7 +66,7 @@
 
         @if (!token()) {
           <p class="suave subtitulo">Este endereço está incompleto. Abra o link exatamente como chegou no e-mail ou peça um novo.</p>
-          <a routerLink="/recuperar-senha" class="botao enviar">Pedir novo link</a>
+          <a routerLink="/sistema/recuperar-senha" class="botao enviar">Pedir novo link</a>
         } @else {
           <p class="suave subtitulo">Escolha uma senha nova para entrar no sistema.</p>
 
@@ -99,7 +99,7 @@
           }
 
           @if (linkInvalido()) {
-            <a routerLink="/recuperar-senha" class="botao enviar">Pedir novo link</a>
+            <a routerLink="/sistema/recuperar-senha" class="botao enviar">Pedir novo link</a>
           } @else {
             <button type="submit" class="botao enviar" [disabled]="enviando()">
               {{ enviando() ? 'Salvando...' : 'Salvar nova senha e entrar' }}
@@ -107,7 +107,7 @@
           }
         }
 
-        <p class="troca"><a routerLink="/entrar">Voltar para entrar</a></p>
+        <p class="troca"><a routerLink="/sistema/entrar">Voltar para entrar</a></p>
       </form>
     }
   </section>

@@ -83,7 +83,7 @@ export class RecuperarSenhaPage implements OnInit {
     this.auth.redefinirSenha(this.token(), this.senha).subscribe({
       next: () => {
         this.avisos.sucesso('Senha alterada! Você já está no sistema.');
-        this.router.navigate(['/inicio']);
+        this.router.navigate(['/sistema/inicio']);
       },
       error: (e) => {
         const mensagem = mensagemDeErro(e);

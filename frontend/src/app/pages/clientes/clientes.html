@@ -25,7 +25,7 @@
         <div class="chips">
           @for (c of aniversariantes(); track c.id) {
             <span class="chip">
-              <a [routerLink]="['/clientes', c.id]">{{ c.nome }}</a>
+              <a [routerLink]="['/sistema/clientes', c.id]">{{ c.nome }}</a>
               <small>{{ textoAniversario(c.aniversario) }}</small>
               @if (parabens(c); as link) {
                 <a class="whats" [href]="link" target="_blank" rel="noopener" title="Enviar parabéns pelo WhatsApp">
@@ -63,7 +63,7 @@
   } @else {
     <div class="grade">
       @for (c of clientes(); track c.id) {
-        <a class="cartao cliente" [routerLink]="['/clientes', c.id]">
+        <a class="cartao cliente" [routerLink]="['/sistema/clientes', c.id]">
           <div class="topo">
             <span class="avatar" [class.pj]="c.tipo === 'juridica'">
               @if (c.tipo === 'juridica') {

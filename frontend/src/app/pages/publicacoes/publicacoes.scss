@@ -1,0 +1,119 @@
+/* [F7] Tela Publicações */
+
+.subtitulo {
+  margin-top: 6px;
+  font-size: 0.9rem;
+}
+
+.acoes-topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.alerta-site {
+  margin-bottom: 20px;
+  background: var(--alerta-suave);
+  color: var(--alerta);
+}
+
+.lista {
+  display: grid;
+  gap: 14px;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 22px;
+
+  .info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  h2 {
+    margin: 10px 0 6px;
+    font-family: var(--fonte-titulo);
+    font-weight: 500;
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.etiquetas {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-size: 0.8rem;
+
+  .area {
+    font-weight: 700;
+    color: var(--dourado);
+  }
+
+  .data {
+    color: var(--texto-3);
+  }
+}
+
+.botoes {
+  display: flex;
+  gap: 2px;
+}
+
+.editor {
+  max-width: 760px;
+}
+
+.texto-longo {
+  min-height: 260px;
+  line-height: 1.6;
+}
+
+.ajuda {
+  align-self: flex-end;
+
+  &.excedeu {
+    color: var(--perigo);
+    font-weight: 700;
+  }
+}
+
+.publicar {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-sm);
+  background: var(--superficie-2);
+  cursor: pointer;
+
+  input {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--tinta);
+  }
+
+  span {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 560px) {
+  .item {
+    flex-direction: column;
+  }
+}

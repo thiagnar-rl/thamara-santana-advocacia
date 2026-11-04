@@ -27,7 +27,7 @@
         <strong>{{ d.resumo.atrasados }}</strong>
         <span class="legenda">{{ d.resumo.atrasados ? 'precisam de atenção' : 'tudo em dia' }}</span>
       </div>
-      <a class="numero" routerLink="/processos">
+      <a class="numero" routerLink="/sistema/processos">
         <span class="rotulo">Processos ativos</span>
         <strong>{{ d.resumo.processosAtivos }}</strong>
         <span class="legenda">{{ d.resumo.concluidosMes }} concluídos no mês</span>
@@ -40,7 +40,7 @@
         <section class="cartao">
           <header class="cartao-cabecalho">
             <h2>Hoje <span class="contador">{{ d.hoje.length }}</span></h2>
-            <a routerLink="/agenda" class="botao fantasma pequeno">Ver agenda</a>
+            <a routerLink="/sistema/agenda" class="botao fantasma pequeno">Ver agenda</a>
           </header>
           <div class="lista">
             @for (c of d.hoje; track c.id) {
@@ -92,12 +92,12 @@
         <section class="cartao aniversarios">
           <header class="cartao-cabecalho">
             <h2><app-icone nome="bolo" [tamanho]="18" /> Aniversários</h2>
-            <a routerLink="/clientes" class="botao fantasma pequeno">Clientes</a>
+            <a routerLink="/sistema/clientes" class="botao fantasma pequeno">Clientes</a>
           </header>
           <ul class="lista-aniversarios">
             @for (c of aniversariantes(); track c.id) {
               <li [class.hoje]="c.aniversario?.dias === 0">
-                <a class="nome" [routerLink]="['/clientes', c.id]">
+                <a class="nome" [routerLink]="['/sistema/clientes', c.id]">
                   <strong>{{ c.nome }}</strong>
                   <small>
                     {{ textoAniversario(c.aniversario) }}

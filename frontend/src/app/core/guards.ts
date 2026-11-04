@@ -6,12 +6,12 @@ import { AuthService } from './auth.service';
 export const exigeLogin: CanActivateFn = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
-  return auth.logado() ? true : router.createUrlTree(['/entrar']);
+  return auth.logado() ? true : router.createUrlTree(['/sistema/entrar']);
 };
 
 /** Quem já está logado não precisa ver a tela de login. */
 export const somenteVisitante: CanActivateFn = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
-  return auth.logado() ? router.createUrlTree(['/inicio']) : true;
+  return auth.logado() ? router.createUrlTree(['/sistema/inicio']) : true;
 };

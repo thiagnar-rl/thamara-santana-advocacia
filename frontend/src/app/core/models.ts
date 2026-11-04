@@ -141,3 +141,67 @@ export interface ClienteDetalhe {
   cliente: Cliente;
   processos: Processo[];
 }
+
+/* ---------- [F7] Site institucional (pedido de Thiago Rinaldi Luna, 04/11/2026) ---------- */
+
+export interface AreaSite {
+  chave: string;
+  nome: string;
+}
+
+/** Publicação escrita pela advogada (tela "Publicações" do sistema). */
+export interface PublicacaoForm {
+  titulo: string;
+  resumo: string | null;
+  conteudo: string;
+  area: string | null;
+  publicada: boolean;
+}
+
+export interface Publicacao extends PublicacaoForm {
+  id: number;
+  area_nome: string | null;
+  publicado_em: string | null;
+  criado_em: string;
+  atualizado_em: string;
+}
+
+export interface ListaPublicacoes {
+  publicacoes: Publicacao[];
+  /** false = esta conta não está autorizada a publicar no site (o texto fica só no sistema). */
+  aparece_no_site: boolean;
+}
+
+/** Cartão de publicação no site. */
+export interface PublicacaoCartao {
+  id: number;
+  titulo: string;
+  resumo: string;
+  area: string | null;
+  area_nome: string | null;
+  publicado_em: string | null;
+}
+
+export interface PublicacaoSite extends PublicacaoCartao {
+  conteudo: string;
+  atualizado_em: string;
+}
+
+/** Notícia jurídica buscada automaticamente (STJ, ConJur...). */
+export interface NoticiaExterna {
+  id: number;
+  fonte: string;
+  titulo: string;
+  link: string;
+  resumo: string | null;
+  area: string | null;
+  area_nome: string | null;
+  publicado_em: string;
+}
+
+export interface NoticiasSite {
+  publicacoes: PublicacaoCartao[];
+  noticias: NoticiaExterna[];
+  atualizado_em: string | null;
+  areas: AreaSite[];
+}

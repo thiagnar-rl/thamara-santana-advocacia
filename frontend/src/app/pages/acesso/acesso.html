@@ -81,7 +81,7 @@
         }
         <!-- [F3] Esqueci minha senha — solicitado por Thamara Santana (30/10/2026) -->
         @if (!cadastro()) {
-          <a class="esqueci" routerLink="/recuperar-senha" [queryParams]="email.trim() ? { email: email.trim() } : {}">
+          <a class="esqueci" routerLink="/sistema/recuperar-senha" [queryParams]="email.trim() ? { email: email.trim() } : {}">
             Esqueci minha senha
           </a>
         }
@@ -97,11 +97,14 @@
 
       <p class="troca">
         @if (cadastro()) {
-          Já tem conta? <a routerLink="/entrar">Entrar</a>
+          Já tem conta? <a routerLink="/sistema/entrar">Entrar</a>
         } @else {
-          Primeira vez aqui? <a routerLink="/cadastro">Criar conta</a>
+          Primeira vez aqui? <a routerLink="/sistema/cadastro">Criar conta</a>
         }
       </p>
+
+      <!-- [F7] Atalho de volta para o site do escritório -->
+      <a class="voltar-site" routerLink="/"><app-icone nome="voltar" [tamanho]="15" /> Voltar ao site</a>
     </form>
   </section>
 </div>
