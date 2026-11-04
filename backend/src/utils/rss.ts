@@ -12,6 +12,8 @@ export interface ItemFeed {
   resumo: string | null;
   /** Data em ISO 8601 (UTC), ou null se o feed não informar uma data válida. */
   data: string | null;
+  /** Site de origem, quando o feed informa (ex.: Google Notícias: <source>IBDFAM</source>). */
+  fonte?: string | null;
 }
 
 const ENTIDADES: Record<string, string> = {
@@ -127,14 +129,19 @@ export function lerFeed(xml: string): ItemFeed[] {
 
   const itens: ItemFeed[] = [];
   for (const bloco of lista) {
-    const titulo = limparTexto(tag(bloco, 'title'));
+    const fonte = limparTexto(tag(bloco, 'source')) || null;
+    let titulo = limparTexto(tag(bloco, 'title'));
+    // Agregadores escrevem "Título - Site"; o site já aparece separado
+    if (fonte && titulo.endsWith(` - ${fonte}`)) titulo = titulo.slice(0, -(fonte.length + 3)).trim();
     const link = linkSeguro(ehAtom ? linkAtom(bloco) : (tag(bloco, 'link') ?? tag(bloco, 'guid')));
     if (!titulo || !link) continue;
-    const resumoBruto = limparTexto(tag(bloco, 'description') ?? tag(bloco, 'summary') ?? tag(bloco, 'content'));
+    let resumoBruto = limparTexto(tag(bloco, 'description') ?? tag(bloco, 'summary') ?? tag(bloco, 'content'));
+    // Resumo que só repete o título (e o nome do site) não acrescenta nada
+    if (resumoBruto && normalizar(resumoBruto).startsWith(normalizar(titulo).slice(0, 60))) resumoBruto = '';
     const data = lerData(
       tag(bloco, 'pubDate') ?? tag(bloco, 'dc:date') ?? tag(bloco, 'published') ?? tag(bloco, 'updated'),
     );
-    itens.push({ titulo: resumir(titulo, 200), link, resumo: resumoBruto ? resumir(resumoBruto, 280) : null, data });
+    itens.push({ titulo: resumir(titulo, 200), link, resumo: resumoBruto ? resumir(resumoBruto, 280) : null, data, fonte });
   }
   return itens;
 }

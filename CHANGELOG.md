@@ -7,6 +7,17 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
+## [1.3.1] — 04/11/2026
+
+### Corrigido
+
+- **[F7] Mais notícias no site publicado.** O site do STJ não responde aos servidores da Vercel, que ficam fora do Brasil, e por isso o site no ar mostrava poucas notícias. Foram adicionadas buscas por área no **Google Notícias**, limitadas a sites jurídicos e oficiais de confiança (STJ, STF, TST, ConJur, Migalhas, IBDFAM, Agência Brasil, gov.br). O nome do site de origem aparece em cada notícia. Quando a lista de fontes muda, as notícias são buscadas na hora.
+  - **Solicitado por:** Thiago Rinaldi Luna (ajuste do pedido F7, conferido no site publicado em 04/11/2026)
+  - **Ramo:** `correcao/F7-mais-fontes-de-noticias`
+  - **Ficha:** [docs/solicitacoes/F7-site-institucional.md](docs/solicitacoes/F7-site-institucional.md) (seção 7)
+
+---
+
 ## [1.3.0] — 04/11/2026
 
 ### Adicionado

@@ -112,14 +112,15 @@ export const NoticiaModel = {
   },
 
   /** Guarda os itens novos de uma fonte (links repetidos não duplicam). Devolve quantas linhas mudaram. */
-  async salvarItens(fonte: string, itens: ItemFeed[], agora: Date): Promise<number> {
+  async salvarItens(fonte: string, itens: ItemFeed[], agora: Date, opcoes: { area?: string; maximo?: number } = {}): Promise<number> {
     if (!itens.length) return 0;
     const coletadoEm = agora.toISOString();
     const valores: (string | null)[] = [];
-    for (const item of itens.slice(0, 80)) {
+    for (const item of itens.slice(0, opcoes.maximo ?? 80)) {
       // Sem data no feed: usa o momento da busca. Datas no futuro (fuso errado na fonte) também.
       const data = item.data && item.data <= coletadoEm ? item.data : coletadoEm;
-      valores.push(fonte, item.titulo, item.link, item.resumo, classificarArea(item.titulo, item.resumo), data, coletadoEm);
+      const area = classificarArea(item.titulo, item.resumo) ?? opcoes.area ?? null;
+      valores.push(item.fonte || fonte, item.titulo, item.link, item.resumo, area, data, coletadoEm);
     }
     // Um único INSERT com todas as linhas (mais rápido no banco da nuvem).
     // Se a notícia já existe, só corrige a data quando a fonte passou a informar a data real.
@@ -147,7 +148,7 @@ export const NoticiaModel = {
     for (const [i, resultado] of resultados.entries()) {
       const fonte = FONTES_NOTICIAS[i];
       if (resultado.status === 'fulfilled') {
-        await NoticiaModel.salvarItens(fonte.sigla, resultado.value, agora);
+        await NoticiaModel.salvarItens(fonte.sigla, resultado.value, agora, { area: fonte.area, maximo: fonte.maximo });
         situacao.push({ sigla: fonte.sigla, nome: fonte.nome, ok: true, itens: resultado.value.length });
       } else {
         const motivo = resultado.reason instanceof Error ? resultado.reason.message : String(resultado.reason);
@@ -169,7 +170,10 @@ export const NoticiaModel = {
   /** Busca de novo só se a última busca for antiga. Nunca lança erro (o site não pode cair por causa disso). */
   async atualizarSePreciso(buscador?: Buscador, agora = new Date()): Promise<void> {
     try {
-      if (precisaColetar(await NoticiaModel.ultimaColeta(), agora)) await NoticiaModel.coletar(buscador, agora);
+      // Busca de novo se passou o intervalo ou se a lista de fontes mudou (ex.: fonte nova no config/site.ts)
+      const fontesMudaram =
+        (await NoticiaModel.situacaoFontes()).map((s) => s.sigla).join('|') !== FONTES_NOTICIAS.map((f) => f.sigla).join('|');
+      if (fontesMudaram || precisaColetar(await NoticiaModel.ultimaColeta(), agora)) await NoticiaModel.coletar(buscador, agora);
     } catch (erro) {
       console.error('[F7] Falha ao atualizar as notícias:', erro);
     }
