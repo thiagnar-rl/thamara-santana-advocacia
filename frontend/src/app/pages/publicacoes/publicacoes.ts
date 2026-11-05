@@ -24,7 +24,7 @@ function formularioVazio(): PublicacaoForm {
 
 /**
  * Tela "Publicações": a advogada escreve notícias e artigos que aparecem na aba Notícias do site.
- * [F7] Solicitado por: Thiago Rinaldi Luna (04/11/2026).
+ * [F7] Solicitado por: Thamara Santana (cliente) (04/11/2026).
  */
 @Component({
   selector: 'app-publicacoes',

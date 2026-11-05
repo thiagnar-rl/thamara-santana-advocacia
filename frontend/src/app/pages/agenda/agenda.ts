@@ -130,7 +130,7 @@ export class AgendaPage {
   }
 
   /**
-   * [F4] Imprimir a agenda — pedido de Thiago Rinaldi Luna (04/11/2026).
+   * [F4] Imprimir a agenda — pedido de Thamara Santana (cliente) (04/11/2026).
    * (Já pedido na planilha de 29/10 por Pedro Nogueira: "imprimir a agenda da semana".)
    */
   protected imprimir(opcao: 'semana' | 'mes' | 'lista'): void {

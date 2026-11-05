@@ -11,8 +11,8 @@ import { hoje } from '../src/utils/datas';
 const NUMERO_1 = '0001234-56.2026.8.26.0100';
 const NUMERO_2 = '0007654-32.2025.5.15.0001';
 
-/** [C4] Vários clientes por processo e vários processos por cliente — pedido de Thiago Rinaldi Luna (04/11/2026). */
-describe('[C4] Processo com vários clientes (sugestão: Thiago Rinaldi Luna)', () => {
+/** [C4] Vários clientes por processo e vários processos por cliente — pedido de Thamara Santana (cliente) (04/11/2026). */
+describe('[C4] Processo com vários clientes (sugestão: Thamara Santana (cliente))', () => {
   let ana: number;
   let maria: number;
   let joao: number;

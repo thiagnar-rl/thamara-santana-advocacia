@@ -4,7 +4,7 @@ import { dataDoAnexo, problemaNoArquivo, tamanhoLegivel, tipoDoArquivo } from '.
 import { impressaoProcesso } from '../src/app/core/logica/impressao.logica';
 import { Anexo, ProcessoDetalhe } from '../src/app/core/models';
 
-/** [F1] Anexos no Google Drive — pedido de Thiago Rinaldi Luna (04/11/2026). */
+/** [F1] Anexos no Google Drive — pedido de Thamara Santana (cliente) (04/11/2026). */
 describe('[F1] anexos.logica', () => {
   it('tamanhoLegivel()', () => {
     assert.equal(tamanhoLegivel(500), '500 B');

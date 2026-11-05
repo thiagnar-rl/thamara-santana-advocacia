@@ -4,12 +4,12 @@
 | ----- | ---------- |
 | **Código** | F4 (o mesmo código reservado na planilha de testes de 29/10: "imprimir ou exportar a agenda da semana em PDF", apontado por Pedro Nogueira) |
 | **Tipo** | Funcionalidade nova |
-| **Solicitado por** | Thiago Rinaldi Luna (pedido de 04/11/2026); já sugerido por Pedro Nogueira (teste 5) |
+| **Solicitado por** | Thamara Santana (cliente), pedido de 04/11/2026 — repassado por Thiago Rinaldi Luna (desenvolvedor); já sugerido por Pedro Nogueira (teste 5) |
 | **Origem** | Pedido de 04/11/2026 |
 | **Prioridade** | Média |
 | **Ramo no Git** | `melhoria/F4-imprimir` |
 | **Versão** | 1.4.0 |
-| **Status** | Pronta para publicar |
+| **Status** | Publicada em 05/11/2026 (v1.4.0) |
 
 ---
 

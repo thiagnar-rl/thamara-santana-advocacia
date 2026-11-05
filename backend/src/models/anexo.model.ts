@@ -5,7 +5,7 @@ import { GoogleModel } from './google.model';
 
 /**
  * MODEL — Anexos (documentos guardados no Google Drive)
- * [F1] Solicitado por Thiago Rinaldi Luna (04/11/2026): "botões de anexar documentos nos tipos de compromissos,
+ * [F1] Solicitado por Thamara Santana (cliente) (04/11/2026): "botões de anexar documentos nos tipos de compromissos,
  * bem como atribuídos ao cliente e também atribuídos ao processo".
  *
  * Os arquivos ficam no Drive da conta Google conectada (a mesma do Google Agenda, F8), na pasta

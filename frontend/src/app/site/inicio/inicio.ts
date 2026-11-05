@@ -22,7 +22,7 @@ interface Destaque {
 
 /**
  * Página inicial do site: apresentação, sobre, áreas de atuação, atendimento, notícias e contato.
- * [F7] Solicitado por: Thiago Rinaldi Luna (04/11/2026).
+ * [F7] Solicitado por: Thamara Santana (cliente) (04/11/2026).
  */
 @Component({
   selector: 'app-inicio-site',

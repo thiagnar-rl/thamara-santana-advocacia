@@ -1,6 +1,6 @@
 /**
  * Lógica do site institucional (funções puras, testadas em tests/site.logica.test.ts).
- * [F7] Solicitado por: Thiago Rinaldi Luna (04/11/2026).
+ * [F7] Solicitado por: Thamara Santana (cliente) (04/11/2026).
  */
 
 /** ["A", "B", "C"] → "A, B e C" */

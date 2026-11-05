@@ -11,7 +11,7 @@ import { decodificarBytes, ItemFeed, lerFeed, normalizar } from '../utils/rss';
 
 /**
  * MODEL — Notícias jurídicas automáticas
- * [F7] Site institucional — solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * [F7] Site institucional — solicitado por Thamara Santana (cliente) (04/11/2026).
  *
  * Como funciona:
  * 1. O site pede as notícias. Se a última busca tem mais de 3 horas, o servidor

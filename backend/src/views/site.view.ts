@@ -4,7 +4,7 @@ import { Publicacao, PublicacaoModel } from '../models/publicacao.model';
 
 /**
  * VIEW — Site institucional (publicações do escritório e notícias automáticas)
- * [F7] Solicitado por: Thiago Rinaldi Luna (04/11/2026).
+ * [F7] Solicitado por: Thamara Santana (cliente) (04/11/2026).
  * Nunca envia usuario_id para o site público.
  */
 

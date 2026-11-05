@@ -14,7 +14,7 @@
         </div>
         <h1>{{ p.cliente }}</h1>
         <!-- [F6] Atalho para a ficha do cliente (sugestão: Thamara Santana) -->
-        <!-- [C4] Um atalho para cada cliente do processo (sugestão: Thiago Rinaldi Luna) -->
+        <!-- [C4] Um atalho para cada cliente do processo (sugestão: Thamara Santana (cliente)) -->
         @if (p.clientes.length > 1 || p.clientes[0]?.cliente_id) {
           <div class="clientes-processo">
             @for (c of p.clientes; track $index) {
@@ -33,7 +33,7 @@
         }
       </div>
       <div class="acoes">
-        <!-- [F4] Imprimir — sugestão: Thiago Rinaldi Luna -->
+        <!-- [F4] Imprimir — sugestão: Thamara Santana (cliente) -->
         <button type="button" class="botao secundario" title="Imprimir ou salvar em PDF" (click)="imprimir()">
           <app-icone nome="impressora" [tamanho]="16" /> Imprimir
         </button>

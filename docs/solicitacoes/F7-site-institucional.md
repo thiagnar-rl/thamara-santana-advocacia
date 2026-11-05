@@ -4,7 +4,7 @@
 | ----- | ---------- |
 | **Código** | F7 |
 | **Tipo** | Funcionalidade nova |
-| **Solicitado por** | Thiago Rinaldi Luna (desenvolvedor e responsável pelo projeto) |
+| **Solicitado por** | Thamara Santana (cliente) — pedido repassado por Thiago Rinaldi Luna (desenvolvedor) |
 | **Origem** | Pedido de 04/11/2026, com timbre, logo, foto e dados de contato enviados por ele |
 | **Prioridade** | Alta |
 | **Ramo no Git** | `melhoria/F7-site-institucional` |

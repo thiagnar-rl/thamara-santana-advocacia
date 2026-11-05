@@ -9,7 +9,7 @@ import { AVISO_LEGAL, CONTATO, ESCRITORIO } from '../conteudo';
 
 /**
  * Página de uma publicação do escritório (texto completo).
- * [F7] Solicitado por: Thiago Rinaldi Luna (04/11/2026).
+ * [F7] Solicitado por: Thamara Santana (cliente) (04/11/2026).
  */
 @Component({
   selector: 'app-artigo-site',

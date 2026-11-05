@@ -13,7 +13,7 @@ export const MENSAGEM_NAO_CONFIGURADO =
 
 /**
  * CONTROLLER — Conexão com o Google (Google Agenda; anexos no Drive no F1)
- * [F8] Solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * [F8] Solicitado por Thamara Santana (cliente) (04/11/2026).
  */
 export const GoogleController = {
   /** GET /api/google → situação da conexão */

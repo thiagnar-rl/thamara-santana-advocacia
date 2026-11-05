@@ -3,7 +3,7 @@ import { enderecoDoSite } from './email';
 /**
  * [F8] Conversa com o Google (login, Google Agenda e, no F1, Google Drive).
  * Usa chamadas HTTP diretas, sem biblioteca nova.
- * Solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * Solicitado por Thamara Santana (cliente) (04/11/2026).
  *
  * Configuração (variáveis de ambiente — ver backend/.env.example e a ficha F8):
  *   GOOGLE_CLIENT_ID      "ID do cliente" criado no Google Cloud

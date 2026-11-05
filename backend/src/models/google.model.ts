@@ -4,7 +4,7 @@ import { ErroGoogle, googleConfigurado, renovarAcesso, revogar } from '../utils/
 
 /**
  * MODEL — Conta Google conectada
- * [F8] Solicitado por Thiago Rinaldi Luna (04/11/2026): ligar a agenda do sistema à Google Agenda
+ * [F8] Solicitado por Thamara Santana (cliente) (04/11/2026): ligar a agenda do sistema à Google Agenda
  * da Thamara (e, no F1, guardar anexos no Google Drive dela).
  *
  * - Guarda só o "refresh token", CIFRADO. O acesso de curta duração (1 hora) fica na memória.

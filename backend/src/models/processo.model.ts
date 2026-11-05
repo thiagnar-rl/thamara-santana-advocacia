@@ -8,7 +8,7 @@ import { STATUS_PROCESSO, StatusProcesso, normalizarNumeroCNJ, texto, umDe } fro
 
 /**
  * [C4] Cliente de um processo: o nome e, se for um cliente cadastrado, o id dele.
- * Solicitado por Thiago Rinaldi Luna (04/11/2026): um processo pode ter vários clientes.
+ * Solicitado por Thamara Santana (cliente) (04/11/2026): um processo pode ter vários clientes.
  */
 export interface ClienteDoProcesso {
   nome: string;

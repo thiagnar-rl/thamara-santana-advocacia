@@ -34,7 +34,7 @@ describe('formularios.logica', () => {
     assert.equal(validarProcesso({ numero: NUMERO, clientes: [A] }).erro, null);
   });
 
-  it('[C4] clientesPreenchidos() tira linhas vazias e repetidas (sugestão: Thiago Rinaldi Luna)', () => {
+  it('[C4] clientesPreenchidos() tira linhas vazias e repetidas (sugestão: Thamara Santana (cliente))', () => {
     assert.deepEqual(
       clientesPreenchidos([
         { nome: ' Maria ', cliente_id: 3 },

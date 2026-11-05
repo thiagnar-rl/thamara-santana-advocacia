@@ -8,7 +8,33 @@ Site e sistema de gestão do escritório **Thamara Santana Advocacia e Consultor
 - **Frontend:** Angular 20 · TypeScript · SCSS
 - **Backend:** Node.js · Express 5 · TypeScript · SQLite
 - **Login:** e-mail e senha (senha criptografada com bcrypt, sessão com JWT)
+- **Integrações:** Google Agenda (sincronização nos dois sentidos) e Google Drive (documentos anexados)
 - **Site publicado:** <https://thamara-santana-advocacia.vercel.app> (Vercel + banco Turso)
+- **Versão atual:** 1.6.0 (05/11/2026) — histórico completo no [`CHANGELOG.md`](CHANGELOG.md)
+
+### Quem é quem
+
+| Papel | Pessoa |
+| ----- | ------ |
+| **Cliente** (dona do escritório e usuária do sistema) | **Thamara Santana**, advogada (OAB/SP 500.770) |
+| **Desenvolvedor** (autor do código) | **Thiago Rinaldi Luna** |
+
+As **solicitações de alteração** (correções e funcionalidades novas) foram feitas pela **cliente Thamara Santana**, durante o uso e os testes do sistema. Cada uma ganhou um código e uma ficha. A lista completa está em [`docs/solicitacoes/`](docs/solicitacoes/README.md). Na fase de testes de 29 e 30/10, algumas sugestões vieram também de voluntários (Mariana Couto, Pedro Nogueira e Juliana Prado). Os nomes deles ficam registrados nas fichas correspondentes.
+
+### Resumo das solicitações atendidas
+
+| Código | O que mudou | Versão |
+| ------ | ----------- | ------ |
+| C1 | Máscara e validação do número do processo (padrão CNJ) | 1.0.1 |
+| C2 | Confirmação antes de sair do sistema | 1.1.0 |
+| F6 | Cadastro de clientes (pessoa física e jurídica) com aviso de aniversário | 1.1.0 |
+| F3 | "Esqueci minha senha", com link por e-mail | 1.2.0 |
+| C3 | Senha forte (8 caracteres ou mais, com letras e números) | 1.2.1 |
+| F7 | Site institucional com notícias jurídicas diárias; sistema em `/sistema` | 1.3.0 a 1.3.2 |
+| C4 | Vários clientes por processo e vários processos por cliente | 1.3.3 |
+| F4 | Botão Imprimir (agenda, fichas e lista de processos) | 1.4.0 |
+| F8 | Agenda ligada à Google Agenda da Thamara, nos dois sentidos | 1.5.0 |
+| F1 | Anexar documentos no Google Drive (clientes, processos e compromissos) | 1.6.0 |
 
 ---
 
@@ -74,14 +100,16 @@ Os textos, telefones e endereços do site ficam todos em **`frontend/src/app/sit
 | **Início**    | Resumo do dia: compromissos de hoje, próximos 7 dias, atrasados e pendências por tipo.            |
 | **Agenda**    | Calendário do mês com pontinhos coloridos + lista com filtros (próximos, atrasados, concluídos).  |
 | **Processos** | Cadastro de processos (número no padrão CNJ com máscara automática, **um ou mais clientes**, parte contrária, vara, área, situação, observações). |
-| **Processo**  | Ficha do processo com todos os compromissos ligados a ele.                                        |
-| **Clientes**  | Cadastro de pessoas físicas e jurídicas (documentos, representante legal, contatos e endereço com busca por CEP), ficha com os processos do cliente e **aviso de aniversário**. |
+| **Processo**  | Ficha do processo com todos os compromissos ligados a ele e os **documentos anexados** ([F1]). |
+| **Clientes**  | Cadastro de pessoas físicas e jurídicas (documentos, representante legal, contatos e endereço com busca por CEP), ficha com os processos do cliente, **documentos anexados** ([F1]) e **aviso de aniversário**. |
 | **Imprimir** ([F4]) | Botão na Agenda (semana, mês ou lista), nas fichas de processo e cliente e na lista de processos. Para PDF, use "Salvar como PDF" na janela de impressão. |
 | **Publicações** | Textos da advogada para a aba Notícias do site: publicar ou deixar como rascunho. |
+| **Google Agenda** ([F8]) | Quadro no menu lateral. O que muda no sistema vai na hora para a Google Agenda. O que muda no Google volta ao abrir o sistema, a cada 5 minutos e no botão **Sincronizar agora**. |
+| **Documentos** ([F1]) | Botão **Anexar** nas fichas de processo e cliente e no formulário do compromisso. Os arquivos (até 50 MB cada) ficam no Google Drive da Thamara, na pasta "Thamara Santana Advocacia". |
 
 Cada compromisso tem um **tipo** com cor própria:
 
-- 🟣 **Audiência** · 🟠 **Recurso** · 🟢 **Manifestação** · 🌸 **Despacho**
+- 🟣 **Audiência** · 🟠 **Recurso** · 🟢 **Manifestação** · 🌸 **Despacho** · ⚪ **Outro** (eventos criados direto na Google Agenda, [F8])
 
 Clique no quadradinho ao lado de um compromisso para marcá-lo como **concluído**.
 
@@ -111,16 +139,19 @@ Projeto Advocacia/
 ├── backend/                  ← API (Node + Express + SQLite)
 │   ├── .env.example          ← modelo das variáveis de ambiente
 │   ├── data/                 ← banco local + segredo do login (criado sozinho, fora do Git)
+│   │                            NÃO apague: é onde ficam os dados quando o sistema roda no computador
 │   ├── src/
 │   │   ├── server.ts         ← liga o servidor
 │   │   ├── app.ts            ← monta o Express (middlewares + rotas)
 │   │   ├── config/           ← variáveis de ambiente e banco (tabelas)
-│   │   ├── models/           ← MODEL: usuário, cliente, processo, compromisso, painel
+│   │   ├── models/           ← MODEL: usuário, cliente, processo, compromisso, painel, publicações,
+│   │   │                        conta Google, sincronização da agenda e anexos
 │   │   ├── views/            ← VIEW: formato do JSON devolvido
 │   │   ├── controllers/      ← CONTROLLER: recebe as requisições
 │   │   ├── routes/           ← liga cada URL ao seu controller
 │   │   ├── middlewares/      ← login obrigatório e tratamento de erros
-│   │   └── utils/            ← datas, validações e token
+│   │   └── utils/            ← datas, validações, token, cifra, e-mail, notícias (RSS),
+│   │                            Google (login, Agenda e Drive)
 │   └── tests/                ← testes unitários do backend
 └── frontend/                 ← site (Angular)
     ├── public/marca/         ← logo dourada, monograma e foto do login
@@ -128,7 +159,8 @@ Projeto Advocacia/
     │   ├── styles.scss       ← cores, fontes e estilos globais
     │   └── app/
     │       ├── core/         ← MODEL: modelos, serviços e logica/ (regras de tela)
-    │       ├── layout/       ← menu lateral
+    │       ├── layout/       ← menu lateral (com o quadro do Google Agenda)
+    │       ├── site/         ← site público (início, notícias, conteúdo dos textos)
     │       ├── shared/       ← componentes reutilizáveis
     │       └── pages/        ← telas (.ts = controller, .html/.scss = view)
     └── tests/                ← testes unitários do frontend
@@ -231,6 +263,12 @@ o arquivo `vercel.json` já traz essa configuração.
 | `SMTP_USUARIO` | e-mail Gmail que envia o link do "Esqueci minha senha" |
 | `SMTP_SENHA` | **senha de app** do Gmail (16 letras), criada em <https://myaccount.google.com/apppasswords>. Não é a senha normal |
 | `SITE_AUTORES` | *(opcional, [F7])* e-mail(s) das contas que podem publicar na aba Notícias do site. Sem ela, vale a conta mais antiga |
+| `GOOGLE_CLIENT_ID` | *([F8])* "ID do cliente" criado no Google Cloud (Google Agenda e Drive) |
+| `GOOGLE_CLIENT_SECRET` | *([F8])* "Chave secreta do cliente" do Google Cloud. Só na Vercel, nunca no GitHub |
+
+> Situação atual do site publicado: cadastro **fechado** (`PERMITIR_CADASTRO=false`), Gmail configurado e Google conectado à conta da Thamara.
+
+**Configurar o Google (Agenda e Drive):** o passo a passo completo, com o projeto no Google Cloud, a tela de consentimento "Em produção" e o ID do cliente, está na [ficha F8, seção 5](docs/solicitacoes/F8-google-agenda.md). O endereço de retorno cadastrado no Google é `https://thamara-santana-advocacia.vercel.app/api/google/retorno`.
 
 **5. Publicar a versão final:**
 
@@ -273,7 +311,21 @@ Todo pedido de correção ou melhoria recebe um **código** (C1, C2… para corr
 2. **[`CHANGELOG.md`](CHANGELOG.md)**: resumo por versão.
 3. **Código e testes**: comentários e nomes de testes com a marca `[C1]`, `[C2]`… — basta pesquisar o código (Ctrl + Shift + F no VS Code) para achar tudo o que um pedido alterou.
 
-Cada pedido é feito num **ramo próprio** (ex.: `correcao/C1-mascara-numero-processo`) e a mensagem do commit cita o código e quem pediu.
+Cada pedido é feito num **ramo próprio** (ex.: `correcao/C1-mascara-numero-processo`) e a mensagem do commit cita o código e quem pediu. Depois de testado, o ramo é juntado ao `main` (merge) e a versão ganha uma **tag** (`v1.6.0`, por exemplo).
+
+### Scripts de publicação (`publicar-*.local.cmd`)
+
+Para facilitar, cada pedido pode vir com um script `publicar-XX.local.cmd`, que roda com dois cliques no Windows. Ele faz tudo na ordem:
+1. cria o ramo;
+2. roda os testes;
+3. compila o site;
+4. faz o commit;
+5. envia ao GitHub;
+6. junta no `main`;
+7. publica na Vercel;
+8. marca a versão.
+
+Se algo falhar, ele para e mostra o erro. Esses scripts são **descartáveis**: valem para um pedido só e não vão para o GitHub (`*.local.cmd` está no `.gitignore`). Depois de usados, podem ser apagados.
 
 ---
 
@@ -290,3 +342,6 @@ Cada pedido é feito num **ramo próprio** (ex.: `correcao/C1-mascara-numero-pro
 - **Site publicado mostra "Algo deu errado":** abra `/api/saude` no endereço do site. Se não aparecer `{"ok":true}`,
   veja o erro em Vercel → projeto → **Logs** e confira as 4 variáveis em **Settings → Environment Variables**.
 - Rodar só a API: `npm run api` · Rodar só o site: `npm run web`.
+- **Google Agenda não sincroniza / quadro mostra "Reconectar o Google":** a autorização foi retirada ou expirou. Clique em **Reconectar o Google** no menu e autorize de novo, com todas as caixinhas marcadas.
+- **Quadro do Google não aparece no menu:** falta `GOOGLE_CLIENT_ID` ou `GOOGLE_CLIENT_SECRET` na Vercel (ou falta o Redeploy depois de cadastrar). No celular, o quadro fica escondido de propósito.
+- **Pastas que podem ser apagadas sem medo** (são recriadas sozinhas): `node_modules/` (volta com `npm run instalar`), `frontend/dist/` e `frontend/.angular/` (voltam ao compilar).

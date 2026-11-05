@@ -218,7 +218,7 @@ export const CompromissoModel = {
     return (await executar('DELETE FROM compromissos WHERE id = ? AND usuario_id = ?', id, usuarioId)).alteracoes > 0;
   },
 
-  /* ---------- [F8] Vínculo com o Google Agenda — pedido de Thiago Rinaldi Luna (04/11/2026) ---------- */
+  /* ---------- [F8] Vínculo com o Google Agenda — pedido de Thamara Santana (cliente) (04/11/2026) ---------- */
 
   async definirVinculoGoogle(usuarioId: number, id: number, eventoId: string | null, atualizadoEm: string | null): Promise<void> {
     await executar(

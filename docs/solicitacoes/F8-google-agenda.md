@@ -4,12 +4,12 @@
 | ----- | ---------- |
 | **Código** | F8 |
 | **Tipo** | Funcionalidade nova |
-| **Solicitado por** | Thiago Rinaldi Luna (pedido de 04/11/2026) |
+| **Solicitado por** | Thamara Santana (cliente), pedido de 04/11/2026 — repassado por Thiago Rinaldi Luna (desenvolvedor) |
 | **Origem** | Pedido de 04/11/2026 |
 | **Prioridade** | Alta |
 | **Ramo no Git** | `melhoria/F8-google-agenda` |
 | **Versão** | 1.5.0 |
-| **Status** | Pronta para publicar (depende da configuração no Google Cloud, seção 5) |
+| **Status** | Publicada em 05/11/2026 (v1.5.0). Google Cloud configurado e conta da Thamara conectada; testado no site em 05/11 (envio, recebimento e exclusão) |
 
 ---
 

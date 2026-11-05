@@ -10,7 +10,7 @@ import { Icone } from '../icone/icone';
 
 /**
  * [F1] Documentos anexados (guardados no Google Drive) de um cliente, processo ou compromisso.
- * Solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * Solicitado por Thamara Santana (cliente) (04/11/2026).
  *
  * O arquivo vai do navegador DIRETO para o Drive (o servidor só abre o envio e depois registra),
  * por isso arquivos grandes não passam pela Vercel.

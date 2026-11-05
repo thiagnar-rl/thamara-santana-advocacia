@@ -1,6 +1,6 @@
 import { Anexo } from '../models/anexo.model';
 
-/** VIEW — Anexo [F1] (pedido de Thiago Rinaldi Luna, 04/11/2026). Sem o usuario_id nem o id interno do Drive. */
+/** VIEW — Anexo [F1] (pedido de Thamara Santana (cliente), 04/11/2026). Sem o usuario_id nem o id interno do Drive. */
 export interface AnexoJSON {
   id: number;
   dono_tipo: string;

@@ -12,7 +12,7 @@ const ARTIGO = {
   publicada: true,
 };
 
-/** [F7] Publicações do escritório no site — pedido de Thiago Rinaldi Luna (04/11/2026). */
+/** [F7] Publicações do escritório no site — pedido de Thamara Santana (cliente) (04/11/2026). */
 describe('[F7] Publicações do escritório', () => {
   let dona: number;
   let outra: number;

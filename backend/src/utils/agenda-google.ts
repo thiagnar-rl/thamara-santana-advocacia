@@ -2,7 +2,7 @@ import type { TipoCompromisso } from './validacao';
 
 /**
  * [F8] Conversão entre um compromisso do sistema e um evento do Google Agenda (funções puras).
- * Solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * Solicitado por Thamara Santana (cliente) (04/11/2026).
  *
  * - Título no Google: "[Audiência] Audiência de conciliação" (e "✓ " na frente quando concluído).
  *   Assim dá para saber o tipo olhando a agenda do celular, e o tipo volta certo para o sistema.

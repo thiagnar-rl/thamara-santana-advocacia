@@ -4,7 +4,7 @@ import { segredoDoSistema } from './token';
 /**
  * [F8] Cifra e decifra textos sensíveis guardados no banco (ex.: o acesso à conta Google).
  * AES-256-GCM, com a chave derivada do JWT_SECRET: quem tiver só o banco não consegue ler.
- * Solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * Solicitado por Thamara Santana (cliente) (04/11/2026).
  */
 
 function chave(): Buffer {

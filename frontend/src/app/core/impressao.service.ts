@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { DocumentoImpressao } from './logica/impressao.logica';
 
 /**
- * [F4] Imprimir — solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * [F4] Imprimir — solicitado por Thamara Santana (cliente) (04/11/2026).
  * A tela chama imprimir(documento); o componente <app-impressao> desenha o documento
  * (só aparece no papel) e a janela de impressão do navegador abre em seguida.
  */

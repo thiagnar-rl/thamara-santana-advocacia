@@ -59,7 +59,7 @@ export function validarProcesso(form: Pick<ProcessoForm, 'numero' | 'clientes'>)
 
 /**
  * [C4] Linhas de cliente que serão enviadas: sem linhas vazias e sem o mesmo cliente duas vezes.
- * Solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * Solicitado por Thamara Santana (cliente) (04/11/2026).
  */
 export function clientesPreenchidos(lista: ClienteDoProcesso[] | null | undefined): ClienteDoProcesso[] {
   const vistos = new Set<string>();
