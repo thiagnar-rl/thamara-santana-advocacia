@@ -11,7 +11,7 @@ import { Icone } from '../../shared/icone/icone';
 
 /** Áreas de atuação (as mesmas do site). */
 const AREAS = [
-  { chave: 'familia', nome: 'Família, Patrimônio e Sucessões' },
+  { chave: 'familia', nome: 'Família e Sucessões' },
   { chave: 'previdenciario', nome: 'Previdenciário' },
   { chave: 'trabalhista', nome: 'Trabalhista' },
   { chave: 'consumidor', nome: 'Consumidor' },

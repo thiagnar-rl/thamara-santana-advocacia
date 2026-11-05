@@ -125,7 +125,7 @@ describe('[F7] Notícias jurídicas automáticas', () => {
 
     const artigo = resposta();
     await SiteController.publicacao(requisicao({ params: { id: String(publicada) } }), artigo as never);
-    assert.equal(artigo.corpo.area_nome, 'Família, Patrimônio e Sucessões');
+    assert.equal(artigo.corpo.area_nome, 'Família e Sucessões');
 
     const naoPublicado = resposta();
     await SiteController.publicacao(requisicao({ params: { id: String(rascunho) } }), naoPublicado as never);

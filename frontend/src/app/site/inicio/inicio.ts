@@ -5,7 +5,7 @@ import { ApiService } from '../../core/api.service';
 import { linkInstagram, linkMapa, linkMapaIncorporado, linkWhatsApp, listarComE, tempoRelativo } from '../../core/logica/site.logica';
 import { NoticiasSite } from '../../core/models';
 import { Icone } from '../../shared/icone/icone';
-import { AREA_PRINCIPAL, AREAS_EQUIPE, CONTATO, ESCRITORIO, ETAPAS, SOBRE } from '../conteudo';
+import { AREAS_THAMARA, AREAS_EQUIPE, CONTATO, ESCRITORIO, ETAPAS, SOBRE } from '../conteudo';
 
 /** Item da vitrine de notícias da página inicial (publicação do escritório ou notícia externa). */
 interface Destaque {
@@ -37,7 +37,7 @@ export class InicioSite {
   protected readonly escritorio = ESCRITORIO;
   protected readonly contato = CONTATO;
   protected readonly sobre = SOBRE;
-  protected readonly principal = AREA_PRINCIPAL;
+  protected readonly areasThamara = AREAS_THAMARA; // [C5]
   protected readonly equipe = AREAS_EQUIPE;
   protected readonly etapas = ETAPAS;
   /** "Santos, São Vicente e Praia Grande" */

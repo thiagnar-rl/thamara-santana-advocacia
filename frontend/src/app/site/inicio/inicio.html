@@ -5,10 +5,10 @@
   <div class="balanca" style="background-image: url(site/balanca.webp)" aria-hidden="true"></div>
   <div class="s-container conteudo-hero">
     <p class="s-sobretitulo">Advocacia e Consultoria Jurídica</p>
-    <h1>Decisões sobre família e patrimônio, tomadas com <em>clareza</em>.</h1>
+    <h1>Decisões sobre família e sucessões, tomadas com <em>clareza</em>.</h1>
     <p class="chamada">
-      Orientação jurídica para que cada família entenda o que a lei permite, as consequências de cada escolha e o que
-      precisa ser formalizado.
+      Orientação jurídica em Família e Sucessões, Cível e Trabalhista, para que você entenda o que a lei permite, as
+      consequências de cada escolha e o que precisa ser formalizado.
     </p>
     <div class="acoes">
       <a class="s-botao ouro" [href]="whatsapp" target="_blank" rel="noopener">
@@ -33,6 +33,11 @@
         <source srcset="site/thamara.webp" type="image/webp" />
         <img src="site/thamara.jpg" [alt]="'Foto de ' + escritorio.advogada" width="720" height="900" loading="lazy" />
       </picture>
+      <!-- [C5] Segunda foto (detalhe do escritório) — enviada pela cliente Thamara Santana -->
+      <picture class="foto-detalhe">
+        <source srcset="site/escritorio.webp" type="image/webp" />
+        <img src="site/escritorio.jpg" alt="Estátua da Justiça e cartão do escritório Thamara Santana" width="500" height="400" loading="lazy" />
+      </picture>
       <figcaption>
         <strong>Dra. Thamara Santana</strong>
         <span>{{ escritorio.oab }}</span>
@@ -41,7 +46,7 @@
 
     <div class="texto-sobre">
       <p class="s-sobretitulo">Sobre mim</p>
-      <h2 class="s-titulo">Família, patrimônio e sucessões, com <em>escuta</em> e método.</h2>
+      <h2 class="s-titulo">Família e sucessões, com <em>escuta</em> e método.</h2>
       @for (p of sobre.paragrafos; track $index) {
         <p class="paragrafo">{{ p }}</p>
       }
@@ -67,25 +72,32 @@
     <p class="s-sobretitulo">Áreas de atuação</p>
     <h2 class="s-titulo">Cada área com quem se <em>dedica</em> a ela.</h2>
     <p class="s-intro">
-      A Dra. Thamara conduz pessoalmente os casos de Família, Patrimônio e Sucessões. As demais áreas são atendidas pela
-      equipe do escritório, com profissionais que acompanham aquele ramo do Direito no dia a dia.
+      A Dra. Thamara conduz pessoalmente os casos de Família e Sucessões, Cível e Trabalhista. As demais áreas são
+      atendidas pela equipe do escritório, com profissionais que acompanham aquele ramo do Direito no dia a dia.
     </p>
 
-    <div class="grade-areas">
-      <article class="area principal">
-        <span class="selo">Atuação da Dra. Thamara</span>
-        <span class="icone-area"><app-icone [nome]="principal.icone" [tamanho]="26" /></span>
-        <h3>{{ principal.nome }}</h3>
-        <p>{{ principal.descricao }}</p>
-        <ul>
-          @for (item of principal.itens ?? []; track item) {
-            <li>{{ item }}</li>
-          }
-        </ul>
-      </article>
+    <!-- [C5] Especialidades da Dra. Thamara — lista enviada pela cliente Thamara Santana -->
+    <article class="area principal">
+      <span class="selo">Atuação da Dra. Thamara</span>
+      <div class="grade-especialidades">
+        @for (a of areasThamara; track a.chave) {
+          <section class="especialidade">
+            <span class="icone-area"><app-icone [nome]="a.icone" [tamanho]="24" /></span>
+            <h3>{{ a.nome }}</h3>
+            <p>{{ a.descricao }}</p>
+            <ul>
+              @for (item of a.itens ?? []; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </section>
+        }
+      </div>
+    </article>
 
-      <div class="equipe">
-        <p class="rotulo-equipe">Equipe do escritório</p>
+    <div class="equipe">
+      <p class="rotulo-equipe">Equipe do escritório</p>
+      <div class="grade-equipe">
         @for (a of equipe; track a.chave) {
           <article class="area">
             <span class="icone-area"><app-icone [nome]="a.icone" [tamanho]="22" /></span>

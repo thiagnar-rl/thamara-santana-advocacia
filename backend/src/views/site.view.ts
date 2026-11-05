@@ -8,7 +8,7 @@ import { Publicacao, PublicacaoModel } from '../models/publicacao.model';
  * Nunca envia usuario_id para o site público.
  */
 
-/** Nome da área por extenso (ex.: "familia" → "Família, Patrimônio e Sucessões"). */
+/** Nome da área por extenso (ex.: "familia" → "Família e Sucessões"). */
 export function nomeDaArea(chave: string | null): string | null {
   return AREAS_ATUACAO.find((a) => a.chave === chave)?.nome ?? null;
 }

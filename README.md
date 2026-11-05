@@ -10,7 +10,7 @@ Site e sistema de gestão do escritório **Thamara Santana Advocacia e Consultor
 - **Login:** e-mail e senha (senha criptografada com bcrypt, sessão com JWT)
 - **Integrações:** Google Agenda (sincronização nos dois sentidos) e Google Drive (documentos anexados)
 - **Site publicado:** <https://thamara-santana-advocacia.vercel.app> (Vercel + banco Turso)
-- **Versão atual:** 1.6.0 (05/11/2026) — histórico completo no [`CHANGELOG.md`](CHANGELOG.md)
+- **Versão atual:** 1.6.2 (05/11/2026) — histórico completo no [`CHANGELOG.md`](CHANGELOG.md)
 
 ### Quem é quem
 
@@ -35,6 +35,7 @@ As **solicitações de alteração** (correções e funcionalidades novas) foram
 | F4 | Botão Imprimir (agenda, fichas e lista de processos) | 1.4.0 |
 | F8 | Agenda ligada à Google Agenda da Thamara, nos dois sentidos | 1.5.0 |
 | F1 | Anexar documentos no Google Drive (clientes, processos e compromissos) | 1.6.0 |
+| C5 | Site: áreas da Dra. Thamara (Família e Sucessões, Cível e Trabalhista) e fotos novas | 1.6.2 |
 
 ---
 
@@ -86,7 +87,7 @@ Para desligar, clique no terminal e aperte `Ctrl + C`.
 
 | Página | Conteúdo |
 | ------ | -------- |
-| **Início** (`/`) | Apresentação, **Sobre mim**, **Áreas de atuação**, **Como funciona o atendimento**, as 3 notícias mais recentes e **Contato** com mapa. |
+| **Início** (`/`) | Apresentação, **Sobre mim**, **Áreas de atuação** (Dra. Thamara: Família e Sucessões, Cível e Trabalhista; equipe: Previdenciário e Criminal), **Como funciona o atendimento**, as 3 notícias mais recentes e **Contato** com mapa. |
 | **Notícias** (`/noticias`) | Publicações do escritório e notícias jurídicas do dia (STJ, ConJur e Agência Brasil), com filtro por área. |
 | **Publicação** (`/noticias/:id`) | Texto completo de uma publicação do escritório. |
 
