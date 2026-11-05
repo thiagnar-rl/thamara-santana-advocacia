@@ -152,3 +152,10 @@
 .vazio-cartao {
   grid-column: 1 / -1;
 }
+
+/* [F4] Botões do topo (Imprimir + Novo processo) */
+.acoes-topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

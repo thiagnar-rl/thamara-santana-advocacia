@@ -12,10 +12,11 @@ Cada pedido de cliente/usuário recebe um código e uma ficha nesta pasta.
 | [C3](C3-senha-forte.md) | 30/10/2026 | Pedro Nogueira (teste 5) | Exigir senha forte no cadastro: mín. 8 caracteres, com letras e números | `correcao/C3-senha-forte` | Publicada em 30/10/2026 (v1.2.1) |
 | [C4](C4-varios-clientes-por-processo.md) | 04/11/2026 | Thiago Rinaldi Luna | Processo com vários clientes, e cliente com vários processos | `correcao/C4-varios-clientes-por-processo` | Pronta para publicar (v1.3.3) |
 | [F3](F3-esqueci-minha-senha.md) | 30/10/2026 | Thamara Santana (cliente 3) — já listado na planilha de 29/10 | "Esqueci minha senha": recuperação de acesso por link no e-mail | `melhoria/F3-esqueci-minha-senha` | Publicada em 30/10/2026 (v1.2.0) — envio por Gmail configurado e testado |
+| [F4](F4-imprimir.md) | 04/11/2026 | Thiago Rinaldi Luna — já sugerido por Pedro Nogueira na planilha de 29/10 | Botão Imprimir na agenda, fichas de processo e cliente e lista de processos | `melhoria/F4-imprimir` | Pronta para publicar (v1.4.0) |
 | [F6](F6-cadastro-de-clientes.md) | 30/10/2026 | Thamara Santana (cliente 3) | Cadastro individual de clientes (PF/PJ) com aviso de aniversário, integrado aos processos | `melhoria/F6-cadastro-de-clientes` | Publicada em 30/10/2026 (v1.1.0) |
 | [F7](F7-site-institucional.md) | 04/11/2026 | Thiago Rinaldi Luna | Site institucional (landing page) com Sobre, Atuação, Notícias diárias, Contato e redes sociais; sistema em `/sistema` | `melhoria/F7-site-institucional` | Publicada em 04/11/2026 (v1.3.0); ajustes nas notícias na v1.3.1 e v1.3.2 |
 
-> F1, F2, F4 e F5 são sugestões da planilha de testes de 29/10 (anexos, lembretes, exportar PDF e tela de perfil), ainda não pedidas formalmente. A F3 ("esqueci minha senha") foi pedida por Thamara Santana em 30/10.
+> F1, F2 e F5 são sugestões da planilha de testes de 29/10 (anexos, lembretes, exportar PDF e tela de perfil), ainda não pedidas formalmente. A F3 ("esqueci minha senha") foi pedida por Thamara Santana em 30/10.
 
 ## Como registrar um novo pedido
 

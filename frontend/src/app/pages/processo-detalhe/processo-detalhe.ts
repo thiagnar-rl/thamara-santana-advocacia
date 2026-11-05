@@ -5,8 +5,10 @@ import { ApiService } from '../../core/api.service';
 import { mensagemDeErro } from '../../core/auth.interceptor';
 import { AvisoService } from '../../core/aviso.service';
 import { EdicaoService } from '../../core/edicao.service';
+import { ImpressaoService } from '../../core/impressao.service';
+import { impressaoProcesso } from '../../core/logica/impressao.logica';
 import { ProcessoDetalhe } from '../../core/models';
-import { dataCurta, rotuloStatusProcesso } from '../../core/rotulos';
+import { dataCurta, hojeISO, rotuloStatusProcesso } from '../../core/rotulos';
 import { CompromissoItem } from '../../shared/compromisso-item/compromisso-item';
 import { Icone } from '../../shared/icone/icone';
 
@@ -22,6 +24,7 @@ export class ProcessoDetalhePage {
   private avisos = inject(AvisoService);
   private router = inject(Router);
   protected edicao = inject(EdicaoService);
+  private impressao = inject(ImpressaoService);
 
   /** Vem da URL: /processos/:id */
   readonly id = input.required<string>();
@@ -56,5 +59,11 @@ export class ProcessoDetalhePage {
         this.avisos.erro(mensagemDeErro(e));
       },
     });
+  }
+
+  /** [F4] Imprime a ficha do processo — pedido de Thiago Rinaldi Luna (04/11/2026). */
+  protected imprimir(): void {
+    const d = this.detalhe();
+    if (d) this.impressao.imprimir(impressaoProcesso(d, hojeISO()));
   }
 }

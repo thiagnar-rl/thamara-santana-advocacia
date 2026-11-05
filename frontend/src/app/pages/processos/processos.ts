@@ -4,6 +4,8 @@ import { ApiService } from '../../core/api.service';
 import { mensagemDeErro } from '../../core/auth.interceptor';
 import { AvisoService } from '../../core/aviso.service';
 import { EdicaoService } from '../../core/edicao.service';
+import { ImpressaoService } from '../../core/impressao.service';
+import { impressaoProcessos } from '../../core/logica/impressao.logica';
 import { Processo, StatusProcesso } from '../../core/models';
 import { STATUS_PROCESSO, dataRelativa, rotuloStatusProcesso } from '../../core/rotulos';
 import { Icone } from '../../shared/icone/icone';
@@ -19,6 +21,7 @@ export class ProcessosPage {
   private api = inject(ApiService);
   private avisos = inject(AvisoService);
   protected edicao = inject(EdicaoService);
+  private impressao = inject(ImpressaoService);
 
   protected readonly opcoesStatus = STATUS_PROCESSO;
   protected readonly rotuloStatus = rotuloStatusProcesso;
@@ -58,5 +61,14 @@ export class ProcessosPage {
         this.carregando.set(false);
       },
     });
+  }
+
+  /** [F4] Imprime a lista com o filtro aplicado — pedido de Thiago Rinaldi Luna (04/11/2026). */
+  protected imprimir(): void {
+    const status = this.status();
+    const filtro = [status ? `Situação: ${this.rotuloStatus(status)}` : 'Todas as situações', this.busca().trim() ? `busca "${this.busca().trim()}"` : '']
+      .filter(Boolean)
+      .join(' · ');
+    this.impressao.imprimir(impressaoProcessos(this.processos(), filtro));
   }
 }

@@ -618,3 +618,27 @@ select.entrada {
     transform: translateY(16px) scale(0.98);
   }
 }
+
+/* ---------- [F4] Impressão — pedido de Thiago Rinaldi Luna (04/11/2026) ---------- */
+/* Ao clicar em "Imprimir", só a folha com o timbre (<app-impressao>) vai para o papel. */
+
+@page {
+  size: A4;
+  margin: 14mm 12mm;
+}
+
+@media print {
+  html.imprimindo {
+    body {
+      background: #fff;
+    }
+
+    app-root > *:not(app-impressao) {
+      display: none !important;
+    }
+
+    app-impressao {
+      display: block !important;
+    }
+  }
+}

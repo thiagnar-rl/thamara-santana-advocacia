@@ -4,9 +4,15 @@
       <p class="sobretitulo">Carteira</p>
       <h1>Processos</h1>
     </div>
-    <button type="button" class="botao" (click)="edicao.novoProcesso()">
-      <app-icone nome="mais" [tamanho]="17" [traco]="2.2" /> Novo processo
-    </button>
+    <div class="acoes-topo">
+      <!-- [F4] Imprimir — sugestão: Thiago Rinaldi Luna -->
+      <button type="button" class="botao secundario" title="Imprimir ou salvar em PDF" (click)="imprimir()">
+        <app-icone nome="impressora" [tamanho]="17" /> Imprimir
+      </button>
+      <button type="button" class="botao" (click)="edicao.novoProcesso()">
+        <app-icone nome="mais" [tamanho]="17" [traco]="2.2" /> Novo processo
+      </button>
+    </div>
   </header>
 
   <div class="barra">

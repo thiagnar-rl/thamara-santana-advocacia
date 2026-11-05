@@ -33,6 +33,10 @@
         }
       </div>
       <div class="acoes">
+        <!-- [F4] Imprimir — sugestão: Thiago Rinaldi Luna -->
+        <button type="button" class="botao secundario" title="Imprimir ou salvar em PDF" (click)="imprimir()">
+          <app-icone nome="impressora" [tamanho]="16" /> Imprimir
+        </button>
         <button type="button" class="botao secundario" (click)="edicao.editarProcesso(p)">
           <app-icone nome="editar" [tamanho]="16" /> Editar
         </button>

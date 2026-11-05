@@ -4,9 +4,39 @@
       <p class="sobretitulo">Agenda</p>
       <h1>Seus compromissos</h1>
     </div>
-    <button type="button" class="botao" (click)="edicao.novoCompromisso({ data: diaSelecionado() })">
-      <app-icone nome="mais" [tamanho]="17" [traco]="2.2" /> Novo compromisso
-    </button>
+    <div class="acoes-topo">
+      <!-- [F4] Imprimir a agenda — sugestão: Thiago Rinaldi Luna (e Pedro Nogueira, planilha de 29/10) -->
+      <div class="menu-imprimir">
+        <button
+          type="button"
+          class="botao secundario"
+          title="Imprimir ou salvar em PDF"
+          [attr.aria-expanded]="menuImprimir()"
+          (click)="menuImprimir.set(!menuImprimir())"
+        >
+          <app-icone nome="impressora" [tamanho]="17" /> Imprimir
+        </button>
+        @if (menuImprimir()) {
+          <div class="opcoes-imprimir cartao" role="menu">
+            <button type="button" role="menuitem" (click)="imprimir('semana')">
+              <strong>Semana</strong>
+              <small>{{ diaSelecionado() ? 'do dia selecionado' : 'atual' }}, de domingo a sábado</small>
+            </button>
+            <button type="button" role="menuitem" (click)="imprimir('mes')">
+              <strong>Mês inteiro</strong>
+              <small>{{ tituloMes() }}</small>
+            </button>
+            <button type="button" role="menuitem" (click)="imprimir('lista')">
+              <strong>Lista desta tela</strong>
+              <small>{{ tituloLista() }}</small>
+            </button>
+          </div>
+        }
+      </div>
+      <button type="button" class="botao" (click)="edicao.novoCompromisso({ data: diaSelecionado() })">
+        <app-icone nome="mais" [tamanho]="17" [traco]="2.2" /> Novo compromisso
+      </button>
+    </div>
   </header>
 
   <div class="layout">

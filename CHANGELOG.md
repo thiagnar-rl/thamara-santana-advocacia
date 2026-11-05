@@ -7,6 +7,17 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
+## [1.4.0] — 04/11/2026
+
+### Adicionado
+
+- **[F4] Botão Imprimir.** A Agenda (semana, mês inteiro ou a lista da tela), a ficha do processo, a ficha do cliente e a lista de processos agora podem ser impressas ou salvas em PDF. A folha sai em A4, com o timbre do escritório.
+  - **Solicitado por:** Thiago Rinaldi Luna (pedido de 04/11/2026); já sugerido por Pedro Nogueira na planilha de testes de 29/10
+  - **Ramo:** `melhoria/F4-imprimir`
+  - **Ficha:** [docs/solicitacoes/F4-imprimir.md](docs/solicitacoes/F4-imprimir.md)
+
+---
+
 ## [1.3.3] — 04/11/2026
 
 ### Corrigido
