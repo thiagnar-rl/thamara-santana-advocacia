@@ -162,12 +162,15 @@ Projeto Advocacia/
 | GET    | `/api/google/retorno`             | [F8] **Público:** volta do login do Google |
 | POST   | `/api/google/sincronizar`         | [F8] Traz as mudanças do Google Agenda (`?forcar=1`) |
 | DELETE | `/api/google`                     | [F8] Desconecta o Google |
+| GET    | `/api/anexos?tipo=&id=`           | [F1] Documentos anexados de um cliente, processo ou compromisso |
+| POST   | `/api/anexos/envio`               | [F1] Abre o envio do arquivo no Google Drive |
+| POST / DELETE | `/api/anexos[/:id]`        | [F1] Registra / exclui (lixeira do Drive) |
 
 ---
 
 ## 5. Testes unitários
 
-São **184 testes** (134 no backend e 50 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
+São **196 testes** (142 no backend e 54 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
 
 ```bash
 npm test                                   # roda todos os testes

@@ -7,6 +7,17 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
+## [1.6.0] — 05/11/2026
+
+### Adicionado
+
+- **[F1] Anexar documentos no Google Drive.** As fichas do processo e do cliente e o formulário do compromisso agora têm o quadro **Documentos**, com o botão **Anexar** (vários arquivos, até 50 MB cada). Os arquivos ficam no Google Drive da Thamara, na pasta "Thamara Santana Advocacia". Excluir manda o arquivo para a lixeira do Drive, e as fichas impressas listam os documentos.
+  - **Solicitado por:** Thiago Rinaldi Luna (pedido de 04/11/2026); o código F1 já estava reservado na planilha de testes de 29/10
+  - **Ramo:** `melhoria/F1-anexos-google-drive`
+  - **Ficha:** [docs/solicitacoes/F1-anexos-google-drive.md](docs/solicitacoes/F1-anexos-google-drive.md)
+
+---
+
 ## [1.5.0] — 05/11/2026
 
 ### Adicionado

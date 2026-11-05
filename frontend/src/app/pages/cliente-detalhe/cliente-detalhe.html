@@ -118,6 +118,11 @@
             }
           </div>
         </section>
+
+        <!-- [F1] Documentos anexados (Google Drive) — pedido de Thiago Rinaldi Luna -->
+        <section class="cartao anexos-cliente">
+          <app-anexos tipo="cliente" [donoId]="c.id" (mudou)="anexos.set($event)" />
+        </section>
       </div>
 
       <!-- 2. Contato e localização -->

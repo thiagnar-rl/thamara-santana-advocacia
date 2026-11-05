@@ -96,6 +96,15 @@
         ></textarea>
       </div>
 
+      <!-- [F1] Documentos anexados (Google Drive) -->
+      @if (idEmEdicao; as id) {
+        <div class="campo anexos-compromisso">
+          <app-anexos tipo="compromisso" [donoId]="id" />
+        </div>
+      } @else {
+        <p class="dica-anexos">Depois de salvar, abra o compromisso de novo para anexar documentos.</p>
+      }
+
       @if (erro()) {
         <div class="mensagem-erro"><app-icone nome="alerta" [tamanho]="16" /> {{ erro() }}</div>
       }

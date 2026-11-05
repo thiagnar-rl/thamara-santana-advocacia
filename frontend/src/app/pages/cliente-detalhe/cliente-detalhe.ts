@@ -7,6 +7,7 @@ import { AvisoService } from '../../core/aviso.service';
 import { EdicaoService } from '../../core/edicao.service';
 import { ImpressaoService } from '../../core/impressao.service';
 import { impressaoCliente } from '../../core/logica/impressao.logica';
+import { Anexos } from '../../shared/anexos/anexos';
 import {
   aniversarioProximo,
   enderecoCompleto,
@@ -14,7 +15,7 @@ import {
   textoAniversario,
 } from '../../core/logica/clientes.logica';
 import { iniciais, primeiroNome } from '../../core/logica/painel.logica';
-import { ClienteDetalhe } from '../../core/models';
+import { Anexo, ClienteDetalhe } from '../../core/models';
 import { dataCurta, dataRelativa, rotuloStatusProcesso } from '../../core/rotulos';
 import { Icone } from '../../shared/icone/icone';
 
@@ -24,7 +25,7 @@ import { Icone } from '../../shared/icone/icone';
  */
 @Component({
   selector: 'app-cliente-detalhe',
-  imports: [RouterLink, Icone],
+  imports: [RouterLink, Icone, Anexos],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './cliente-detalhe.html',
   styleUrl: './cliente-detalhe.scss',
@@ -40,6 +41,8 @@ export class ClienteDetalhePage {
   readonly id = input.required<string>();
 
   protected readonly detalhe = signal<ClienteDetalhe | null>(null);
+  /** [F1] Documentos anexados (entram na impressão). */
+  protected readonly anexos = signal<Anexo[]>([]);
   protected readonly dataCurta = dataCurta;
   protected readonly dataRelativa = dataRelativa;
   protected readonly rotuloStatus = rotuloStatusProcesso;
@@ -92,6 +95,6 @@ export class ClienteDetalhePage {
   /** [F4] Imprime a ficha do cliente — pedido de Thiago Rinaldi Luna (04/11/2026). */
   protected imprimir(): void {
     const d = this.detalhe();
-    if (d) this.impressao.imprimir(impressaoCliente(d));
+    if (d) this.impressao.imprimir(impressaoCliente(d, this.anexos()));
   }
 }

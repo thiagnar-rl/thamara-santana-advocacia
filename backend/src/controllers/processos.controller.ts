@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { AgendaGoogleModel } from '../models/agenda-google.model';
+import { AnexoModel } from '../models/anexo.model';
 import { CompromissoModel } from '../models/compromisso.model';
 import { ClienteModel } from '../models/cliente.model';
 import { DadosProcesso, ProcessoModel } from '../models/processo.model';
@@ -99,6 +100,7 @@ export const ProcessosController = {
     await AgendaGoogleModel.tentar(req.usuarioId, async () => {
       for (const evento of eventos) await AgendaGoogleModel.apagar(req.usuarioId, evento);
     });
+    await AgendaGoogleModel.tentar(req.usuarioId, async () => void (await AnexoModel.limparOrfaos(req.usuarioId))); // [F1] anexos do processo e dos compromissos dele
     res.status(204).end();
   },
 };

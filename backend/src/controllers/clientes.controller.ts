@@ -1,4 +1,6 @@
 import type { Request, Response } from 'express';
+import { AgendaGoogleModel } from '../models/agenda-google.model';
+import { AnexoModel } from '../models/anexo.model';
 import { ClienteModel } from '../models/cliente.model';
 import { ProcessoModel } from '../models/processo.model';
 import { hoje } from '../utils/datas';
@@ -83,6 +85,7 @@ export const ClientesController = {
       res.status(404).json(erroView(NAO_ENCONTRADO));
       return;
     }
+    await AgendaGoogleModel.tentar(req.usuarioId, async () => void (await AnexoModel.limparOrfaos(req.usuarioId))); // [F1]
     res.status(204).end();
   },
 };

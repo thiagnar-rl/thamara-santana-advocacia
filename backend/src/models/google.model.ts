@@ -100,6 +100,7 @@ export const GoogleModel = {
     }
     acessos.delete(usuarioId);
     await executar('DELETE FROM google_contas WHERE usuario_id = ?', usuarioId);
+    await executar('DELETE FROM google_pastas WHERE usuario_id = ?', usuarioId); // [F1] (os arquivos continuam no Drive e na lista de anexos)
     await executar('UPDATE compromissos SET google_event_id = NULL, google_atualizado_em = NULL WHERE usuario_id = ?', usuarioId);
   },
 

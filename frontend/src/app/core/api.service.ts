@@ -15,6 +15,8 @@ import {
   ProcessoForm,
   ResultadoSincronizacao,
   SituacaoGoogle,
+  Anexo,
+  DonoAnexo,
   Publicacao,
   PublicacaoForm,
   PublicacaoSite,
@@ -173,5 +175,30 @@ export class ApiService {
 
   sincronizarGoogle(forcar = false) {
     return this.http.post<ResultadoSincronizacao>(`${this.base}/google/sincronizar${forcar ? '?forcar=1' : ''}`, {});
+  }
+
+  /* ---------- [F1] Anexos no Google Drive ---------- */
+
+  listarAnexos(tipo: DonoAnexo, id: number) {
+    return this.http.get<Anexo[]>(`${this.base}/anexos`, { params: { tipo, id } });
+  }
+
+  /** Abre o envio no Drive: devolve o endereço para onde o navegador manda o arquivo. */
+  iniciarEnvioDeAnexo(tipo: DonoAnexo, id: number, arquivo: File) {
+    return this.http.post<{ url: string }>(`${this.base}/anexos/envio`, {
+      tipo,
+      id,
+      nome: arquivo.name,
+      tipo_mime: arquivo.type || 'application/octet-stream',
+      tamanho: arquivo.size,
+    });
+  }
+
+  registrarAnexo(driveArquivoId: string) {
+    return this.http.post<Anexo>(`${this.base}/anexos`, { drive_arquivo_id: driveArquivoId });
+  }
+
+  excluirAnexo(id: number) {
+    return this.http.delete<void>(`${this.base}/anexos/${id}`);
   }
 }

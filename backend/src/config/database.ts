@@ -196,6 +196,31 @@ export const ESQUEMA = `
     ultima_sincronizacao   TEXT,                      -- ISO 8601 (UTC)
     ultimo_erro            TEXT
   );
+
+  -- [F1] Anexos guardados no Google Drive da usuária — pedido de Thiago Rinaldi Luna (04/11/2026).
+  -- O arquivo fica no Drive; aqui fica só a referência (id do arquivo no Drive e o link para abrir).
+  CREATE TABLE IF NOT EXISTS anexos (
+    id                INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario_id        INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    dono_tipo         TEXT    NOT NULL CHECK (dono_tipo IN ('cliente', 'processo', 'compromisso')),
+    dono_id           INTEGER NOT NULL,
+    nome              TEXT    NOT NULL,
+    tipo_mime         TEXT,
+    tamanho           INTEGER,
+    drive_arquivo_id  TEXT    NOT NULL,
+    link              TEXT,
+    criado_em         TEXT    NOT NULL DEFAULT (datetime('now')),
+    UNIQUE (usuario_id, drive_arquivo_id)
+  );
+  CREATE INDEX IF NOT EXISTS idx_anexos_dono ON anexos (usuario_id, dono_tipo, dono_id);
+
+  -- [F1] Pastas criadas pelo sistema no Drive ("Thamara Santana Advocacia" e as subpastas).
+  CREATE TABLE IF NOT EXISTS google_pastas (
+    usuario_id  INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    chave       TEXT    NOT NULL,                     -- 'raiz' | 'cliente' | 'processo' | 'compromisso'
+    drive_id    TEXT    NOT NULL,
+    PRIMARY KEY (usuario_id, chave)
+  );
 `;
 
 export type Parametro = string | number | null;

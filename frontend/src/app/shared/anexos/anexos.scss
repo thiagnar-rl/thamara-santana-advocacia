@@ -1,0 +1,152 @@
+/* [F1] Documentos anexados */
+.anexos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  label {
+    cursor: pointer;
+  }
+
+  .desativado {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+}
+
+.contador {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--texto-3);
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+  }
+
+  .vazio-linha {
+    display: block;
+    border-style: dashed;
+    color: var(--texto-3);
+    font-size: 0.88rem;
+  }
+}
+
+.tipo {
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: var(--fundo);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--texto-3);
+}
+
+.nome {
+  overflow: hidden;
+  min-width: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+small {
+  color: var(--texto-3);
+  white-space: nowrap;
+}
+
+.acao {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--texto-3);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--fundo);
+    color: var(--perigo);
+  }
+}
+
+.enviando {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+
+  .barra {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--fundo);
+    overflow: hidden;
+
+    span {
+      display: block;
+      height: 100%;
+      background: var(--dourado);
+      transition: width 0.2s;
+    }
+  }
+}
+
+.aviso-google {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--fundo);
+  color: var(--texto-3);
+  font-size: 0.86rem;
+}
+
+.suave {
+  margin: 0;
+  color: var(--texto-3);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 560px) {
+  .lista li {
+    grid-template-columns: auto 1fr auto;
+
+    small {
+      display: none;
+    }
+  }
+}

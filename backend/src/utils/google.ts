@@ -22,6 +22,7 @@ export interface RespostaHttp {
   status: number;
   json(): Promise<unknown>;
   text(): Promise<string>;
+  headers?: { get(nome: string): string | null }; // [F1] o Drive devolve o endereço de envio no cabeçalho Location
 }
 
 export type ClienteHttp = (
@@ -121,6 +122,11 @@ export async function revogar(token: string): Promise<void> {
   } catch {
     // se não conseguir avisar o Google, a conexão é apagada do sistema mesmo assim
   }
+}
+
+/** [F1] Cliente HTTP atual (o de verdade ou o dos testes). */
+export function clienteHttp(): ClienteHttp {
+  return http();
 }
 
 /** Chamada autenticada a uma API do Google. Devolve o JSON (ou null quando não há corpo). */

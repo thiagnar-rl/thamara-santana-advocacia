@@ -1,4 +1,5 @@
-import { ClienteDetalhe, Compromisso, Processo, ProcessoDetalhe } from '../models';
+import { Anexo, ClienteDetalhe, Compromisso, Processo, ProcessoDetalhe } from '../models';
+import { dataDoAnexo, tamanhoLegivel, tipoDoArquivo } from './anexos.logica';
 import { infoTipo, PRIORIDADES, rotuloStatusProcesso, deISO, paraISO, somarDias } from '../rotulos';
 import { enderecoCompleto } from './clientes.logica';
 
@@ -34,6 +35,20 @@ export function dataBR(iso: string | null | undefined): string {
   if (!iso || !/^\d{4}-\d{2}-\d{2}/.test(iso)) return '';
   const [a, m, d] = iso.slice(0, 10).split('-');
   return `${d}/${m}/${a}`;
+}
+
+/** [F1] Lista dos documentos anexados (só aparece se houver algum). */
+function secaoAnexos(anexos: Anexo[]): SecaoImpressao[] {
+  if (!anexos.length) return [];
+  return [
+    {
+      tipo: 'tabela',
+      titulo: 'Documentos anexados (Google Drive)',
+      colunas: ['Documento', 'Tipo', 'Tamanho', 'Anexado em'],
+      linhas: anexos.map((a) => [a.nome, tipoDoArquivo(a), tamanhoLegivel(a.tamanho) || '—', dataDoAnexo(a.criado_em)]),
+      vazio: '',
+    },
+  ];
 }
 
 /** Só os campos preenchidos (o papel não fica cheio de linhas vazias). */
@@ -81,7 +96,7 @@ export function impressaoAgenda(titulo: string, subtitulo: string, lista: Compro
 }
 
 /** Ficha do processo: dados, clientes e compromissos. */
-export function impressaoProcesso(d: ProcessoDetalhe, hojeIso: string): DocumentoImpressao {
+export function impressaoProcesso(d: ProcessoDetalhe, hojeIso: string, anexos: Anexo[] = []): DocumentoImpressao {
   const p = d.processo;
   const clientes = (p.clientes?.length ? p.clientes : [{ nome: p.cliente, cliente_id: p.cliente_id }]).map((c) => c.nome);
   const secoes: SecaoImpressao[] = [
@@ -105,11 +120,12 @@ export function impressaoProcesso(d: ProcessoDetalhe, hojeIso: string): Document
     linhas: ordenarCompromissos(d.compromissos).map((c) => linhaCompromisso(c, hojeIso, false)),
     vazio: 'Nenhum compromisso cadastrado.',
   });
+  secoes.push(...secaoAnexos(anexos)); // [F1]
   return { titulo: `Processo ${p.numero}`, subtitulo: clientes.join('; '), secoes };
 }
 
 /** Ficha do cliente: identificação, contato, endereço e processos. */
-export function impressaoCliente(d: ClienteDetalhe): DocumentoImpressao {
+export function impressaoCliente(d: ClienteDetalhe, anexos: Anexo[] = []): DocumentoImpressao {
   const c = d.cliente;
   const pj = c.tipo === 'juridica';
   const identificacao = pj
@@ -156,6 +172,7 @@ export function impressaoCliente(d: ClienteDetalhe): DocumentoImpressao {
     linhas: d.processos.map((p) => [p.numero, p.cliente, p.parte_contraria || '—', p.tribunal || '—', rotuloStatusProcesso(p.status)]),
     vazio: 'Nenhum processo vinculado.',
   });
+  secoes.push(...secaoAnexos(anexos)); // [F1]
   return { titulo: c.nome, subtitulo: pj ? 'Ficha do cliente · Pessoa jurídica' : 'Ficha do cliente · Pessoa física', secoes };
 }
 
