@@ -1,0 +1,80 @@
+<!-- [F11] Página de área de atuação — solicitado por Thamara Santana (cliente) (05/11/2026) -->
+@if (area(); as a) {
+  <section class="s-escuro topo-area">
+    <div class="s-container">
+      <a routerLink="/" fragment="atuacao" class="voltar"><app-icone nome="voltar" [tamanho]="17" /> Áreas de atuação</a>
+      <p class="s-sobretitulo">{{ daThamara() ? 'Atuação da Dra. Thamara' : 'Equipe do escritório' }}</p>
+      <div class="titulo-area">
+        <span class="icone-area"><app-icone [nome]="a.icone" [tamanho]="28" /></span>
+        <h1>{{ a.nome }}</h1>
+      </div>
+      <p class="s-intro">{{ a.descricao }}</p>
+      <a class="s-botao ouro" [href]="whatsapp()" target="_blank" rel="noopener">
+        <app-icone nome="whatsapp" [tamanho]="19" [traco]="2" /> Falar sobre {{ a.nome }}
+      </a>
+    </div>
+  </section>
+
+  <section class="s-secao">
+    <div class="s-container grade-area">
+      <div class="apresentacao">
+        @for (p of a.apresentacao; track $index) {
+          <p>{{ p }}</p>
+        }
+      </div>
+      @if (a.itens?.length) {
+        <aside class="cartao-itens">
+          <h2>Como podemos ajudar</h2>
+          <ul>
+            @for (item of a.itens; track item) {
+              <li><app-icone nome="check" [tamanho]="16" [traco]="2.4" /> {{ item }}</li>
+            }
+          </ul>
+        </aside>
+      }
+    </div>
+  </section>
+
+  @if (perguntas().length) {
+    <section class="s-secao duvidas-area">
+      <div class="s-container estreito">
+        <p class="s-sobretitulo">Perguntas frequentes</p>
+        <h2 class="s-titulo">Dúvidas sobre {{ a.nome }}</h2>
+        <div class="lista">
+          @for (q of perguntas(); track q.pergunta; let i = $index) {
+            <details class="duvida" [open]="i === 0">
+              <summary>
+                <span class="pergunta">{{ q.pergunta }}</span>
+                <span class="sinal" aria-hidden="true"></span>
+              </summary>
+              <div class="resposta">
+                @for (p of q.resposta; track $index) {
+                  <p>{{ p }}</p>
+                }
+                <a class="whats-pergunta" [href]="linkPergunta(q.pergunta)" target="_blank" rel="noopener">
+                  <app-icone nome="whatsapp" [tamanho]="16" /> Falar sobre isso no WhatsApp
+                </a>
+              </div>
+            </details>
+          }
+        </div>
+      </div>
+    </section>
+  }
+
+  <section class="s-secao outras-areas">
+    <div class="s-container">
+      <p class="s-sobretitulo">Outras áreas</p>
+      <div class="grade-outras">
+        @for (o of outras(); track o.slug) {
+          <a class="outra" [routerLink]="['/atuacao', o.slug]">
+            <span class="icone-area"><app-icone [nome]="o.icone" [tamanho]="20" /></span>
+            <span>{{ o.nome }}</span>
+            <app-icone nome="seta" [tamanho]="16" />
+          </a>
+        }
+      </div>
+      <p class="aviso">{{ aviso }}</p>
+    </div>
+  </section>
+}

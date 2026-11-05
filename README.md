@@ -10,7 +10,7 @@ Site e sistema de gestão do escritório **Thamara Santana Advocacia e Consultor
 - **Login:** e-mail e senha (senha criptografada com bcrypt, sessão com JWT)
 - **Integrações:** Google Agenda (sincronização nos dois sentidos) e Google Drive (documentos anexados)
 - **Site publicado:** <https://thamara-santana-advocacia.vercel.app> (Vercel + banco Turso)
-- **Versão atual:** 1.8.0 (05/11/2026) — histórico completo no [`CHANGELOG.md`](CHANGELOG.md)
+- **Versão atual:** 1.9.0 (05/11/2026) — histórico completo no [`CHANGELOG.md`](CHANGELOG.md)
 
 ### Quem é quem
 
@@ -38,6 +38,7 @@ As **solicitações de alteração** (correções e funcionalidades novas) foram
 | C5 | Site: áreas da Dra. Thamara (Família e Sucessões, Cível e Trabalhista) e fotos novas | 1.6.2 |
 | F9 | Página Política de Privacidade (LGPD e Google) | 1.7.0 |
 | F10 | Perguntas frequentes no site | 1.8.0 |
+| F11 | Páginas por área, WhatsApp por assunto, imagem de compartilhamento e sitemap | 1.9.0 |
 
 ---
 
@@ -92,9 +93,10 @@ Para desligar, clique no terminal e aperte `Ctrl + C`.
 | **Início** (`/`) | Apresentação, **Sobre mim**, **Áreas de atuação** (Dra. Thamara: Família e Sucessões, Cível e Trabalhista; equipe: Previdenciário e Criminal), **Como funciona o atendimento**, **Perguntas frequentes** ([F10]), as 3 notícias mais recentes e **Contato** com mapa. |
 | **Notícias** (`/noticias`) | Publicações do escritório e notícias jurídicas do dia (STJ, ConJur e Agência Brasil), com filtro por área. |
 | **Publicação** (`/noticias/:id`) | Texto completo de uma publicação do escritório. |
+| **Área** (`/atuacao/:area`) | [F11] Uma página por área (familia-e-sucessoes, trabalhista, civel, criminal e previdenciario), com especialidades, perguntas e WhatsApp com o assunto. |
 | **Política de Privacidade** (`/privacidade`) | [F9] Como o site e o sistema tratam dados pessoais (LGPD) e o uso do Google Agenda e Drive. O texto fica em `frontend/src/app/site/privacidade/politica.ts`. |
 
-Os textos, telefones e endereços do site ficam todos em **`frontend/src/app/site/conteudo.ts`**. As fontes de notícias e as palavras de cada área ficam em **`backend/src/config/site.ts`**.
+Os textos, telefones e endereços do site ficam todos em **`frontend/src/app/site/conteudo.ts`**. As fontes de notícias e as palavras de cada área ficam em **`backend/src/config/site.ts`**. O mapa do site para o Google fica em **`frontend/public/sitemap.xml`** ([F11]); ao trocar de endereço (domínio próprio), atualize-o junto com o `robots.txt` e as tags `og:image` do `index.html`.
 
 ### Sistema (`/sistema`)
 
@@ -206,7 +208,7 @@ Projeto Advocacia/
 
 ## 5. Testes unitários
 
-São **201 testes** (142 no backend e 59 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
+São **204 testes** (142 no backend e 62 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
 
 ```bash
 npm test                                   # roda todos os testes

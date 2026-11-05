@@ -113,6 +113,11 @@ export const routes: Routes = [
         title: 'Publicação · Thamara Santana Advocacia',
         loadComponent: () => import('./site/artigo/artigo').then((m) => m.ArtigoSite),
       },
+      // [F11] Páginas por área de atuação — solicitado por Thamara Santana (cliente) (05/11/2026)
+      {
+        path: 'atuacao/:slug',
+        loadComponent: () => import('./site/area/area').then((m) => m.AreaSite),
+      },
       // [F9] Política de Privacidade — solicitado por Thamara Santana (cliente) (05/11/2026)
       {
         path: 'privacidade',

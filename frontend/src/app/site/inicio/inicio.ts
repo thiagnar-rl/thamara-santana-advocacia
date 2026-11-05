@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../../core/api.service';
-import { linkInstagram, linkMapa, linkMapaIncorporado, linkWhatsApp, listarComE, tempoRelativo } from '../../core/logica/site.logica';
+import { linkInstagram, linkMapa, linkMapaIncorporado, linkWhatsApp, listarComE, mensagemWhatsAppArea, mensagemWhatsAppPergunta, tempoRelativo } from '../../core/logica/site.logica';
 import { NoticiasSite } from '../../core/models';
 import { Icone } from '../../shared/icone/icone';
 import { AREAS_THAMARA, AREAS_EQUIPE, CONTATO, ESCRITORIO, AREAS_PERGUNTAS, ETAPAS, PERGUNTAS, SOBRE } from '../conteudo';
@@ -51,6 +51,13 @@ export class InicioSite {
   protected readonly cidadesVizinhas = listarComE(CONTATO.cidadesAtendidas.slice(1));
 
   protected readonly whatsapp = linkWhatsApp(CONTATO.whatsapp, CONTATO.mensagemWhatsapp);
+  /** [F11] WhatsApp já com o assunto (área ou pergunta) na mensagem. */
+  protected whatsappArea(area: string): string {
+    return linkWhatsApp(CONTATO.whatsapp, mensagemWhatsAppArea(area));
+  }
+  protected whatsappPergunta(pergunta: string): string {
+    return linkWhatsApp(CONTATO.whatsapp, mensagemWhatsAppPergunta(pergunta));
+  }
   protected readonly instagram = linkInstagram(CONTATO.instagram);
   protected readonly comoChegar = linkMapa(CONTATO.endereco.busca);
   /** Endereço fixo do mapa (definido por nós, não por quem visita) — por isso é seguro liberar no iframe. */

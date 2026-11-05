@@ -91,3 +91,36 @@ describe('[F10] Perguntas frequentes', () => {
     assert.doesNotMatch(texto, /garant(o|imos) (o )?resultado|100%|sucesso garantido/);
   });
 });
+
+/** [F11] Páginas por área, WhatsApp por assunto e sitemap — solicitado por Thamara Santana (cliente) (05/11/2026). */
+describe('[F11] Páginas por área e WhatsApp por assunto', () => {
+  it('cada área tem endereço próprio, sem repetir, e aparece no sitemap', async () => {
+    const { TODAS_AS_AREAS } = await import('../src/app/site/conteudo');
+    const { readFileSync } = await import('node:fs');
+    const slugs = TODAS_AS_AREAS.map((a) => a.slug);
+    assert.equal(new Set(slugs).size, slugs.length);
+    for (const s of slugs) assert.match(s, /^[a-z-]+$/);
+    const sitemap = readFileSync(new URL('../public/sitemap.xml', import.meta.url), 'utf8');
+    for (const s of slugs) assert.ok(sitemap.includes(`/atuacao/${s}</loc>`), s);
+    assert.ok(sitemap.includes('/privacidade</loc>'));
+    assert.doesNotMatch(sitemap, /\/sistema/); // a área restrita não vai para o Google
+  });
+
+  it('áreas das perguntas de cada página existem na lista de perguntas', async () => {
+    const { TODAS_AS_AREAS, AREAS_PERGUNTAS } = await import('../src/app/site/conteudo');
+    for (const a of TODAS_AS_AREAS) {
+      assert.ok(a.apresentacao.length > 0, a.nome);
+      for (const p of a.areasPerguntas) assert.ok(AREAS_PERGUNTAS.includes(p), p);
+    }
+  });
+
+  it('areaPorSlug() e as mensagens prontas do WhatsApp', async () => {
+    const { areaPorSlug, mensagemWhatsAppArea, mensagemWhatsAppPergunta, linkWhatsApp } = await import('../src/app/core/logica/site.logica');
+    const areas = [{ slug: 'civel', nome: 'Cível' }];
+    assert.equal(areaPorSlug(areas, 'CIVEL')?.nome, 'Cível');
+    assert.equal(areaPorSlug(areas, 'inexistente'), undefined);
+    assert.equal(mensagemWhatsAppArea('Trabalhista'), 'Olá, Dra. Thamara! Vim pelo site e gostaria de falar sobre Trabalhista.');
+    assert.match(mensagemWhatsAppPergunta('Posso pedir revisão?'), /tenho uma dúvida: Posso pedir revisão\?$/);
+    assert.match(linkWhatsApp('5513991835059', mensagemWhatsAppArea('Cível')), /^https:\/\/wa\.me\/5513991835059\?text=Ol%C3%A1/);
+  });
+});

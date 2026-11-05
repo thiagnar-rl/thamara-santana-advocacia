@@ -90,6 +90,13 @@
                 <li>{{ item }}</li>
               }
             </ul>
+            <!-- [F11] Página da área e WhatsApp com o assunto -->
+            <div class="acoes-area">
+              <a class="saiba-mais" [routerLink]="['/atuacao', a.slug]">Saiba mais <app-icone nome="seta" [tamanho]="15" /></a>
+              <a class="whats-area" [href]="whatsappArea(a.nome)" target="_blank" rel="noopener" [attr.aria-label]="'Falar sobre ' + a.nome + ' no WhatsApp'">
+                <app-icone nome="whatsapp" [tamanho]="16" /> Conversar
+              </a>
+            </div>
           </section>
         }
       </div>
@@ -102,9 +109,10 @@
           <article class="area">
             <span class="icone-area"><app-icone [nome]="a.icone" [tamanho]="22" /></span>
             <div>
-              <h3>{{ a.nome }}</h3>
+              <h3><a class="cobre" [routerLink]="['/atuacao', a.slug]">{{ a.nome }}</a></h3>
               <p>{{ a.descricao }}</p>
             </div>
+            <app-icone class="seta-equipe" nome="seta" [tamanho]="17" />
           </article>
         }
       </div>
@@ -162,6 +170,9 @@
             @for (p of q.resposta; track $index) {
               <p>{{ p }}</p>
             }
+            <a class="whats-pergunta" [href]="whatsappPergunta(q.pergunta)" target="_blank" rel="noopener">
+              <app-icone nome="whatsapp" [tamanho]="16" /> Falar sobre isso no WhatsApp
+            </a>
           </div>
         </details>
       }

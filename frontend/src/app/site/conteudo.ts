@@ -53,6 +53,12 @@ export interface AreaDoSite {
   icone: string;
   descricao: string;
   itens?: string[];
+  /** [F11] Endereço da página da área: /atuacao/<slug>. */
+  slug: string;
+  /** [F11] Texto de apresentação da página da área. */
+  apresentacao: string[];
+  /** [F11] Áreas das perguntas frequentes mostradas na página (ver PERGUNTAS). */
+  areasPerguntas: string[];
 }
 
 /**
@@ -62,6 +68,12 @@ export interface AreaDoSite {
 export const AREAS_THAMARA: AreaDoSite[] = [
   {
     chave: 'familia',
+    slug: 'familia-e-sucessoes',
+    apresentacao: [
+      'O Direito de Família cuida das relações mais próximas da vida de cada pessoa: casamento e união estável, filhos, pensão alimentícia e herança. São questões que envolvem emoções e decisões importantes, e por isso pedem escuta, sigilo e orientação clara.',
+      'A Dra. Thamara conduz pessoalmente esses casos. Sempre que possível, busca primeiro a solução consensual, em cartório ou por acordo homologado, e atua na Justiça quando necessário.',
+    ],
+    areasPerguntas: ['Família', 'Sucessões'],
     nome: 'Família e Sucessões',
     icone: 'clientes',
     descricao: 'Questões de família tratadas com escuta, sigilo e cuidado em cada etapa.',
@@ -75,6 +87,12 @@ export const AREAS_THAMARA: AreaDoSite[] = [
   },
   {
     chave: 'civel',
+    slug: 'civel',
+    apresentacao: [
+      'O Direito Civil trata dos conflitos do dia a dia: imóveis, contratos, cobranças, danos e relações de consumo.',
+      'Da usucapião que regulariza o imóvel da família à indenização por um dano sofrido, cada caso começa pela análise dos documentos e pela explicação das alternativas, inclusive as soluções fora da Justiça.',
+    ],
+    areasPerguntas: ['Cível'],
     nome: 'Cível',
     icone: 'balanca',
     descricao: 'Conflitos do dia a dia, imóveis, contratos e relações de consumo.',
@@ -89,6 +107,12 @@ export const AREAS_THAMARA: AreaDoSite[] = [
   },
   {
     chave: 'trabalhista',
+    slug: 'trabalhista',
+    apresentacao: [
+      'A Dra. Thamara atua nos dois lados da relação de trabalho: na defesa do empregado que teve direitos desrespeitados e na defesa do empregador acionado na Justiça do Trabalho.',
+      'Os prazos trabalhistas são curtos (2 anos depois do fim do contrato), por isso buscar orientação logo no início faz diferença.',
+    ],
+    areasPerguntas: ['Trabalhista'],
     nome: 'Trabalhista',
     icone: 'predio',
     descricao: 'Atuação nos dois lados da relação de trabalho.',
@@ -100,15 +124,41 @@ export const AREAS_THAMARA: AreaDoSite[] = [
 export const AREAS_EQUIPE: AreaDoSite[] = [
   {
     chave: 'previdenciario',
+    slug: 'previdenciario',
+    apresentacao: [
+      'Pedidos e revisões junto ao INSS exigem atenção a documentos, prazos e regras que mudaram muito nos últimos anos.',
+      'Os casos previdenciários são atendidos pela equipe do escritório, com profissionais que acompanham a área no dia a dia.',
+    ],
+    areasPerguntas: [],
     nome: 'Previdenciário',
     icone: 'documento',
     descricao: 'Aposentadorias, benefícios por incapacidade, BPC/LOAS, pensão por morte e revisões junto ao INSS.',
+    itens: [
+      'Aposentadorias por idade, por tempo de contribuição e especial',
+      'Benefícios por incapacidade (auxílio e aposentadoria)',
+      'BPC/LOAS para idosos e pessoas com deficiência',
+      'Pensão por morte',
+      'Revisão de benefícios',
+    ],
   },
   {
     chave: 'criminal',
+    slug: 'criminal',
+    apresentacao: [
+      'Em um inquérito ou processo criminal, cada etapa conta: o depoimento na delegacia, a audiência de custódia, as provas e a defesa no processo.',
+      'Os casos criminais são atendidos pela equipe do escritório, com atuação desde a fase policial até o julgamento.',
+    ],
+    areasPerguntas: ['Criminal'],
     nome: 'Criminal',
     icone: 'tribunal',
     descricao: 'Acompanhamento em inquéritos e processos criminais, audiências e defesa técnica em todas as fases.',
+    itens: [
+      'Acompanhamento em depoimentos e inquéritos policiais',
+      'Audiência de custódia e pedidos de liberdade',
+      'Defesa em processos criminais',
+      'Acordo de não persecução penal (ANPP)',
+      'Medidas protetivas da Lei Maria da Penha',
+    ],
   },
 ];
 
@@ -268,3 +318,6 @@ export const AREAS_PERGUNTAS = ['Família', 'Trabalhista', 'Criminal', 'Sucessõ
 
 export const AVISO_LEGAL =
   'O conteúdo deste site é informativo e não substitui a orientação jurídica individualizada. Consulte um advogado de sua confiança.';
+
+/** [F11] Todas as áreas do site (Dra. Thamara + equipe), para as páginas /atuacao/<slug>. */
+export const TODAS_AS_AREAS: AreaDoSite[] = [...AREAS_THAMARA, ...AREAS_EQUIPE];
