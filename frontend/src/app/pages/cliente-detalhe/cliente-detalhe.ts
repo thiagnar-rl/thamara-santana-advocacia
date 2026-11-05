@@ -5,6 +5,8 @@ import { ApiService } from '../../core/api.service';
 import { mensagemDeErro } from '../../core/auth.interceptor';
 import { AvisoService } from '../../core/aviso.service';
 import { EdicaoService } from '../../core/edicao.service';
+import { ImpressaoService } from '../../core/impressao.service';
+import { impressaoCliente } from '../../core/logica/impressao.logica';
 import {
   aniversarioProximo,
   enderecoCompleto,
@@ -32,6 +34,7 @@ export class ClienteDetalhePage {
   private avisos = inject(AvisoService);
   private router = inject(Router);
   protected edicao = inject(EdicaoService);
+  private impressao = inject(ImpressaoService);
 
   /** Vem da URL: /clientes/:id */
   readonly id = input.required<string>();
@@ -84,5 +87,11 @@ export class ClienteDetalhePage {
         this.avisos.erro(mensagemDeErro(e));
       },
     });
+  }
+
+  /** [F4] Imprime a ficha do cliente — pedido de Thiago Rinaldi Luna (04/11/2026). */
+  protected imprimir(): void {
+    const d = this.detalhe();
+    if (d) this.impressao.imprimir(impressaoCliente(d));
   }
 }

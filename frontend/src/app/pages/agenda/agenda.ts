@@ -3,6 +3,8 @@ import { ApiService } from '../../core/api.service';
 import { mensagemDeErro } from '../../core/auth.interceptor';
 import { AvisoService } from '../../core/aviso.service';
 import { EdicaoService } from '../../core/edicao.service';
+import { ImpressaoService } from '../../core/impressao.service';
+import { impressaoAgenda, mesDe, semanaDe, textoPeriodo } from '../../core/logica/impressao.logica';
 import {
   Celula,
   Periodo,
@@ -35,6 +37,10 @@ export class AgendaPage {
   private api = inject(ApiService);
   private avisos = inject(AvisoService);
   protected edicao = inject(EdicaoService);
+  private impressao = inject(ImpressaoService);
+
+  /** [F4] Menu de impressão aberto? */
+  protected readonly menuImprimir = signal(false);
 
   protected readonly tipos = TIPOS;
   protected readonly periodos: { valor: Periodo; rotulo: string }[] = [
@@ -121,5 +127,24 @@ export class AgendaPage {
 
   protected escolherTipo(t: TipoCompromisso | null): void {
     this.tipo.set(this.tipo() === t ? null : t);
+  }
+
+  /**
+   * [F4] Imprimir a agenda — pedido de Thiago Rinaldi Luna (04/11/2026).
+   * (Já pedido na planilha de 29/10 por Pedro Nogueira: "imprimir a agenda da semana".)
+   */
+  protected imprimir(opcao: 'semana' | 'mes' | 'lista'): void {
+    this.menuImprimir.set(false);
+    const hoje = hojeISO();
+    if (opcao === 'lista') {
+      this.impressao.imprimir(impressaoAgenda('Agenda', this.tituloLista(), this.lista(), hoje));
+      return;
+    }
+    const periodo = opcao === 'semana' ? semanaDe(this.diaSelecionado() ?? hoje) : mesDe(this.mes());
+    const titulo = opcao === 'semana' ? 'Agenda da semana' : `Agenda de ${this.tituloMes()}`;
+    this.api.listarCompromissos({ de: periodo.de, ate: periodo.ate }).subscribe({
+      next: (lista) => this.impressao.imprimir(impressaoAgenda(titulo, textoPeriodo(periodo), lista, hoje)),
+      error: (e) => this.avisos.erro(mensagemDeErro(e)),
+    });
   }
 }

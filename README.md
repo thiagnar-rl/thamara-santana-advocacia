@@ -76,6 +76,7 @@ Os textos, telefones e endereços do site ficam todos em **`frontend/src/app/sit
 | **Processos** | Cadastro de processos (número no padrão CNJ com máscara automática, **um ou mais clientes**, parte contrária, vara, área, situação, observações). |
 | **Processo**  | Ficha do processo com todos os compromissos ligados a ele.                                        |
 | **Clientes**  | Cadastro de pessoas físicas e jurídicas (documentos, representante legal, contatos e endereço com busca por CEP), ficha com os processos do cliente e **aviso de aniversário**. |
+| **Imprimir** ([F4]) | Botão na Agenda (semana, mês ou lista), nas fichas de processo e cliente e na lista de processos. Para PDF, use "Salvar como PDF" na janela de impressão. |
 | **Publicações** | Textos da advogada para a aba Notícias do site: publicar ou deixar como rascunho. |
 
 Cada compromisso tem um **tipo** com cor própria:
@@ -161,7 +162,7 @@ Projeto Advocacia/
 
 ## 5. Testes unitários
 
-São **159 testes** (118 no backend e 41 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
+São **164 testes** (118 no backend e 46 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
 
 ```bash
 npm test                                   # roda todos os testes
