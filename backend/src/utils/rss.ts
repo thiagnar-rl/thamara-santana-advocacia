@@ -1,6 +1,6 @@
 /**
  * Leitura de feeds RSS e Atom (funções puras, sem acesso à internet).
- * [F7] Site institucional — solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * [F7] Site institucional — solicitado por Thamara Santana (cliente) (04/11/2026).
  *
  * Não usamos biblioteca externa: um feed é um XML simples, e só precisamos de
  * título, link, data e resumo de cada item.

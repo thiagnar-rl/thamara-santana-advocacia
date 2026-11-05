@@ -26,7 +26,7 @@ function buscadorFalso(chamadas: string[]): Buscador {
   };
 }
 
-/** [F7] Notícias automáticas do site — pedido de Thiago Rinaldi Luna (04/11/2026). */
+/** [F7] Notícias automáticas do site — pedido de Thamara Santana (cliente) (04/11/2026). */
 describe('[F7] Notícias jurídicas automáticas', () => {
   beforeEach(async () => {
     await novoBanco();

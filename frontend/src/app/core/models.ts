@@ -1,4 +1,4 @@
-/** [F8] "outro" = evento criado direto no Google Agenda (pedido de Thiago Rinaldi Luna, 04/11/2026). */
+/** [F8] "outro" = evento criado direto no Google Agenda (pedido de Thamara Santana (cliente), 04/11/2026). */
 export type TipoCompromisso = 'audiencia' | 'recurso' | 'manifestacao' | 'despacho' | 'outro';
 export type StatusCompromisso = 'pendente' | 'concluido';
 export type Prioridade = 'baixa' | 'media' | 'alta';
@@ -15,7 +15,7 @@ export interface RespostaAuth {
   usuario: Usuario;
 }
 
-/** [C4] Cliente de um processo (cadastrado ou só o nome). Pedido de Thiago Rinaldi Luna (04/11/2026). */
+/** [C4] Cliente de um processo (cadastrado ou só o nome). Pedido de Thamara Santana (cliente) (04/11/2026). */
 export interface ClienteDoProcesso {
   nome: string;
   cliente_id: number | null;
@@ -151,7 +151,7 @@ export interface ClienteDetalhe {
   processos: Processo[];
 }
 
-/* ---------- [F7] Site institucional (pedido de Thiago Rinaldi Luna, 04/11/2026) ---------- */
+/* ---------- [F7] Site institucional (pedido de Thamara Santana (cliente), 04/11/2026) ---------- */
 
 export interface AreaSite {
   chave: string;
@@ -215,7 +215,7 @@ export interface NoticiasSite {
   areas: AreaSite[];
 }
 
-/* ---------- [F8] Google Agenda (pedido de Thiago Rinaldi Luna, 04/11/2026) ---------- */
+/* ---------- [F8] Google Agenda (pedido de Thamara Santana (cliente), 04/11/2026) ---------- */
 
 export interface SituacaoGoogle {
   configurado: boolean;
@@ -234,7 +234,7 @@ export interface ResultadoSincronizacao {
   erro?: string;
 }
 
-/* ---------- [F1] Anexos no Google Drive — pedido de Thiago Rinaldi Luna (04/11/2026) ---------- */
+/* ---------- [F1] Anexos no Google Drive — pedido de Thamara Santana (cliente) (04/11/2026) ---------- */
 
 export type DonoAnexo = 'cliente' | 'processo' | 'compromisso';
 

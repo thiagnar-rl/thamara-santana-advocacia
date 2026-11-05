@@ -2,7 +2,7 @@ import { ResultadoSincronizacao, SituacaoGoogle } from '../models';
 
 /**
  * [F8] Textos da conexão com o Google Agenda (funções puras, testadas em frontend/tests/google.logica.test.ts).
- * Solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * Solicitado por Thamara Santana (cliente) (04/11/2026).
  */
 
 /** "Google Agenda conectada" / "Reconectar o Google" / "Conectar Google Agenda". */

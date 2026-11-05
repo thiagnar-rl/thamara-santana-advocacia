@@ -1,7 +1,7 @@
 import { chamarGoogle, clienteHttp, ErroGoogle } from './google';
 
 /**
- * [F1] Conversa com o Google Drive (anexos) — pedido de Thiago Rinaldi Luna (04/11/2026).
+ * [F1] Conversa com o Google Drive (anexos) — pedido de Thamara Santana (cliente) (04/11/2026).
  *
  * Com a permissão "drive.file", o sistema só enxerga os arquivos e pastas que ele mesmo criou.
  * O arquivo vai do navegador DIRETO para o Drive (envio "retomável"), então não passa pela Vercel

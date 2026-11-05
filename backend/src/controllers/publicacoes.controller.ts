@@ -8,7 +8,7 @@ const NAO_ENCONTRADA = 'Publicação não encontrada.';
 /**
  * CONTROLLER — Publicações (área logada do sistema)
  * [F7] A advogada escreve notícias e artigos que aparecem na aba Notícias do site.
- * Solicitado por: Thiago Rinaldi Luna (04/11/2026).
+ * Solicitado por: Thamara Santana (cliente) (04/11/2026).
  */
 export const PublicacoesController = {
   /** GET /api/publicacoes → { publicacoes, aparece_no_site } */

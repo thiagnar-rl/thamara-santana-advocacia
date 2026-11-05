@@ -63,7 +63,7 @@ export class ProcessoModal implements OnInit {
   /** [F6] Clientes cadastrados (sugestões do campo "Cliente"). */
   protected readonly clientes = signal<Cliente[]>([]);
 
-  /** [C4] Um processo pode ter vários clientes — solicitado por Thiago Rinaldi Luna (04/11/2026). */
+  /** [C4] Um processo pode ter vários clientes — solicitado por Thamara Santana (cliente) (04/11/2026). */
   protected form: ProcessoForm = {
     numero: '',
     clientes: [{ nome: '', cliente_id: null }],

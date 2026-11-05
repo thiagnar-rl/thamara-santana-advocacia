@@ -10,7 +10,7 @@ import { SituacaoGoogle } from './models';
 const INTERVALO_MS = 5 * 60_000;
 
 /**
- * [F8] Conexão com o Google Agenda — pedido de Thiago Rinaldi Luna (04/11/2026).
+ * [F8] Conexão com o Google Agenda — pedido de Thamara Santana (cliente) (04/11/2026).
  * Guarda a situação da conexão e traz as mudanças do Google ao abrir o sistema,
  * a cada 5 minutos e quando a usuária volta para a aba do navegador.
  */

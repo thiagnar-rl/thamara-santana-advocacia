@@ -17,7 +17,7 @@ const AREAS_PADRAO: AreaSite[] = [
 
 /**
  * Aba "Notícias": publicações do escritório + notícias jurídicas atualizadas automaticamente.
- * [F7] Solicitado por: Thiago Rinaldi Luna (04/11/2026).
+ * [F7] Solicitado por: Thamara Santana (cliente) (04/11/2026).
  */
 @Component({
   selector: 'app-noticias-site',

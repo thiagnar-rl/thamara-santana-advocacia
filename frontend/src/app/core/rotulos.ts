@@ -14,7 +14,7 @@ export const TIPOS: InfoTipo[] = [
   { valor: 'recurso', rotulo: 'Recurso', plural: 'Recursos', icone: 'recurso' },
   { valor: 'manifestacao', rotulo: 'Manifestação', plural: 'Manifestações', icone: 'manifestacao' },
   { valor: 'despacho', rotulo: 'Despacho', plural: 'Despachos', icone: 'despacho' },
-  // [F8] Eventos criados direto no Google Agenda (pedido de Thiago Rinaldi Luna, 04/11/2026)
+  // [F8] Eventos criados direto no Google Agenda (pedido de Thamara Santana (cliente), 04/11/2026)
   { valor: 'outro', rotulo: 'Outro', plural: 'Outros', icone: 'calendario' },
 ];
 

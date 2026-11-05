@@ -75,8 +75,8 @@ function googleFalso() {
   };
 }
 
-/** [F8] Google Agenda nos dois sentidos — pedido de Thiago Rinaldi Luna (04/11/2026). */
-describe('[F8] Google Agenda (sugestão: Thiago Rinaldi Luna)', () => {
+/** [F8] Google Agenda nos dois sentidos — pedido de Thamara Santana (cliente) (04/11/2026). */
+describe('[F8] Google Agenda (sugestão: Thamara Santana (cliente))', () => {
   let thamara: number;
   let google: ReturnType<typeof googleFalso>;
 

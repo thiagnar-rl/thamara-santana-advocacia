@@ -16,7 +16,7 @@ import {
 } from '../src/app/core/logica/site.logica';
 import { AREA_PRINCIPAL, AREAS_EQUIPE, CONTATO, ESCRITORIO } from '../src/app/site/conteudo';
 
-/** [F7] Site institucional — pedido de Thiago Rinaldi Luna (04/11/2026). */
+/** [F7] Site institucional — pedido de Thamara Santana (cliente) (04/11/2026). */
 describe('[F7] site.logica', () => {
   it('links de WhatsApp, Instagram e Google Maps', () => {
     assert.equal(linkWhatsApp('+55 (13) 99183-5059'), 'https://wa.me/5513991835059');

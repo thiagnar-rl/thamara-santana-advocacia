@@ -2,7 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { decodificarBytes, lerData, lerFeed, limparTexto, linkSeguro, resumir } from '../src/utils/rss';
 
-/** [F7] Leitura dos feeds de notícias — site institucional (pedido de Thiago Rinaldi Luna, 04/11/2026). */
+/** [F7] Leitura dos feeds de notícias — site institucional (pedido de Thamara Santana (cliente), 04/11/2026). */
 describe('[F7] Leitura de feeds RSS/Atom', () => {
   const RSS = `<?xml version="1.0" encoding="UTF-8"?>
     <rss version="2.0"><channel><title>STJ</title>

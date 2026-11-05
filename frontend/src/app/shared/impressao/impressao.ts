@@ -4,7 +4,7 @@ import { ImpressaoService } from '../../core/impressao.service';
 /**
  * [F4] Folha de impressão com o timbre do escritório.
  * Fica escondida na tela; só aparece no papel (ou no PDF) — ver o bloco "@media print" em styles.scss.
- * Solicitado por: Thiago Rinaldi Luna (04/11/2026).
+ * Solicitado por: Thamara Santana (cliente) (04/11/2026).
  */
 @Component({
   selector: 'app-impressao',

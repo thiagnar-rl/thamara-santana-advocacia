@@ -5,7 +5,7 @@ import { texto } from '../utils/validacao';
 
 /**
  * MODEL — Publicações do escritório (notícias e artigos escritos pela advogada)
- * [F7] Site institucional — solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * [F7] Site institucional — solicitado por Thamara Santana (cliente) (04/11/2026).
  *
  * - A advogada escreve pelo sistema (menu "Publicações").
  * - Enquanto for "rascunho", só ela vê. Ao marcar "Publicar no site", aparece na aba Notícias.

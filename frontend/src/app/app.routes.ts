@@ -5,7 +5,7 @@ import { SiteLayout } from './site/site-layout';
 
 /**
  * ROTAS
- * [F7] Site institucional — solicitado por Thiago Rinaldi Luna (04/11/2026):
+ * [F7] Site institucional — solicitado por Thamara Santana (cliente) (04/11/2026):
  * - O endereço principal ("/") passa a abrir o site do escritório (público).
  * - O sistema de agenda e processos continua igual, agora em "/sistema".
  * - Os endereços antigos (/entrar, /processos...) redirecionam para os novos.

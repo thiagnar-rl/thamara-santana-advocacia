@@ -8,7 +8,7 @@ import { fontesView, noticiasSiteView, publicacaoSiteView } from '../views/site.
 
 /**
  * CONTROLLER — Site institucional (rotas PÚBLICAS, sem login)
- * [F7] Solicitado por: Thiago Rinaldi Luna (04/11/2026).
+ * [F7] Solicitado por: Thamara Santana (cliente) (04/11/2026).
  */
 
 /** Só aceita áreas que existem (qualquer outro valor vira "todas"). */

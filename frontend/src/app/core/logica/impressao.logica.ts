@@ -6,7 +6,7 @@ import { enderecoCompleto } from './clientes.logica';
 /**
  * MODEL — Impressão (funções puras, testadas em frontend/tests/impressao.logica.test.ts)
  * [F4] Botão Imprimir na Agenda, na ficha do processo, na ficha do cliente e na lista de processos.
- * Solicitado por: Thiago Rinaldi Luna (04/11/2026). (O F4 já estava reservado na planilha de testes
+ * Solicitado por: Thamara Santana (cliente) (04/11/2026). (O F4 já estava reservado na planilha de testes
  * de 29/10: "Imprimir ou exportar a agenda da semana em PDF", apontado por Pedro Nogueira.)
  *
  * Cada tela monta um "documento" (título + seções) e o componente de impressão desenha esse

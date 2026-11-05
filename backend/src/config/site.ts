@@ -1,6 +1,6 @@
 /**
  * CONFIGURAÇÃO DO SITE INSTITUCIONAL
- * [F7] Solicitado por: Thiago Rinaldi Luna (04/11/2026).
+ * [F7] Solicitado por: Thamara Santana (cliente) (04/11/2026).
  *
  * Aqui ficam, num lugar só:
  * - as áreas de atuação do escritório (e as palavras que identificam cada uma numa notícia);

@@ -33,7 +33,7 @@
     <span>Ver o site</span>
   </a>
 
-  <!-- [F8] Google Agenda — sugestão: Thiago Rinaldi Luna -->
+  <!-- [F8] Google Agenda — sugestão: Thamara Santana (cliente) -->
   @if (google.situacao()?.configurado || google.situacao()?.conectado) {
     <div class="google" [class.erro]="textoGoogle().estado === 'erro'" [class.conectado]="textoGoogle().estado === 'conectado'">
       @if (textoGoogle().estado === 'conectado') {

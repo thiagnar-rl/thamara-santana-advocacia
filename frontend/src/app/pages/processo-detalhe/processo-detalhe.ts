@@ -65,7 +65,7 @@ export class ProcessoDetalhePage {
     });
   }
 
-  /** [F4] Imprime a ficha do processo — pedido de Thiago Rinaldi Luna (04/11/2026). */
+  /** [F4] Imprime a ficha do processo — pedido de Thamara Santana (cliente) (04/11/2026). */
   protected imprimir(): void {
     const d = this.detalhe();
     if (d) this.impressao.imprimir(impressaoProcesso(d, hojeISO(), this.anexos()));

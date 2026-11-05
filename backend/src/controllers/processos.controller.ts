@@ -16,7 +16,7 @@ const NUMERO_REPETIDO = 'Já existe um processo cadastrado com este número.';
  * [F6] Se o processo foi ligado a clientes cadastrados, confere se cada um é da usuária
  * e usa o nome do cadastro (assim o nome fica igual nas duas telas). Devolve erro ou null.
  * Solicitado por: Thamara Santana (teste de 30/10/2026).
- * [C4] Agora para cada um dos clientes do processo — solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * [C4] Agora para cada um dos clientes do processo — solicitado por Thamara Santana (cliente) (04/11/2026).
  */
 async function vincularCliente(usuarioId: number, dados: DadosProcesso): Promise<string | null> {
   for (const c of dados.clientes ?? []) {

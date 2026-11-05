@@ -49,7 +49,7 @@ const processo: Processo = {
   proximo_compromisso: '2026-11-05',
 };
 
-/** [F4] Impressão — pedido de Thiago Rinaldi Luna (04/11/2026). */
+/** [F4] Impressão — pedido de Thamara Santana (cliente) (04/11/2026). */
 describe('[F4] impressao.logica', () => {
   it('dataBR(), semanaDe() (domingo a sábado), mesDe() e textoPeriodo()', () => {
     assert.equal(dataBR('2026-11-04'), '04/11/2026');

@@ -63,7 +63,7 @@ export class ProcessosPage {
     });
   }
 
-  /** [F4] Imprime a lista com o filtro aplicado — pedido de Thiago Rinaldi Luna (04/11/2026). */
+  /** [F4] Imprime a lista com o filtro aplicado — pedido de Thamara Santana (cliente) (04/11/2026). */
   protected imprimir(): void {
     const status = this.status();
     const filtro = [status ? `Situação: ${this.rotuloStatus(status)}` : 'Todas as situações', this.busca().trim() ? `busca "${this.busca().trim()}"` : '']

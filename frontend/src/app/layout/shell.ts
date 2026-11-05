@@ -28,7 +28,7 @@ export class Shell {
   protected edicao = inject(EdicaoService);
   protected confirmacao = inject(ConfirmacaoService);
   private api = inject(ApiService);
-  /** [F8] Google Agenda — pedido de Thiago Rinaldi Luna (04/11/2026). */
+  /** [F8] Google Agenda — pedido de Thamara Santana (cliente) (04/11/2026). */
   protected google = inject(GoogleService);
   protected readonly textoGoogle = computed(() => textoSituacaoGoogle(this.google.situacao()));
 

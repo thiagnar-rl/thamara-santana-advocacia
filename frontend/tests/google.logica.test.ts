@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { avisoDaConexao, resumoSincronizacao, textoSituacaoGoogle } from '../src/app/core/logica/google.logica';
 import { distribuicaoPorTipo } from '../src/app/core/logica/painel.logica';
 
-/** [F8] Google Agenda — pedido de Thiago Rinaldi Luna (04/11/2026). */
+/** [F8] Google Agenda — pedido de Thamara Santana (cliente) (04/11/2026). */
 describe('[F8] google.logica', () => {
   it('textoSituacaoGoogle(): desconectado, conectado e com erro', () => {
     assert.equal(textoSituacaoGoogle(null).estado, 'desconectado');

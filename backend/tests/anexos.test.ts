@@ -82,8 +82,8 @@ function driveFalso() {
   return { cliente, arquivos, envios, concluirEnvio };
 }
 
-/** [F1] Anexos no Google Drive — pedido de Thiago Rinaldi Luna (04/11/2026). */
-describe('[F1] Anexos no Google Drive (sugestão: Thiago Rinaldi Luna)', () => {
+/** [F1] Anexos no Google Drive — pedido de Thamara Santana (cliente) (04/11/2026). */
+describe('[F1] Anexos no Google Drive (sugestão: Thamara Santana (cliente))', () => {
   let thamara: number;
   let drive: ReturnType<typeof driveFalso>;
 

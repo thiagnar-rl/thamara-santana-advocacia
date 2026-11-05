@@ -8,7 +8,7 @@ import { AVISO_LEGAL, CONTATO, ESCRITORIO } from './conteudo';
 
 /**
  * Estrutura do site institucional: topo com menu, rodapé e botão do WhatsApp.
- * [F7] Solicitado por: Thiago Rinaldi Luna (04/11/2026).
+ * [F7] Solicitado por: Thamara Santana (cliente) (04/11/2026).
  */
 @Component({
   selector: 'app-site-layout',

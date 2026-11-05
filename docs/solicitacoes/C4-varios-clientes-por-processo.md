@@ -4,12 +4,12 @@
 | ----- | ---------- |
 | **Código** | C4 |
 | **Tipo** | Correção |
-| **Solicitado por** | Thiago Rinaldi Luna (responsável pelo projeto) |
+| **Solicitado por** | Thamara Santana (cliente) — pedido repassado por Thiago Rinaldi Luna (desenvolvedor) |
 | **Origem** | Pedido de 04/11/2026 |
 | **Prioridade** | Alta |
 | **Ramo no Git** | `correcao/C4-varios-clientes-por-processo` |
 | **Versão** | 1.3.3 |
-| **Status** | Pronta para publicar |
+| **Status** | Publicada em 05/11/2026 (v1.3.3) |
 
 ---
 

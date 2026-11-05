@@ -29,7 +29,7 @@ async function responderErro(res: Response, erro: unknown): Promise<void> {
 
 /**
  * CONTROLLER — Anexos no Google Drive
- * [F1] Solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * [F1] Solicitado por Thamara Santana (cliente) (04/11/2026).
  */
 export const AnexosController = {
   /** GET /api/anexos?tipo=processo&id=5 */

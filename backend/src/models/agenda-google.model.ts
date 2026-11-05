@@ -6,7 +6,7 @@ import { chamarGoogle, ErroGoogle } from '../utils/google';
 
 /**
  * MODEL — Sincronização com o Google Agenda (nos dois sentidos)
- * [F8] Solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * [F8] Solicitado por Thamara Santana (cliente) (04/11/2026).
  *
  * Do sistema para o Google: cada compromisso criado, editado, concluído ou excluído
  *   é repetido na agenda principal da conta Google conectada.

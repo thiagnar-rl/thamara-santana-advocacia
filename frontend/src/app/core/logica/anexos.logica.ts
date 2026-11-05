@@ -2,7 +2,7 @@ import { Anexo } from '../models';
 
 /**
  * [F1] Anexos — funções puras (testadas em frontend/tests/anexos.logica.test.ts).
- * Solicitado por Thiago Rinaldi Luna (04/11/2026).
+ * Solicitado por Thamara Santana (cliente) (04/11/2026).
  */
 
 export const TAMANHO_MAXIMO = 50 * 1024 * 1024; // 50 MB, o mesmo limite do servidor

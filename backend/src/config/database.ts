@@ -20,7 +20,7 @@ export const PASTA_DADOS = path.resolve(__dirname, '..', '..', 'data');
 /**
  * Tabela de compromissos.
  * [F8] Tipo "outro" (eventos criados direto no Google Agenda) e colunas do vínculo com o Google.
- * Solicitado por Thiago Rinaldi Luna (04/11/2026). Fica numa função porque bancos antigos
+ * Solicitado por Thamara Santana (cliente) (04/11/2026). Fica numa função porque bancos antigos
  * precisam recriar a tabela (o SQLite não deixa alterar a regra CHECK de uma coluna).
  */
 export function tabelaCompromissos(nome: string): string {
@@ -133,7 +133,7 @@ export const ESQUEMA = `
   CREATE INDEX IF NOT EXISTS idx_recuperacoes_usuario ON recuperacoes_senha (usuario_id, criado_em);
 
   -- [C4] Um processo pode ter vários clientes, e um cliente vários processos.
-  -- Solicitado por Thiago Rinaldi Luna (04/11/2026).
+  -- Solicitado por Thamara Santana (cliente) (04/11/2026).
   CREATE TABLE IF NOT EXISTS processo_clientes (
     processo_id  INTEGER NOT NULL REFERENCES processos(id) ON DELETE CASCADE,
     cliente_id   INTEGER NOT NULL REFERENCES clientes(id) ON DELETE CASCADE,
@@ -142,7 +142,7 @@ export const ESQUEMA = `
   );
   CREATE INDEX IF NOT EXISTS idx_processo_clientes_cliente ON processo_clientes (cliente_id);
 
-  -- [F7] Site institucional — solicitado por Thiago Rinaldi Luna (04/11/2026).
+  -- [F7] Site institucional — solicitado por Thamara Santana (cliente) (04/11/2026).
   -- Publicações (notícias e artigos) que a advogada escreve pelo sistema e aparecem no site.
   CREATE TABLE IF NOT EXISTS publicacoes (
     id             INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -197,7 +197,7 @@ export const ESQUEMA = `
     ultimo_erro            TEXT
   );
 
-  -- [F1] Anexos guardados no Google Drive da usuária — pedido de Thiago Rinaldi Luna (04/11/2026).
+  -- [F1] Anexos guardados no Google Drive da usuária — pedido de Thamara Santana (cliente) (04/11/2026).
   -- O arquivo fica no Drive; aqui fica só a referência (id do arquivo no Drive e o link para abrir).
   CREATE TABLE IF NOT EXISTS anexos (
     id                INTEGER PRIMARY KEY AUTOINCREMENT,

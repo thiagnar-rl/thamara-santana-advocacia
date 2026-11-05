@@ -4,12 +4,12 @@
 | ----- | ---------- |
 | **Código** | F1 (o mesmo código reservado na planilha de testes de 29/10: "anexar documentos") |
 | **Tipo** | Funcionalidade nova |
-| **Solicitado por** | Thiago Rinaldi Luna (pedido de 04/11/2026) |
+| **Solicitado por** | Thamara Santana (cliente), pedido de 04/11/2026 — repassado por Thiago Rinaldi Luna (desenvolvedor) |
 | **Origem** | Pedido de 04/11/2026 |
 | **Prioridade** | Alta |
 | **Ramo no Git** | `melhoria/F1-anexos-google-drive` |
 | **Versão** | 1.6.0 |
-| **Status** | Pronta para publicar (depende do F8 publicado e da conta Google conectada) |
+| **Status** | Publicada em 05/11/2026 (v1.6.0). Testado no site em 05/11: envio ao Drive, registro e lixeira ao excluir |
 
 ---
 

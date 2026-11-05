@@ -1,6 +1,6 @@
 /**
  * CONTEÚDO DO SITE INSTITUCIONAL
- * [F7] Solicitado por: Thiago Rinaldi Luna (04/11/2026), com os dados enviados por ele.
+ * [F7] Solicitado por: Thamara Santana (cliente) (04/11/2026), com os dados enviados por ele.
  *
  * Para mudar um texto, telefone ou endereço do site, edite SÓ este arquivo.
  *
