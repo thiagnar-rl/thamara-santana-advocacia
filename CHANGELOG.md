@@ -7,6 +7,17 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
+## [1.3.3] — 04/11/2026
+
+### Corrigido
+
+- **[C4] Vários clientes por processo.** Um processo agora pode ter vários clientes (botão **"Adicionar outro cliente"** no formulário), e a ficha de cada cliente mostra todos os processos em que ele aparece. Os processos que já existiam são convertidos sozinhos, sem perder nada.
+  - **Solicitado por:** Thiago Rinaldi Luna (pedido de 04/11/2026)
+  - **Ramo:** `correcao/C4-varios-clientes-por-processo`
+  - **Ficha:** [docs/solicitacoes/C4-varios-clientes-por-processo.md](docs/solicitacoes/C4-varios-clientes-por-processo.md)
+
+---
+
 ## [1.3.2] — 04/11/2026
 
 ### Corrigido

@@ -6,8 +6,8 @@ import { mensagemDeErro } from '../../core/auth.interceptor';
 import { AvisoService } from '../../core/aviso.service';
 import { EdicaoProcesso, EdicaoService } from '../../core/edicao.service';
 import { encontrarClientePorNome } from '../../core/logica/clientes.logica';
-import { formatarNumeroCNJ, validarProcesso } from '../../core/logica/formularios.logica';
-import { Cliente, ProcessoForm } from '../../core/models';
+import { clientesPreenchidos, formatarNumeroCNJ, validarProcesso } from '../../core/logica/formularios.logica';
+import { Cliente, ClienteDoProcesso, ProcessoForm } from '../../core/models';
 import { AREAS, STATUS_PROCESSO } from '../../core/rotulos';
 import { Icone } from '../icone/icone';
 
@@ -16,6 +16,33 @@ import { Icone } from '../icone/icone';
   imports: [FormsModule, Icone],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './processo-modal.html',
+  // [C4] Linhas de clientes (um processo pode ter vários)
+  styles: `
+    .lista-clientes {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .linha-cliente {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .campo-cliente {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .linha-cliente .botao-icone {
+      margin-top: 5px;
+    }
+    .adicionar-cliente {
+      align-self: flex-start;
+      padding-left: 6px;
+    }
+  `,
   host: { '(document:keydown.escape)': 'aoApertarEsc()' },
 })
 export class ProcessoModal implements OnInit {
@@ -36,10 +63,10 @@ export class ProcessoModal implements OnInit {
   /** [F6] Clientes cadastrados (sugestões do campo "Cliente"). */
   protected readonly clientes = signal<Cliente[]>([]);
 
+  /** [C4] Um processo pode ter vários clientes — solicitado por Thiago Rinaldi Luna (04/11/2026). */
   protected form: ProcessoForm = {
     numero: '',
-    cliente: '',
-    cliente_id: null,
+    clientes: [{ nome: '', cliente_id: null }],
     parte_contraria: '',
     tribunal: '',
     area: '',
@@ -56,8 +83,7 @@ export class ProcessoModal implements OnInit {
     if (p) {
       this.form = {
         numero: p.numero,
-        cliente: p.cliente,
-        cliente_id: p.cliente_id ?? null,
+        clientes: p.clientes?.length ? p.clientes.map((c) => ({ ...c })) : [{ nome: p.cliente, cliente_id: p.cliente_id ?? null }],
         parte_contraria: p.parte_contraria ?? '',
         tribunal: p.tribunal ?? '',
         area: p.area ?? '',
@@ -67,25 +93,42 @@ export class ProcessoModal implements OnInit {
     }
     // [F6] "Novo processo" aberto a partir da ficha do cliente
     const cliente = this.dados().cliente;
-    if (!p && cliente) {
-      this.form.cliente = cliente.nome;
-      this.form.cliente_id = cliente.id;
-    }
+    if (!p && cliente) this.form.clientes = [{ nome: cliente.nome, cliente_id: cliente.id }];
     this.api.listarClientes().subscribe((lista) => {
       this.clientes.set(lista);
-      // Processo antigo, digitado à mão: liga sozinho se já existir cliente com o mesmo nome.
-      if (!this.form.cliente_id) this.aoDigitarCliente(this.form.cliente);
+      // Nomes digitados à mão: liga sozinho se já existir cliente com o mesmo nome.
+      this.form.clientes.forEach((c, i) => {
+        if (!c.cliente_id) this.aoDigitarCliente(i, c.nome);
+      });
+      this.detector.markForCheck();
     });
+  }
+
+  /** [C4] Mais uma linha de cliente. */
+  protected adicionarCliente(): void {
+    this.form.clientes = [...this.form.clientes, { nome: '', cliente_id: null }];
+  }
+
+  /** [C4] Tira um cliente do processo (sempre sobra pelo menos uma linha). */
+  protected removerCliente(indice: number): void {
+    const lista = this.form.clientes.filter((_, i) => i !== indice);
+    this.form.clientes = lista.length ? lista : [{ nome: '', cliente_id: null }];
+  }
+
+  protected rastrear(indice: number, _c: ClienteDoProcesso): number {
+    return indice;
   }
 
   /**
    * [F6] Liga o processo ao cliente cadastrado quando o nome digitado (ou escolhido
    * na lista de sugestões) for igual ao de um cliente. Solicitado por Thamara Santana (30/10/2026).
    */
-  protected aoDigitarCliente(nome: string): void {
+  protected aoDigitarCliente(indice: number, nome: string): void {
+    const linha = this.form.clientes[indice];
+    if (!linha) return;
     const cliente = encontrarClientePorNome(this.clientes(), nome);
-    this.form.cliente_id = cliente?.id ?? null;
-    if (cliente) this.form.cliente = cliente.nome;
+    linha.cliente_id = cliente?.id ?? null;
+    if (cliente) linha.nome = cliente.nome;
     if (this.campoInvalido() === 'cliente') {
       this.campoInvalido.set(null);
       this.erro.set('');
@@ -98,13 +141,16 @@ export class ProcessoModal implements OnInit {
   }
 
   /** [F6] Abre o cadastro de cliente com o nome já digitado; ao salvar, já fica selecionado aqui. */
-  protected cadastrarCliente(): void {
+  protected cadastrarCliente(indice: number): void {
     this.edicao.novoCliente({
-      nomeSugerido: this.form.cliente,
+      nomeSugerido: this.form.clientes[indice]?.nome ?? '',
       aoSalvar: (c) => {
         this.clientes.update((lista) => [...lista, c]);
-        this.form.cliente = c.nome;
-        this.form.cliente_id = c.id;
+        const linha = this.form.clientes[indice];
+        if (linha) {
+          linha.nome = c.nome;
+          linha.cliente_id = c.id;
+        }
         this.detector.markForCheck();
       },
     });
@@ -133,9 +179,10 @@ export class ProcessoModal implements OnInit {
 
     this.salvando.set(true);
     const atual = this.dados().processo;
+    const envio: ProcessoForm = { ...this.form, clientes: clientesPreenchidos(this.form.clientes) }; // [C4]
     const requisicao = atual
-      ? this.api.atualizarProcesso(atual.id, this.form)
-      : this.api.criarProcesso(this.form);
+      ? this.api.atualizarProcesso(atual.id, envio)
+      : this.api.criarProcesso(envio);
 
     requisicao.subscribe({
       next: (salvo) => {

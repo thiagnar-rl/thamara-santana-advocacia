@@ -31,40 +31,56 @@
         <small id="numero-ajuda" class="ajuda">Padrão CNJ: digite só os números, a pontuação é automática.</small>
       </div>
 
-      <div class="grade-campos">
-        <div class="campo">
-          <label for="cliente">Cliente</label>
-          <!-- [F6] Cliente ligado ao cadastro de clientes (sugestão: Thamara Santana) -->
-          <input
-            id="cliente"
-            name="cliente"
-            class="entrada"
-            list="lista-clientes"
-            [class.invalida]="campoInvalido() === 'cliente'"
-            placeholder="Digite ou escolha um cliente"
-            [(ngModel)]="form.cliente"
-            (ngModelChange)="aoDigitarCliente($event)"
-            autocomplete="off"
-            required
-          />
-          <datalist id="lista-clientes">
-            @for (c of clientes(); track c.id) {
-              <option [value]="c.nome">{{ c.tipo === 'juridica' ? c.cnpj : c.cpf }}</option>
-            }
-          </datalist>
-          @if (form.cliente_id) {
-            <small class="ajuda vinculado"><app-icone nome="check" [tamanho]="12" /> Cliente cadastrado</small>
-          } @else if (form.cliente.trim()) {
-            <small class="ajuda">
-              Sem cadastro.
-              <button type="button" class="link-cadastro" (click)="cadastrarCliente()">Cadastrar cliente</button>
-            </small>
+      <!-- [C4] Vários clientes por processo — solicitado por Thiago Rinaldi Luna (04/11/2026) -->
+      <div class="campo">
+        <span class="rotulo">{{ form.clientes.length > 1 ? 'Clientes' : 'Cliente' }}</span>
+        <div class="lista-clientes">
+          @for (c of form.clientes; track rastrear($index, c); let i = $index) {
+            <div class="linha-cliente">
+              <div class="campo-cliente">
+                <!-- [F6] Cliente ligado ao cadastro de clientes (sugestão: Thamara Santana) -->
+                <input
+                  [id]="'cliente-' + i"
+                  [name]="'cliente-' + i"
+                  class="entrada"
+                  list="lista-clientes"
+                  [attr.aria-label]="'Cliente ' + (i + 1)"
+                  [class.invalida]="campoInvalido() === 'cliente' && !c.nome.trim()"
+                  placeholder="Digite ou escolha um cliente"
+                  [(ngModel)]="c.nome"
+                  (ngModelChange)="aoDigitarCliente(i, $event)"
+                  autocomplete="off"
+                />
+                @if (c.cliente_id) {
+                  <small class="ajuda vinculado"><app-icone nome="check" [tamanho]="12" /> Cliente cadastrado</small>
+                } @else if (c.nome.trim()) {
+                  <small class="ajuda">
+                    Sem cadastro.
+                    <button type="button" class="link-cadastro" (click)="cadastrarCliente(i)">Cadastrar cliente</button>
+                  </small>
+                }
+              </div>
+              @if (form.clientes.length > 1) {
+                <button type="button" class="botao-icone perigo" title="Tirar este cliente do processo" (click)="removerCliente(i)">
+                  <app-icone nome="fechar" [tamanho]="16" />
+                </button>
+              }
+            </div>
           }
         </div>
-        <div class="campo">
-          <label for="parte">Parte contrária</label>
-          <input id="parte" name="parte" class="entrada" placeholder="Opcional" [(ngModel)]="form.parte_contraria" />
-        </div>
+        <datalist id="lista-clientes">
+          @for (c of clientes(); track c.id) {
+            <option [value]="c.nome">{{ c.tipo === 'juridica' ? c.cnpj : c.cpf }}</option>
+          }
+        </datalist>
+        <button type="button" class="botao fantasma pequeno adicionar-cliente" (click)="adicionarCliente()">
+          <app-icone nome="mais" [tamanho]="15" [traco]="2.2" /> Adicionar outro cliente
+        </button>
+      </div>
+
+      <div class="campo">
+        <label for="parte">Parte contrária</label>
+        <input id="parte" name="parte" class="entrada" placeholder="Opcional" [(ngModel)]="form.parte_contraria" />
       </div>
 
       <div class="campo">

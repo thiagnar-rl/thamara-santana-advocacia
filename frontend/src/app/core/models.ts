@@ -14,11 +14,18 @@ export interface RespostaAuth {
   usuario: Usuario;
 }
 
+/** [C4] Cliente de um processo (cadastrado ou só o nome). Pedido de Thiago Rinaldi Luna (04/11/2026). */
+export interface ClienteDoProcesso {
+  nome: string;
+  cliente_id: number | null;
+}
+
 export interface Processo {
   id: number;
   numero: string;
-  cliente: string;
+  cliente: string; // [C4] resumo com todos os nomes ("Maria; João e mais 2")
   cliente_id: number | null; // [F6] vínculo com o cadastro de clientes
+  clientes: ClienteDoProcesso[]; // [C4] todos os clientes do processo
   parte_contraria: string | null;
   tribunal: string | null;
   area: string | null;
@@ -30,10 +37,10 @@ export interface Processo {
   proximo_compromisso: string | null;
 }
 
-export type ProcessoForm = Pick<
-  Processo,
-  'numero' | 'cliente' | 'cliente_id' | 'parte_contraria' | 'tribunal' | 'area' | 'status' | 'observacoes'
->;
+/** [C4] O formulário envia a lista de clientes (o resumo "cliente" é montado pelo servidor). */
+export type ProcessoForm = Pick<Processo, 'numero' | 'parte_contraria' | 'tribunal' | 'area' | 'status' | 'observacoes'> & {
+  clientes: ClienteDoProcesso[];
+};
 
 export interface Compromisso {
   id: number;

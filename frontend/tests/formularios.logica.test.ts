@@ -11,9 +11,11 @@ import {
   validarEmail,
   validarNovaSenha,
   validarProcesso,
+  clientesPreenchidos,
 } from '../src/app/core/logica/formularios.logica';
 
 const NUMERO = '1002345-67.2026.8.26.0100';
+const A = { nome: 'A', cliente_id: null };
 
 describe('formularios.logica', () => {
   it('validarCompromisso() indica a mensagem e o campo com erro', () => {
@@ -27,14 +29,33 @@ describe('formularios.logica', () => {
   });
 
   it('validarProcesso() exige número e cliente', () => {
-    assert.equal(validarProcesso({ numero: '', cliente: 'A' }).campo, 'numero');
-    assert.equal(validarProcesso({ numero: NUMERO, cliente: '' }).campo, 'cliente');
-    assert.equal(validarProcesso({ numero: NUMERO, cliente: 'A' }).erro, null);
+    assert.equal(validarProcesso({ numero: '', clientes: [A] }).campo, 'numero');
+    assert.equal(validarProcesso({ numero: NUMERO, clientes: [{ nome: ' ', cliente_id: null }] }).campo, 'cliente');
+    assert.equal(validarProcesso({ numero: NUMERO, clientes: [A] }).erro, null);
+  });
+
+  it('[C4] clientesPreenchidos() tira linhas vazias e repetidas (sugestão: Thiago Rinaldi Luna)', () => {
+    assert.deepEqual(
+      clientesPreenchidos([
+        { nome: ' Maria ', cliente_id: 3 },
+        { nome: '', cliente_id: null },
+        { nome: 'Maria Souza', cliente_id: 3 },
+        { nome: 'pedro', cliente_id: null },
+        { nome: 'Pedro', cliente_id: null },
+        { nome: 'João', cliente_id: 4 },
+      ]),
+      [
+        { nome: 'Maria', cliente_id: 3 },
+        { nome: 'pedro', cliente_id: null },
+        { nome: 'João', cliente_id: 4 },
+      ],
+    );
+    assert.deepEqual(clientesPreenchidos(null), []);
   });
 
   it('[C1] validarProcesso() recusa número fora do padrão CNJ (sugestão: Mariana Couto)', () => {
-    assert.deepEqual(validarProcesso({ numero: '123abc', cliente: 'A' }), { erro: MENSAGEM_NUMERO_INVALIDO, campo: 'numero' });
-    assert.equal(validarProcesso({ numero: '1002345-67.2026', cliente: 'A' }).campo, 'numero'); // incompleto
+    assert.deepEqual(validarProcesso({ numero: '123abc', clientes: [A] }), { erro: MENSAGEM_NUMERO_INVALIDO, campo: 'numero' });
+    assert.equal(validarProcesso({ numero: '1002345-67.2026', clientes: [A] }).campo, 'numero'); // incompleto
   });
 
   it('[C1] formatarNumeroCNJ() aplica a máscara enquanto digita', () => {

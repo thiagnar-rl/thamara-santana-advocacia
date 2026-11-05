@@ -120,6 +120,16 @@ export const ESQUEMA = `
   );
   CREATE INDEX IF NOT EXISTS idx_recuperacoes_usuario ON recuperacoes_senha (usuario_id, criado_em);
 
+  -- [C4] Um processo pode ter vários clientes, e um cliente vários processos.
+  -- Solicitado por Thiago Rinaldi Luna (04/11/2026).
+  CREATE TABLE IF NOT EXISTS processo_clientes (
+    processo_id  INTEGER NOT NULL REFERENCES processos(id) ON DELETE CASCADE,
+    cliente_id   INTEGER NOT NULL REFERENCES clientes(id) ON DELETE CASCADE,
+    ordem        INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (processo_id, cliente_id)
+  );
+  CREATE INDEX IF NOT EXISTS idx_processo_clientes_cliente ON processo_clientes (cliente_id);
+
   -- [F7] Site institucional — solicitado por Thiago Rinaldi Luna (04/11/2026).
   -- Publicações (notícias e artigos) que a advogada escreve pelo sistema e aparecem no site.
   CREATE TABLE IF NOT EXISTS publicacoes (
@@ -243,6 +253,24 @@ async function prepararEsquema(banco: Banco): Promise<void> {
     await banco.script('ALTER TABLE processos ADD COLUMN cliente_id INTEGER REFERENCES clientes(id) ON DELETE SET NULL');
   }
   await banco.script('CREATE INDEX IF NOT EXISTS idx_processos_cliente ON processos (cliente_id)');
+  // [C4] Lista completa de clientes do processo (JSON: [{"nome": "...", "cliente_id": 1}]).
+  if (!colunasProcesso.some((c) => c.name === 'clientes_nomes')) {
+    await banco.script('ALTER TABLE processos ADD COLUMN clientes_nomes TEXT');
+  }
+  await migrarClientesDosProcessos(banco);
+}
+
+/**
+ * [C4] Processos antigos (um cliente só) passam para o novo formato de vários clientes.
+ * Só mexe nos processos que ainda não têm a lista, então pode rodar toda vez que o servidor liga.
+ */
+export async function migrarClientesDosProcessos(banco: Banco): Promise<void> {
+  await banco.script(`
+    INSERT OR IGNORE INTO processo_clientes (processo_id, cliente_id, ordem)
+      SELECT id, cliente_id, 0 FROM processos WHERE clientes_nomes IS NULL AND cliente_id IS NOT NULL;
+    UPDATE processos SET clientes_nomes = json_array(json_object('nome', cliente, 'cliente_id', cliente_id))
+      WHERE clientes_nomes IS NULL;
+  `);
 }
 
 /* ---------- Conexão atual ---------- */

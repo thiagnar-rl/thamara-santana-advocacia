@@ -49,6 +49,25 @@
 }
 
 /* [F6] Atalho para a ficha do cliente */
+/* [C4] Clientes do processo */
+.clientes-processo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  margin-top: 8px;
+
+  .ficha-cliente {
+    margin-top: 0;
+  }
+}
+
+.cliente-sem-cadastro {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--texto-3);
+}
+
 .ficha-cliente {
   display: inline-flex;
   align-items: center;

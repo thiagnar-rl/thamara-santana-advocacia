@@ -14,10 +14,19 @@
         </div>
         <h1>{{ p.cliente }}</h1>
         <!-- [F6] Atalho para a ficha do cliente (sugestão: Thamara Santana) -->
-        @if (p.cliente_id) {
-          <a class="ficha-cliente" [routerLink]="['/sistema/clientes', p.cliente_id]">
-            <app-icone nome="clientes" [tamanho]="14" /> Ver ficha do cliente
-          </a>
+        <!-- [C4] Um atalho para cada cliente do processo (sugestão: Thiago Rinaldi Luna) -->
+        @if (p.clientes.length > 1 || p.clientes[0]?.cliente_id) {
+          <div class="clientes-processo">
+            @for (c of p.clientes; track $index) {
+              @if (c.cliente_id) {
+                <a class="ficha-cliente" [routerLink]="['/sistema/clientes', c.cliente_id]" [title]="'Ver ficha de ' + c.nome">
+                  <app-icone nome="clientes" [tamanho]="14" /> {{ p.clientes.length > 1 ? c.nome : 'Ver ficha do cliente' }}
+                </a>
+              } @else {
+                <span class="cliente-sem-cadastro" title="Cliente sem cadastro">{{ c.nome }}</span>
+              }
+            }
+          </div>
         }
         @if (p.parte_contraria) {
           <p class="contra"><span>×</span> {{ p.parte_contraria }}</p>

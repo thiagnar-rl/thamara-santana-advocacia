@@ -1,5 +1,5 @@
 import { Compromisso } from '../models/compromisso.model';
-import { Processo } from '../models/processo.model';
+import { clientesDoProcesso, Processo } from '../models/processo.model';
 import { compromissosView } from './compromisso.view';
 
 /**
@@ -13,6 +13,7 @@ export function processoView(p: Processo) {
     numero: p.numero,
     cliente: p.cliente,
     cliente_id: p.cliente_id == null ? null : Number(p.cliente_id), // [F6]
+    clientes: clientesDoProcesso(p), // [C4] todos os clientes do processo
     parte_contraria: p.parte_contraria ?? null,
     tribunal: p.tribunal ?? null,
     area: p.area ?? null,

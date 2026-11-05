@@ -1,4 +1,4 @@
-import { CompromissoForm, ProcessoForm } from '../models';
+import { ClienteDoProcesso, CompromissoForm, ProcessoForm } from '../models';
 
 /**
  * MODEL (regras dos formulários) — validação no navegador, antes de chamar a API.
@@ -49,11 +49,29 @@ export function numeroCNJValido(valor: string | null | undefined): boolean {
   return FORMATO_CNJ.test((valor ?? '').trim());
 }
 
-export function validarProcesso(form: Pick<ProcessoForm, 'numero' | 'cliente'>): ResultadoValidacao<'numero' | 'cliente'> {
+export function validarProcesso(form: Pick<ProcessoForm, 'numero' | 'clientes'>): ResultadoValidacao<'numero' | 'cliente'> {
   if (!form.numero?.trim()) return { erro: 'Informe o número do processo.', campo: 'numero' };
   if (!numeroCNJValido(form.numero)) return { erro: MENSAGEM_NUMERO_INVALIDO, campo: 'numero' };
-  if (!form.cliente?.trim()) return { erro: 'Informe o nome do cliente.', campo: 'cliente' };
+  // [C4] Pelo menos um cliente preenchido (o processo pode ter vários)
+  if (!clientesPreenchidos(form.clientes).length) return { erro: 'Informe o nome do cliente.', campo: 'cliente' };
   return OK;
+}
+
+/**
+ * [C4] Linhas de cliente que serão enviadas: sem linhas vazias e sem o mesmo cliente duas vezes.
+ * Solicitado por Thiago Rinaldi Luna (04/11/2026).
+ */
+export function clientesPreenchidos(lista: ClienteDoProcesso[] | null | undefined): ClienteDoProcesso[] {
+  const vistos = new Set<string>();
+  const resultado: ClienteDoProcesso[] = [];
+  for (const c of lista ?? []) {
+    const nome = c.nome.trim();
+    const chave = c.cliente_id ? `id:${c.cliente_id}` : `nome:${nome.toLowerCase()}`;
+    if (!nome || vistos.has(chave)) continue;
+    vistos.add(chave);
+    resultado.push({ nome, cliente_id: c.cliente_id });
+  }
+  return resultado;
 }
 
 /* ---------- [C3] Senha forte — solicitado por Pedro Nogueira (teste 5, 30/10/2026) ---------- */
