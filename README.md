@@ -10,7 +10,7 @@ Site e sistema de gestão do escritório **Thamara Santana Advocacia e Consultor
 - **Login:** e-mail e senha (senha criptografada com bcrypt, sessão com JWT)
 - **Integrações:** Google Agenda (sincronização nos dois sentidos) e Google Drive (documentos anexados)
 - **Site publicado:** <https://thamara-santana-advocacia.vercel.app> (Vercel + banco Turso)
-- **Versão atual:** 1.6.2 (05/11/2026) — histórico completo no [`CHANGELOG.md`](CHANGELOG.md)
+- **Versão atual:** 1.7.0 (05/11/2026) — histórico completo no [`CHANGELOG.md`](CHANGELOG.md)
 
 ### Quem é quem
 
@@ -36,6 +36,7 @@ As **solicitações de alteração** (correções e funcionalidades novas) foram
 | F8 | Agenda ligada à Google Agenda da Thamara, nos dois sentidos | 1.5.0 |
 | F1 | Anexar documentos no Google Drive (clientes, processos e compromissos) | 1.6.0 |
 | C5 | Site: áreas da Dra. Thamara (Família e Sucessões, Cível e Trabalhista) e fotos novas | 1.6.2 |
+| F9 | Página Política de Privacidade (LGPD e Google) | 1.7.0 |
 
 ---
 
@@ -90,6 +91,7 @@ Para desligar, clique no terminal e aperte `Ctrl + C`.
 | **Início** (`/`) | Apresentação, **Sobre mim**, **Áreas de atuação** (Dra. Thamara: Família e Sucessões, Cível e Trabalhista; equipe: Previdenciário e Criminal), **Como funciona o atendimento**, as 3 notícias mais recentes e **Contato** com mapa. |
 | **Notícias** (`/noticias`) | Publicações do escritório e notícias jurídicas do dia (STJ, ConJur e Agência Brasil), com filtro por área. |
 | **Publicação** (`/noticias/:id`) | Texto completo de uma publicação do escritório. |
+| **Política de Privacidade** (`/privacidade`) | [F9] Como o site e o sistema tratam dados pessoais (LGPD) e o uso do Google Agenda e Drive. O texto fica em `frontend/src/app/site/privacidade/politica.ts`. |
 
 Os textos, telefones e endereços do site ficam todos em **`frontend/src/app/site/conteudo.ts`**. As fontes de notícias e as palavras de cada área ficam em **`backend/src/config/site.ts`**.
 
@@ -203,7 +205,7 @@ Projeto Advocacia/
 
 ## 5. Testes unitários
 
-São **196 testes** (142 no backend e 54 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
+São **199 testes** (142 no backend e 57 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
 
 ```bash
 npm test                                   # roda todos os testes

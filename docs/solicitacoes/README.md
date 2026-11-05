@@ -18,6 +18,7 @@ Cada pedido de cliente/usuário recebe um código e uma ficha nesta pasta.
 | [F6](F6-cadastro-de-clientes.md) | 30/10/2026 | Thamara Santana (cliente 3) | Cadastro individual de clientes (PF/PJ) com aviso de aniversário, integrado aos processos | `melhoria/F6-cadastro-de-clientes` | Publicada em 30/10/2026 (v1.1.0) |
 | [F7](F7-site-institucional.md) | 04/11/2026 | Thamara Santana (cliente) | Site institucional (landing page) com Sobre, Atuação, Notícias diárias, Contato e redes sociais; sistema em `/sistema` | `melhoria/F7-site-institucional` | Publicada em 04/11/2026 (v1.3.0); ajustes nas notícias na v1.3.1 e v1.3.2 |
 | [F8](F8-google-agenda.md) | 04/11/2026 | Thamara Santana (cliente) | Agenda do sistema ligada à Google Agenda da Thamara, nos dois sentidos (tipo novo "Outro") | `melhoria/F8-google-agenda` | Publicada em 05/11/2026 (v1.5.0) |
+| [F9](F9-politica-de-privacidade.md) | 05/11/2026 | Thamara Santana (cliente) | Página Política de Privacidade (LGPD e Google) no site, com link no rodapé | `melhoria/F9-politica-de-privacidade` | Pronta para publicar (v1.7.0) |
 
 > F2 e F5 são sugestões da planilha de testes de 29/10 (lembretes e tela de perfil), ainda não pedidas formalmente. A F1 (anexos) foi pedida em 04/11. A F3 ("esqueci minha senha") foi pedida por Thamara Santana em 30/10.
 

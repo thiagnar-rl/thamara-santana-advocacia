@@ -72,13 +72,17 @@
       @for (item of menu; track item.rotulo) {
         <a [routerLink]="item.rota" [fragment]="item.fragmento">{{ item.rotulo }}</a>
       }
+      <a routerLink="/privacidade">Política de Privacidade</a>
       <a routerLink="/sistema">Área restrita</a>
     </div>
   </div>
 
   <div class="s-container base">
     <p>{{ aviso }}</p>
-    <p>© {{ ano }} {{ escritorio.nome }} · {{ escritorio.subtitulo }} · {{ escritorio.oab }}</p>
+    <p>
+      © {{ ano }} {{ escritorio.nome }} · {{ escritorio.subtitulo }} · {{ escritorio.oab }} ·
+      <a routerLink="/privacidade">Política de Privacidade</a>
+    </p>
   </div>
 </footer>
 

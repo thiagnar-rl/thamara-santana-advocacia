@@ -1,0 +1,42 @@
+<!-- [F9] Política de Privacidade — solicitado por Thamara Santana (cliente) (05/11/2026) -->
+<div class="s-container leitura">
+  <a routerLink="/" class="voltar"><app-icone nome="voltar" [tamanho]="17" /> Voltar ao início</a>
+
+  <header>
+    <p class="s-sobretitulo">Privacidade e proteção de dados</p>
+    <h1>Política de Privacidade</h1>
+    <p class="meta">
+      {{ escritorio.advogada }} · {{ escritorio.oab }} · Atualizada em <strong>{{ atualizadaEm }}</strong>
+    </p>
+  </header>
+
+  <nav class="indice" aria-label="Seções da política">
+    @for (s of secoes; track s.id) {
+      <a routerLink="/privacidade" [fragment]="s.id">{{ s.titulo }}</a>
+    }
+  </nav>
+
+  @for (s of secoes; track s.id) {
+    <section class="secao" [id]="s.id">
+      <h2>{{ s.titulo }}</h2>
+      @for (p of s.paragrafos ?? []; track $index) {
+        <p>{{ p }}</p>
+      }
+      @if (s.itens?.length) {
+        <ul>
+          @for (item of s.itens; track $index) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+      }
+    </section>
+  }
+
+  <aside class="contato">
+    <app-icone nome="cadeado" [tamanho]="22" />
+    <p>
+      Dúvidas ou pedidos sobre seus dados?
+      <a [href]="'mailto:' + email + '?subject=Privacidade%20e%20dados%20pessoais'">{{ email }}</a>
+    </p>
+  </aside>
+</div>
