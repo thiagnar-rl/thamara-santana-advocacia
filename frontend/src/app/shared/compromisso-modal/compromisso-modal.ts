@@ -1,3 +1,4 @@
+import { Anexos } from '../anexos/anexos';
 import { ChangeDetectionStrategy, Component, OnInit, inject, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../core/api.service';
@@ -11,7 +12,7 @@ import { Icone } from '../icone/icone';
 
 @Component({
   selector: 'app-compromisso-modal',
-  imports: [FormsModule, Icone],
+  imports: [FormsModule, Icone, Anexos],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './compromisso-modal.html',
   styleUrl: './compromisso-modal.scss',
@@ -42,6 +43,11 @@ export class CompromissoModal implements OnInit {
     prioridade: 'media',
     status: 'pendente',
   };
+
+  /** [F1] id do compromisso em edição (os anexos só aparecem depois que o compromisso existe). */
+  get idEmEdicao(): number | null {
+    return this.dados().compromisso?.id ?? null;
+  }
 
   get editando(): boolean {
     return this.dados().compromisso !== null;

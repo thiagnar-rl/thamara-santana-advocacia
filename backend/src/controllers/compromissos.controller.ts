@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { AgendaGoogleModel } from '../models/agenda-google.model';
+import { AnexoModel } from '../models/anexo.model';
 import { CompromissoModel } from '../models/compromisso.model';
 import { hoje } from '../utils/datas';
 import { STATUS_COMPROMISSO, texto, umDe } from '../utils/validacao';
@@ -81,6 +82,7 @@ export const CompromissosController = {
       return;
     }
     await AgendaGoogleModel.tentar(req.usuarioId, () => AgendaGoogleModel.apagar(req.usuarioId, evento)); // [F8]
+    await AgendaGoogleModel.tentar(req.usuarioId, async () => void (await AnexoModel.limparOrfaos(req.usuarioId))); // [F1]
     res.status(204).end();
   },
 };

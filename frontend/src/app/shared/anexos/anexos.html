@@ -1,0 +1,50 @@
+<!-- [F1] Documentos anexados (Google Drive) — pedido de Thiago Rinaldi Luna -->
+<div class="anexos">
+  <header class="cabecalho">
+    <h3><app-icone nome="clipe" [tamanho]="16" /> Documentos <span class="contador">{{ lista().length }}</span></h3>
+    @if (google.situacao()?.conectado) {
+      <label class="botao pequeno secundario" [class.desativado]="!!enviando()">
+        <app-icone nome="mais" [tamanho]="15" [traco]="2.2" /> Anexar
+        <input type="file" multiple hidden [disabled]="!!enviando()" (change)="escolher($event)" />
+      </label>
+    }
+  </header>
+
+  @if (enviando(); as e) {
+    <div class="enviando" role="status">
+      <span class="nome">Enviando "{{ e.nome }}"… {{ e.progresso }}%</span>
+      <span class="barra"><span [style.width.%]="e.progresso"></span></span>
+    </div>
+  }
+
+  @if (carregando()) {
+    <p class="suave">Carregando…</p>
+  } @else {
+    <ul class="lista">
+      @for (a of lista(); track a.id) {
+        <li>
+          <span class="tipo">{{ tipoArquivo(a) }}</span>
+          <a class="nome" [href]="a.link" target="_blank" rel="noopener" [title]="'Abrir no Google Drive: ' + a.nome">{{ a.nome }}</a>
+          <small>{{ tamanho(a.tamanho) }}{{ a.tamanho ? ' · ' : '' }}{{ data(a.criado_em) }}</small>
+          <button type="button" class="acao" title="Excluir documento" (click)="excluir(a)">
+            <app-icone nome="lixeira" [tamanho]="15" />
+          </button>
+        </li>
+      } @empty {
+        @if (google.situacao()?.conectado) {
+          <li class="vazio-linha">Nenhum documento anexado.</li>
+        }
+      }
+    </ul>
+    @if (!google.situacao()?.conectado) {
+      <div class="aviso-google">
+        @if (google.situacao()?.configurado) {
+          <span>Para anexar documentos, conecte a conta Google. Os arquivos ficam no Google Drive.</span>
+          <button type="button" class="botao pequeno secundario" (click)="google.conectar()">Conectar Google</button>
+        } @else {
+          <span>Os anexos ficam no Google Drive. A conexão com o Google ainda não foi configurada.</span>
+        }
+      </div>
+    }
+  }
+</div>

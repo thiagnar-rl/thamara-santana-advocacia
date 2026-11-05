@@ -233,3 +233,18 @@ export interface ResultadoSincronizacao {
   removidos: number;
   erro?: string;
 }
+
+/* ---------- [F1] Anexos no Google Drive — pedido de Thiago Rinaldi Luna (04/11/2026) ---------- */
+
+export type DonoAnexo = 'cliente' | 'processo' | 'compromisso';
+
+export interface Anexo {
+  id: number;
+  dono_tipo: DonoAnexo;
+  dono_id: number;
+  nome: string;
+  tipo_mime: string | null;
+  tamanho: number | null;
+  link: string | null;
+  criado_em: string;
+}

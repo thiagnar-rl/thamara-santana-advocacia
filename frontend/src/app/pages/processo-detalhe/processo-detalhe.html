@@ -116,6 +116,11 @@
             <p class="suave">Nenhuma observação.</p>
           }
         </div>
+
+        <!-- [F1] Documentos anexados (Google Drive) -->
+        <div class="observacoes">
+          <app-anexos tipo="processo" [donoId]="p.id" (mudou)="anexos.set($event)" />
+        </div>
       </aside>
     </div>
   } @else {

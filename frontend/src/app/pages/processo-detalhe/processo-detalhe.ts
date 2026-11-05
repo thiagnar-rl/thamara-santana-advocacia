@@ -7,6 +7,8 @@ import { AvisoService } from '../../core/aviso.service';
 import { EdicaoService } from '../../core/edicao.service';
 import { ImpressaoService } from '../../core/impressao.service';
 import { impressaoProcesso } from '../../core/logica/impressao.logica';
+import { Anexos } from '../../shared/anexos/anexos';
+import { Anexo } from '../../core/models';
 import { ProcessoDetalhe } from '../../core/models';
 import { dataCurta, hojeISO, rotuloStatusProcesso } from '../../core/rotulos';
 import { CompromissoItem } from '../../shared/compromisso-item/compromisso-item';
@@ -14,7 +16,7 @@ import { Icone } from '../../shared/icone/icone';
 
 @Component({
   selector: 'app-processo-detalhe',
-  imports: [RouterLink, Icone, CompromissoItem],
+  imports: [RouterLink, Icone, CompromissoItem, Anexos],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './processo-detalhe.html',
   styleUrl: './processo-detalhe.scss',
@@ -30,6 +32,8 @@ export class ProcessoDetalhePage {
   readonly id = input.required<string>();
 
   protected readonly detalhe = signal<ProcessoDetalhe | null>(null);
+  /** [F1] Documentos anexados (entram na impressão). */
+  protected readonly anexos = signal<Anexo[]>([]);
   protected readonly rotuloStatus = rotuloStatusProcesso;
   protected readonly dataCurta = dataCurta;
 
@@ -64,6 +68,6 @@ export class ProcessoDetalhePage {
   /** [F4] Imprime a ficha do processo — pedido de Thiago Rinaldi Luna (04/11/2026). */
   protected imprimir(): void {
     const d = this.detalhe();
-    if (d) this.impressao.imprimir(impressaoProcesso(d, hojeISO()));
+    if (d) this.impressao.imprimir(impressaoProcesso(d, hojeISO(), this.anexos()));
   }
 }

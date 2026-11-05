@@ -1,3 +1,4 @@
+import { AnexoModel } from './anexo.model';
 import { CompromissoModel } from './compromisso.model';
 import { GoogleModel } from './google.model';
 import { dadosDoEvento, EventoGoogle, eventoDoCompromisso } from '../utils/agenda-google';
@@ -119,6 +120,7 @@ export const AgendaGoogleModel = {
       if (!pagina) break;
     }
 
+    if (resultado.removidos) await AnexoModel.limparOrfaos(usuarioId); // [F1] anexos de compromissos apagados no Google
     await GoogleModel.registrarSincronizacao(usuarioId, agora.toISOString());
     resultado.feita = true;
     return resultado;

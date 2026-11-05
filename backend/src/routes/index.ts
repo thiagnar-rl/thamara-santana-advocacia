@@ -6,6 +6,7 @@ import compromissosRoutes from './compromissos.routes';
 import dashboardRoutes from './dashboard.routes';
 import processosRoutes from './processos.routes';
 import googleRoutes from './google.routes';
+import anexosRoutes from './anexos.routes';
 import { GoogleController } from '../controllers/google.controller';
 import publicacoesRoutes from './publicacoes.routes';
 import publicoRoutes from './publico.routes';
@@ -29,5 +30,6 @@ api.use('/dashboard', exigirLogin, dashboardRoutes);
 api.use('/clientes', exigirLogin, clientesRoutes); // [F6]
 api.use('/publicacoes', exigirLogin, publicacoesRoutes); // [F7]
 api.use('/google', exigirLogin, googleRoutes); // [F8]
+api.use('/anexos', exigirLogin, anexosRoutes); // [F1]
 
 export default api;
