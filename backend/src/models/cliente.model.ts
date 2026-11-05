@@ -1,4 +1,5 @@
 import { executar, Parametro, todos, um } from '../config/database';
+import { ProcessoModel } from './processo.model';
 import {
   Aniversario,
   cnpjValido,
@@ -90,7 +91,7 @@ const CAMPOS_PESSOA_JURIDICA: (keyof DadosCliente)[] = [
 
 const SELECT_CLIENTE = `
   SELECT cl.*,
-    (SELECT COUNT(*) FROM processos p WHERE p.cliente_id = cl.id) AS total_processos
+    (SELECT COUNT(*) FROM processo_clientes pc WHERE pc.cliente_id = cl.id) AS total_processos -- [C4]
   FROM clientes cl
 `;
 
@@ -237,7 +238,7 @@ export const ClienteModel = {
       usuarioId,
     );
     if (r.alteracoes === 0) return false;
-    await executar('UPDATE processos SET cliente = ? WHERE cliente_id = ? AND usuario_id = ?', d.nome, id, usuarioId);
+    await ProcessoModel.renomearCliente(usuarioId, id, d.nome); // [C4] em todos os processos do cliente
     return true;
   },
 
@@ -247,7 +248,7 @@ export const ClienteModel = {
    */
   async excluir(usuarioId: number, id: number): Promise<boolean> {
     if (!(await ClienteModel.pertenceAo(usuarioId, id))) return false;
-    await executar('UPDATE processos SET cliente_id = NULL WHERE cliente_id = ? AND usuario_id = ?', id, usuarioId);
+    await ProcessoModel.desvincularCliente(usuarioId, id); // [C4]
     return (await executar('DELETE FROM clientes WHERE id = ? AND usuario_id = ?', id, usuarioId)).alteracoes > 0;
   },
 

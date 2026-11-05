@@ -13,6 +13,7 @@ const processo: Processo = {
   numero: '1',
   cliente: 'Ana',
   cliente_id: null,
+  clientes_nomes: null, // [C4] processo antigo: a view monta a lista a partir de "cliente"
   parte_contraria: null,
   tribunal: null,
   area: null,
@@ -58,6 +59,10 @@ describe('Views', () => {
   it('processoView() e compromissoView() escondem o usuario_id', async () => {
     assert.equal('usuario_id' in processoView(processo), false);
     assert.equal('usuario_id' in compromissoView(compromisso), false);
+  });
+
+  it('[C4] processoView() de um processo antigo monta a lista com o cliente único', async () => {
+    assert.deepEqual(processoView(processo).clientes, [{ nome: 'Ana', cliente_id: null }]);
   });
 
   it('processoDetalheView() junta processo e compromissos', async () => {
