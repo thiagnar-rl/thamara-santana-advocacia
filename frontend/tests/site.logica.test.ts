@@ -69,3 +69,25 @@ describe('[F7] site.logica', () => {
     assert.deepEqual(AREAS_EQUIPE.map((a) => a.chave), ['previdenciario', 'criminal']);
   });
 });
+
+/** [F10] Perguntas frequentes — solicitado por Thamara Santana (cliente) (05/11/2026). */
+describe('[F10] Perguntas frequentes', () => {
+  it('tem perguntas de todas as áreas, sem repetir, todas com resposta e área conhecida', async () => {
+    const { PERGUNTAS, AREAS_PERGUNTAS } = await import('../src/app/site/conteudo');
+    assert.equal(PERGUNTAS.length, 16);
+    for (const p of PERGUNTAS) assert.ok(AREAS_PERGUNTAS.includes(p.area), p.area);
+    for (const a of AREAS_PERGUNTAS) assert.ok(PERGUNTAS.some((p) => p.area === a), a);
+    assert.equal(new Set(PERGUNTAS.map((p) => p.pergunta)).size, PERGUNTAS.length);
+    for (const p of PERGUNTAS) {
+      assert.ok(p.pergunta.endsWith('?'), p.pergunta);
+      assert.ok(p.resposta.length > 0 && p.area);
+    }
+  });
+
+  it('cobre divórcio, pensão, inventário, usucapião e trabalhista, sem prometer resultado', async () => {
+    const { PERGUNTAS } = await import('../src/app/site/conteudo');
+    const texto = JSON.stringify(PERGUNTAS).toLowerCase();
+    for (const tema of ['divórcio', 'pensão', 'inventário', 'usucapião', 'justa causa', 'hora extra', 'audiência de custódia', 'maria da penha', 'não persecução']) assert.ok(texto.includes(tema), tema);
+    assert.doesNotMatch(texto, /garant(o|imos) (o )?resultado|100%|sucesso garantido/);
+  });
+});
