@@ -1,3 +1,6 @@
 # [F7] Site institucional: o sistema interno (/sistema) não deve aparecer no Google
 User-agent: *
 Disallow: /sistema
+
+# [F11] Mapa do site
+Sitemap: https://thamara-santana-advocacia.vercel.app/sitemap.xml

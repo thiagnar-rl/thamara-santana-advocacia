@@ -92,3 +92,20 @@ export function validarPublicacao(p: { titulo: string; resumo: string | null; co
   if (p.conteudo.length > 20000) return 'O texto pode ter no máximo 20.000 caracteres.';
   return null;
 }
+
+/* ---------- [F11] Páginas por área e WhatsApp por assunto — pedido da cliente Thamara Santana (05/11/2026) ---------- */
+
+/** Mensagem pronta do WhatsApp quando o visitante vem da página ou do cartão de uma área. */
+export function mensagemWhatsAppArea(area: string): string {
+  return `Olá, Dra. Thamara! Vim pelo site e gostaria de falar sobre ${area}.`;
+}
+
+/** Mensagem pronta do WhatsApp a partir de uma pergunta frequente. */
+export function mensagemWhatsAppPergunta(pergunta: string): string {
+  return `Olá, Dra. Thamara! Vim pelo site e tenho uma dúvida: ${pergunta}`;
+}
+
+/** Área pelo endereço (/atuacao/<slug>), ou undefined se não existir. */
+export function areaPorSlug<T extends { slug: string }>(areas: T[], slug: string | null | undefined): T | undefined {
+  return areas.find((a) => a.slug === (slug ?? '').toLowerCase());
+}

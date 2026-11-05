@@ -9,7 +9,7 @@
 | **Prioridade** | Média |
 | **Ramo no Git** | `melhoria/F10-perguntas-frequentes` |
 | **Versão** | 1.8.0 |
-| **Status** | Pronta para publicar |
+| **Status** | Publicada em 05/11/2026 (v1.8.0). Conferida no site pelo solicitante |
 
 ---
 

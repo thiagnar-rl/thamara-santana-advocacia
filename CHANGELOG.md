@@ -7,6 +7,21 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
+## [1.9.0] — 05/11/2026
+
+### Adicionado
+
+- **[F11] Páginas por área, WhatsApp por assunto, imagem de compartilhamento e sitemap.**
+  - Cada área ganhou uma página própria em `/atuacao/…`, com apresentação, especialidades, perguntas da área e WhatsApp.
+  - O WhatsApp passou a abrir com a mensagem pronta conforme a área ou a pergunta.
+  - A imagem que aparece ao compartilhar o link agora tem a foto nova.
+  - O `sitemap.xml` foi criado para o Google.
+  - **Solicitado por:** Thamara Santana (cliente), pedido de 05/11/2026
+  - **Ramo:** `melhoria/F11-paginas-por-area`
+  - **Ficha:** [docs/solicitacoes/F11-paginas-por-area-whatsapp-e-sitemap.md](docs/solicitacoes/F11-paginas-por-area-whatsapp-e-sitemap.md)
+
+---
+
 ## [1.8.0] — 05/11/2026
 
 ### Adicionado
