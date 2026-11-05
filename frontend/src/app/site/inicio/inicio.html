@@ -129,6 +129,46 @@
   </div>
 </section>
 
+<!-- ===== [F10] Perguntas frequentes — pedido da cliente Thamara Santana (05/11/2026) ===== -->
+<section id="duvidas" class="s-secao duvidas">
+  <div class="s-container grade-duvidas">
+    <div class="cabecalho-duvidas">
+      <p class="s-sobretitulo">Perguntas frequentes</p>
+      <h2 class="s-titulo">Dúvidas <em>comuns</em>, respostas diretas.</h2>
+      <p class="s-intro">
+        Informações gerais sobre os assuntos que mais chegam ao escritório. Cada caso tem particularidades: para uma
+        orientação sobre a sua situação, fale com a Dra. Thamara.
+      </p>
+      <a class="s-botao escuro" [href]="whatsapp" target="_blank" rel="noopener">
+        <app-icone nome="whatsapp" [tamanho]="18" /> Tirar uma dúvida
+      </a>
+    </div>
+
+    <div class="lista-duvidas">
+      <div class="filtros-duvidas" role="group" aria-label="Filtrar perguntas por área">
+        <button type="button" [class.ativo]="!areaPergunta()" (click)="areaPergunta.set(null)">Todas</button>
+        @for (a of areasPerguntas; track a) {
+          <button type="button" [class.ativo]="areaPergunta() === a" (click)="areaPergunta.set(a)">{{ a }}</button>
+        }
+      </div>
+      @for (q of perguntas(); track q.pergunta; let i = $index) {
+        <details class="duvida" [open]="i === 0">
+          <summary>
+            <span class="s-area">{{ q.area }}</span>
+            <span class="pergunta">{{ q.pergunta }}</span>
+            <span class="sinal" aria-hidden="true"></span>
+          </summary>
+          <div class="resposta">
+            @for (p of q.resposta; track $index) {
+              <p>{{ p }}</p>
+            }
+          </div>
+        </details>
+      }
+    </div>
+  </div>
+</section>
+
 <!-- ===== Notícias ===== -->
 <section class="s-secao noticias">
   <div class="s-container">

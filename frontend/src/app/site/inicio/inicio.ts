@@ -5,7 +5,7 @@ import { ApiService } from '../../core/api.service';
 import { linkInstagram, linkMapa, linkMapaIncorporado, linkWhatsApp, listarComE, tempoRelativo } from '../../core/logica/site.logica';
 import { NoticiasSite } from '../../core/models';
 import { Icone } from '../../shared/icone/icone';
-import { AREAS_THAMARA, AREAS_EQUIPE, CONTATO, ESCRITORIO, ETAPAS, SOBRE } from '../conteudo';
+import { AREAS_THAMARA, AREAS_EQUIPE, CONTATO, ESCRITORIO, AREAS_PERGUNTAS, ETAPAS, PERGUNTAS, SOBRE } from '../conteudo';
 
 /** Item da vitrine de notícias da página inicial (publicação do escritório ou notícia externa). */
 interface Destaque {
@@ -40,6 +40,13 @@ export class InicioSite {
   protected readonly areasThamara = AREAS_THAMARA; // [C5]
   protected readonly equipe = AREAS_EQUIPE;
   protected readonly etapas = ETAPAS;
+  // [F10] Perguntas frequentes, com filtro por área
+  protected readonly areasPerguntas = AREAS_PERGUNTAS;
+  protected readonly areaPergunta = signal<string | null>(null);
+  protected readonly perguntas = computed(() => {
+    const area = this.areaPergunta();
+    return area ? PERGUNTAS.filter((q) => q.area === area) : PERGUNTAS;
+  });
   /** "Santos, São Vicente e Praia Grande" */
   protected readonly cidadesVizinhas = listarComE(CONTATO.cidadesAtendidas.slice(1));
 

@@ -7,6 +7,17 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
+## [1.8.0] — 05/11/2026
+
+### Adicionado
+
+- **[F10] Perguntas frequentes.** A página inicial ganhou a seção "Perguntas frequentes", com **16 dúvidas** em sanfona, ordenadas por relevância e com filtro por área. Temas: Família (pensão, divórcio, paternidade), Sucessões (inventário), Cível (usucapião), Trabalhista (justa causa, carteira não assinada, hora extra, prazo e acordo de saída) e Criminal (prisão em flagrante, Maria da Penha, depoimento na delegacia e ANPP). O menu ganhou o item **Dúvidas**.
+  - **Solicitado por:** Thamara Santana (cliente), pedido de 05/11/2026
+  - **Ramo:** `melhoria/F10-perguntas-frequentes`
+  - **Ficha:** [docs/solicitacoes/F10-perguntas-frequentes.md](docs/solicitacoes/F10-perguntas-frequentes.md)
+
+---
+
 ## [1.7.0] — 05/11/2026
 
 ### Adicionado

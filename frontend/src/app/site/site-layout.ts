@@ -38,6 +38,7 @@ export class SiteLayout {
     { rotulo: 'Início', rota: '/', fragmento: undefined },
     { rotulo: 'Sobre', rota: '/', fragmento: 'sobre' },
     { rotulo: 'Atuação', rota: '/', fragmento: 'atuacao' },
+    { rotulo: 'Dúvidas', rota: '/', fragmento: 'duvidas' }, // [F10]
     { rotulo: 'Notícias', rota: '/noticias', fragmento: undefined },
     { rotulo: 'Contato', rota: '/', fragmento: 'contato' },
   ];

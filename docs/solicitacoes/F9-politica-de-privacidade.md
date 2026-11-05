@@ -9,7 +9,7 @@
 | **Prioridade** | Média |
 | **Ramo no Git** | `melhoria/F9-politica-de-privacidade` |
 | **Versão** | 1.7.0 |
-| **Status** | Pronta para publicar |
+| **Status** | Publicada em 05/11/2026 (v1.7.0). Link atualizado no Google Cloud (Branding) |
 
 ---
 
