@@ -9,7 +9,7 @@
 | **Prioridade** | Média |
 | **Ramo no Git** | `melhoria/F11-paginas-por-area` |
 | **Versão** | 1.9.0 |
-| **Status** | Pronta para publicar |
+| **Status** | Publicada em 05/11/2026 (v1.9.0), conferida no site. Ajustes na v1.9.1 (seção 6) |
 
 ---
 
@@ -64,7 +64,7 @@ O endereço da imagem passou a ser completo (`https://…`), como o WhatsApp exi
 
 1. Abra <https://search.google.com/search-console> e clique em **Adicionar propriedade**.
 2. Escolha **Prefixo do URL** e digite `https://thamara-santana-advocacia.vercel.app`.
-3. Na verificação, escolha **Tag HTML** e copie só o código que aparece em `content="…"`. Mande esse código para o Claude, que coloca no site. É um código público, não é senha.
+3. Na verificação, foi usada a opção **Arquivo HTML**: o Google fornece um arquivo, que fica em `frontend/public/` (ver seção 6).
 4. Depois de verificado, vá em **Sitemaps** e envie `sitemap.xml`.
 
 Quando houver domínio próprio, troque o endereço no `sitemap.xml`, no `robots.txt` e nas tags `og:image` do `index.html`.
@@ -97,3 +97,8 @@ Os testes novos conferem:
 ## 5. Como desfazer
 
 No GitHub, abra o merge de `melhoria/F11-paginas-por-area` e use **Revert**.
+
+## 6. Ajustes da v1.9.1 (05/11/2026)
+
+- **Verificação do Google Search Console.** O arquivo `frontend/public/google284361ef5ba884ef.html`, baixado pela Thamara no Search Console com a opção "Arquivo HTML", fica publicado em `https://thamara-santana-advocacia.vercel.app/google284361ef5ba884ef.html`. Depois de publicar, clique em **Verificar** no Search Console e envie o sitemap em **Sitemaps → `sitemap.xml`**. **Não apague o arquivo**, senão o Google perde a verificação.
+- **Página da área no celular.** O link "← Áreas de atuação" ficava na mesma linha do sobretítulo e passou a ter linha própria (`area.scss`).

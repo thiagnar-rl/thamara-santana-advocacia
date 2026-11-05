@@ -10,7 +10,7 @@ Site e sistema de gestão do escritório **Thamara Santana Advocacia e Consultor
 - **Login:** e-mail e senha (senha criptografada com bcrypt, sessão com JWT)
 - **Integrações:** Google Agenda (sincronização nos dois sentidos) e Google Drive (documentos anexados)
 - **Site publicado:** <https://thamara-santana-advocacia.vercel.app> (Vercel + banco Turso)
-- **Versão atual:** 1.9.0 (05/11/2026) — histórico completo no [`CHANGELOG.md`](CHANGELOG.md)
+- **Versão atual:** 1.9.1 (05/11/2026) — histórico completo no [`CHANGELOG.md`](CHANGELOG.md)
 
 ### Quem é quem
 
@@ -96,7 +96,7 @@ Para desligar, clique no terminal e aperte `Ctrl + C`.
 | **Área** (`/atuacao/:area`) | [F11] Uma página por área (familia-e-sucessoes, trabalhista, civel, criminal e previdenciario), com especialidades, perguntas e WhatsApp com o assunto. |
 | **Política de Privacidade** (`/privacidade`) | [F9] Como o site e o sistema tratam dados pessoais (LGPD) e o uso do Google Agenda e Drive. O texto fica em `frontend/src/app/site/privacidade/politica.ts`. |
 
-Os textos, telefones e endereços do site ficam todos em **`frontend/src/app/site/conteudo.ts`**. As fontes de notícias e as palavras de cada área ficam em **`backend/src/config/site.ts`**. O mapa do site para o Google fica em **`frontend/public/sitemap.xml`** ([F11]); ao trocar de endereço (domínio próprio), atualize-o junto com o `robots.txt` e as tags `og:image` do `index.html`.
+Os textos, telefones e endereços do site ficam todos em **`frontend/src/app/site/conteudo.ts`**. As fontes de notícias e as palavras de cada área ficam em **`backend/src/config/site.ts`**. O mapa do site para o Google fica em **`frontend/public/sitemap.xml`** ([F11]), e o arquivo `frontend/public/google284361ef5ba884ef.html` é a verificação do Google Search Console (não apague); ao trocar de endereço (domínio próprio), atualize-o junto com o `robots.txt` e as tags `og:image` do `index.html`.
 
 ### Sistema (`/sistema`)
 
