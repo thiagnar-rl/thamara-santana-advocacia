@@ -1,4 +1,5 @@
-export type TipoCompromisso = 'audiencia' | 'recurso' | 'manifestacao' | 'despacho';
+/** [F8] "outro" = evento criado direto no Google Agenda (pedido de Thiago Rinaldi Luna, 04/11/2026). */
+export type TipoCompromisso = 'audiencia' | 'recurso' | 'manifestacao' | 'despacho' | 'outro';
 export type StatusCompromisso = 'pendente' | 'concluido';
 export type Prioridade = 'baixa' | 'media' | 'alta';
 export type StatusProcesso = 'ativo' | 'suspenso' | 'arquivado' | 'encerrado';
@@ -56,11 +57,12 @@ export interface Compromisso {
   concluido_em?: string | null;
   processo_numero?: string | null;
   processo_cliente?: string | null;
+  no_google?: boolean; // [F8] ligado a um evento do Google Agenda
 }
 
 export type CompromissoForm = Omit<
   Compromisso,
-  'id' | 'concluido_em' | 'processo_numero' | 'processo_cliente'
+  'id' | 'concluido_em' | 'processo_numero' | 'processo_cliente' | 'no_google'
 >;
 
 export interface ProcessoDetalhe {
@@ -211,4 +213,23 @@ export interface NoticiasSite {
   noticias: NoticiaExterna[];
   atualizado_em: string | null;
   areas: AreaSite[];
+}
+
+/* ---------- [F8] Google Agenda (pedido de Thiago Rinaldi Luna, 04/11/2026) ---------- */
+
+export interface SituacaoGoogle {
+  configurado: boolean;
+  conectado: boolean;
+  email: string | null;
+  ultima_sincronizacao: string | null;
+  erro: string | null;
+}
+
+export interface ResultadoSincronizacao {
+  conectado: boolean;
+  feita: boolean;
+  novos: number;
+  atualizados: number;
+  removidos: number;
+  erro?: string;
 }

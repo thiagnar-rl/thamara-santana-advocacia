@@ -41,7 +41,7 @@ describe('(await DashboardModel.montar())', () => {
 
   it('conta pendências por tipo a partir de hoje', async () => {
     const { porTipo } = await DashboardModel.montar(ana, HOJE);
-    assert.deepEqual(porTipo, { audiencia: 3, recurso: 1, manifestacao: 1, despacho: 0 });
+    assert.deepEqual(porTipo, { audiencia: 3, recurso: 1, manifestacao: 1, despacho: 0, outro: 0 }); // [F8] tipo "outro"
   });
 
   it('usuária sem dados recebe tudo zerado', async () => {

@@ -15,7 +15,8 @@ export interface BarraTipo extends InfoTipo {
 export function distribuicaoPorTipo(porTipo: Partial<Record<TipoCompromisso, number>> | null | undefined): BarraTipo[] {
   if (!porTipo) return [];
   const maior = Math.max(1, ...TIPOS.map((t) => porTipo[t.valor] ?? 0));
-  return TIPOS.map((t) => {
+  // [F8] "Outro" só aparece no gráfico quando existir algum
+  return TIPOS.filter((t) => t.valor !== 'outro' || (porTipo.outro ?? 0) > 0).map((t) => {
     const total = porTipo[t.valor] ?? 0;
     return { ...t, total, largura: (total / maior) * 100 };
   });

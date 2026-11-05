@@ -42,6 +42,7 @@
   --cor-recurso: #c4761b;
   --cor-manifestacao: #1d8781;
   --cor-despacho: #b0457a;
+  --cor-outro: #6b7280; /* [F8] eventos vindos do Google Agenda */
 
   /* Forma */
   --raio: 16px;
@@ -492,6 +493,9 @@ select.entrada {
 }
 .tipo-despacho {
   --cor-tipo: var(--cor-despacho);
+}
+.tipo-outro {
+  --cor-tipo: var(--cor-outro);
 }
 
 /* ---------- Estado vazio ---------- */

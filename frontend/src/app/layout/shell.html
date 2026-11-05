@@ -33,6 +33,32 @@
     <span>Ver o site</span>
   </a>
 
+  <!-- [F8] Google Agenda — sugestão: Thiago Rinaldi Luna -->
+  @if (google.situacao()?.configurado || google.situacao()?.conectado) {
+    <div class="google" [class.erro]="textoGoogle().estado === 'erro'" [class.conectado]="textoGoogle().estado === 'conectado'">
+      @if (textoGoogle().estado === 'conectado') {
+        <span class="google-info" [title]="'Sincronizada com ' + textoGoogle().detalhe">
+          <app-icone nome="calendario" [tamanho]="17" />
+          <span class="google-textos">
+            <strong>{{ textoGoogle().rotulo }}</strong>
+            <small>{{ textoGoogle().detalhe }}</small>
+          </span>
+        </span>
+        <button type="button" class="botao-google" title="Sincronizar agora" [disabled]="google.sincronizando()" (click)="google.sincronizar(true)">
+          <app-icone nome="relogio" [tamanho]="15" />
+        </button>
+        <button type="button" class="botao-google" title="Desconectar o Google" (click)="google.desconectar()">
+          <app-icone nome="fechar" [tamanho]="15" />
+        </button>
+      } @else {
+        <button type="button" class="google-conectar" [title]="textoGoogle().detalhe" (click)="google.conectar()">
+          <app-icone [nome]="textoGoogle().estado === 'erro' ? 'alerta' : 'calendario'" [tamanho]="17" />
+          <span>{{ textoGoogle().rotulo }}</span>
+        </button>
+      }
+    </div>
+  }
+
   <div class="usuario">
     <span class="avatar">{{ iniciais() }}</span>
     <div class="dados">

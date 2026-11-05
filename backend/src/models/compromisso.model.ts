@@ -34,6 +34,8 @@ export interface Compromisso {
   criado_em: string;
   processo_numero: string | null;
   processo_cliente: string | null;
+  google_event_id?: string | null; // [F8] evento correspondente no Google Agenda
+  google_atualizado_em?: string | null; // [F8]
 }
 
 export interface DadosCompromisso {
@@ -214,6 +216,60 @@ export const CompromissoModel = {
 
   async excluir(usuarioId: number, id: number): Promise<boolean> {
     return (await executar('DELETE FROM compromissos WHERE id = ? AND usuario_id = ?', id, usuarioId)).alteracoes > 0;
+  },
+
+  /* ---------- [F8] Vínculo com o Google Agenda — pedido de Thiago Rinaldi Luna (04/11/2026) ---------- */
+
+  async definirVinculoGoogle(usuarioId: number, id: number, eventoId: string | null, atualizadoEm: string | null): Promise<void> {
+    await executar(
+      'UPDATE compromissos SET google_event_id = ?, google_atualizado_em = ? WHERE id = ? AND usuario_id = ?',
+      eventoId,
+      atualizadoEm,
+      id,
+      usuarioId,
+    );
+  },
+
+  async buscarPorEventoGoogle(usuarioId: number, eventoId: string): Promise<Compromisso | undefined> {
+    return await um<Compromisso>(`${SELECT_COMPROMISSO} WHERE c.usuario_id = ? AND c.google_event_id = ?`, usuarioId, eventoId);
+  },
+
+  /** Eventos do Google dos compromissos de um processo (para apagar no Google quando o processo for excluído). */
+  async eventosGoogleDoProcesso(usuarioId: number, processoId: number): Promise<string[]> {
+    const linhas = await todos<{ google_event_id: string }>(
+      'SELECT google_event_id FROM compromissos WHERE usuario_id = ? AND processo_id = ? AND google_event_id IS NOT NULL',
+      usuarioId,
+      processoId,
+    );
+    return linhas.map((l) => l.google_event_id);
+  },
+
+  /** Alteração feita no Google: muda só o que o Google conhece (título, data, hora, local, descrição, concluído). */
+  async atualizarDoGoogle(
+    usuarioId: number,
+    id: number,
+    d: { titulo: string; data: string; hora: string | null; local: string | null; descricao: string | null; tipo: TipoCompromisso | null; concluido: boolean },
+    atualizadoEm: string | null,
+  ): Promise<void> {
+    await executar(
+      `UPDATE compromissos
+          SET titulo = ?, data = ?, hora = ?, local = ?, descricao = ?, tipo = COALESCE(?, tipo),
+              status = ?,
+              concluido_em = CASE WHEN ? = 'concluido' THEN COALESCE(concluido_em, datetime('now', 'localtime')) ELSE NULL END,
+              google_atualizado_em = ?
+        WHERE id = ? AND usuario_id = ?`,
+      d.titulo,
+      d.data,
+      d.hora,
+      d.local,
+      d.descricao,
+      d.tipo,
+      d.concluido ? 'concluido' : 'pendente',
+      d.concluido ? 'concluido' : 'pendente',
+      atualizadoEm,
+      id,
+      usuarioId,
+    );
   },
 
   /** RN05 — atrasado é derivado: pendente com data anterior a hoje. */

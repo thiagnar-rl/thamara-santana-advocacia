@@ -15,6 +15,7 @@ Cada pedido de cliente/usuário recebe um código e uma ficha nesta pasta.
 | [F4](F4-imprimir.md) | 04/11/2026 | Thiago Rinaldi Luna — já sugerido por Pedro Nogueira na planilha de 29/10 | Botão Imprimir na agenda, fichas de processo e cliente e lista de processos | `melhoria/F4-imprimir` | Pronta para publicar (v1.4.0) |
 | [F6](F6-cadastro-de-clientes.md) | 30/10/2026 | Thamara Santana (cliente 3) | Cadastro individual de clientes (PF/PJ) com aviso de aniversário, integrado aos processos | `melhoria/F6-cadastro-de-clientes` | Publicada em 30/10/2026 (v1.1.0) |
 | [F7](F7-site-institucional.md) | 04/11/2026 | Thiago Rinaldi Luna | Site institucional (landing page) com Sobre, Atuação, Notícias diárias, Contato e redes sociais; sistema em `/sistema` | `melhoria/F7-site-institucional` | Publicada em 04/11/2026 (v1.3.0); ajustes nas notícias na v1.3.1 e v1.3.2 |
+| [F8](F8-google-agenda.md) | 04/11/2026 | Thiago Rinaldi Luna | Agenda do sistema ligada à Google Agenda da Thamara, nos dois sentidos (tipo novo "Outro") | `melhoria/F8-google-agenda` | Pronta para publicar (v1.5.0) |
 
 > F1, F2 e F5 são sugestões da planilha de testes de 29/10 (anexos, lembretes, exportar PDF e tela de perfil), ainda não pedidas formalmente. A F3 ("esqueci minha senha") foi pedida por Thamara Santana em 30/10.
 

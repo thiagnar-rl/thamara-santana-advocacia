@@ -41,3 +41,26 @@ export function verificarToken(token: string): number | null {
     return null;
   }
 }
+
+/** [F8] Segredo do sistema (usado também para cifrar o acesso ao Google). */
+export function segredoDoSistema(): string {
+  return obterSegredo();
+}
+
+/**
+ * [F8] Código curto e assinado para uma única finalidade (ex.: voltar do login do Google).
+ * Vale poucos minutos e não serve como sessão.
+ */
+export function gerarCodigoDeFinalidade(usuarioId: number, finalidade: string, minutos = 10): string {
+  return jwt.sign({ sub: String(usuarioId), fin: finalidade }, obterSegredo(), { expiresIn: `${minutos}m` });
+}
+
+export function verificarCodigoDeFinalidade(codigo: string, finalidade: string): number | null {
+  try {
+    const dados = jwt.verify(codigo, obterSegredo()) as JwtPayload;
+    const id = Number(dados.sub);
+    return dados.fin === finalidade && Number.isInteger(id) && id > 0 ? id : null;
+  } catch {
+    return null;
+  }
+}

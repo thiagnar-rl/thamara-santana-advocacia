@@ -157,12 +157,17 @@ Projeto Advocacia/
 | GET    | `/api/publico/noticias`           | **Público:** publicações + notícias do dia (`?area=`) |
 | GET    | `/api/publico/publicacoes/:id`    | **Público:** uma publicação do escritório |
 | GET    | `/api/publico/noticias/fontes`    | **Público:** situação de cada fonte na última busca |
+| GET    | `/api/google`                     | [F8] Situação da conexão com o Google Agenda |
+| GET    | `/api/google/conectar`            | [F8] Endereço da página de autorização do Google |
+| GET    | `/api/google/retorno`             | [F8] **Público:** volta do login do Google |
+| POST   | `/api/google/sincronizar`         | [F8] Traz as mudanças do Google Agenda (`?forcar=1`) |
+| DELETE | `/api/google`                     | [F8] Desconecta o Google |
 
 ---
 
 ## 5. Testes unitários
 
-São **164 testes** (118 no backend e 46 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
+São **184 testes** (134 no backend e 50 no frontend), feitos com o executor de testes que já vem no Node.js (`node:test`). Os testes do backend usam um banco **em memória**, então não mexem nos seus dados reais.
 
 ```bash
 npm test                                   # roda todos os testes

@@ -20,6 +20,7 @@ export interface CompromissoJSON {
   concluido_em: string | null;
   processo_numero: string | null;
   processo_cliente: string | null;
+  no_google: boolean; // [F8] o compromisso está ligado a um evento do Google Agenda
 }
 
 export function compromissoView(c: Compromisso): CompromissoJSON {
@@ -37,6 +38,7 @@ export function compromissoView(c: Compromisso): CompromissoJSON {
     concluido_em: c.concluido_em ?? null,
     processo_numero: c.processo_numero ?? null,
     processo_cliente: c.processo_cliente ?? null,
+    no_google: !!c.google_event_id,
   };
 }
 
