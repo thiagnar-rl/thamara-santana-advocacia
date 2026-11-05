@@ -9,7 +9,7 @@
 | **Prioridade** | Alta |
 | **Ramo no Git** | `correcao/C5-areas-de-atuacao-e-fotos` |
 | **Versão** | 1.6.2 |
-| **Status** | Pronta para publicar |
+| **Status** | Publicada em 05/11/2026 (v1.6.2). Conferida no site no computador e no celular |
 
 ---
 
