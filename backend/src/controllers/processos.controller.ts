@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express';
+import { AgendaGoogleModel } from '../models/agenda-google.model';
 import { CompromissoModel } from '../models/compromisso.model';
 import { ClienteModel } from '../models/cliente.model';
 import { DadosProcesso, ProcessoModel } from '../models/processo.model';
@@ -88,10 +89,16 @@ export const ProcessosController = {
 
   /** DELETE /api/processos/:id */
   async excluir(req: Request, res: Response): Promise<void> {
-    if (!(await ProcessoModel.excluir(req.usuarioId, Number(req.params.id)))) {
+    const id = Number(req.params.id);
+    const eventos = await CompromissoModel.eventosGoogleDoProcesso(req.usuarioId, id); // [F8]
+    if (!(await ProcessoModel.excluir(req.usuarioId, id))) {
       res.status(404).json(erroView(NAO_ENCONTRADO));
       return;
     }
+    // [F8] Os compromissos do processo saem também do Google Agenda
+    await AgendaGoogleModel.tentar(req.usuarioId, async () => {
+      for (const evento of eventos) await AgendaGoogleModel.apagar(req.usuarioId, evento);
+    });
     res.status(204).end();
   },
 };

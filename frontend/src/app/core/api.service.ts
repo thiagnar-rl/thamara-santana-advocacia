@@ -13,6 +13,8 @@ import {
   Processo,
   ProcessoDetalhe,
   ProcessoForm,
+  ResultadoSincronizacao,
+  SituacaoGoogle,
   Publicacao,
   PublicacaoForm,
   PublicacaoSite,
@@ -153,5 +155,23 @@ export class ApiService {
 
   publicacaoDoSite(id: number) {
     return this.http.get<PublicacaoSite>(`${this.base}/publico/publicacoes/${id}`);
+  }
+
+  /* ---------- [F8] Google Agenda ---------- */
+
+  situacaoGoogle() {
+    return this.http.get<SituacaoGoogle>(`${this.base}/google`);
+  }
+
+  conectarGoogle() {
+    return this.http.get<{ url: string }>(`${this.base}/google/conectar`);
+  }
+
+  desconectarGoogle() {
+    return this.http.delete<void>(`${this.base}/google`);
+  }
+
+  sincronizarGoogle(forcar = false) {
+    return this.http.post<ResultadoSincronizacao>(`${this.base}/google/sincronizar${forcar ? '?forcar=1' : ''}`, {});
   }
 }

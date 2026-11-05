@@ -235,6 +235,86 @@
   }
 }
 
+/* [F8] Google Agenda */
+.google {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: 8px;
+  padding: 4px 4px 4px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.82rem;
+
+  &.erro {
+    background: rgba(183, 121, 31, 0.18);
+  }
+}
+
+.google-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--dourado-claro);
+}
+
+.google-textos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+
+  strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.55);
+  }
+}
+
+.botao-google {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+}
+
+.google-conectar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.86rem;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
 /* ---------- Celular: menu vira barra inferior ---------- */
 @media (max-width: 720px) {
   :host {
@@ -258,6 +338,7 @@
 
   .marca,
   .ver-site,
+  .google,
   .usuario .dados,
   .usuario .avatar {
     display: none;

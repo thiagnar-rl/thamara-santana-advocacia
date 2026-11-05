@@ -26,6 +26,9 @@ export interface RespostaFalsa {
   status(codigo: number): RespostaFalsa;
   json(corpo: unknown): RespostaFalsa;
   end(): RespostaFalsa;
+  redirecionadoPara?: string;
+  redirect(url: string): RespostaFalsa;
+  set(nome: string, valor: string): RespostaFalsa;
 }
 
 export function resposta(): RespostaFalsa {
@@ -44,6 +47,15 @@ export function resposta(): RespostaFalsa {
     },
     end() {
       this.encerrada = true;
+      return this;
+    },
+    redirect(url) {
+      this.statusCode = 302;
+      this.redirecionadoPara = url;
+      this.encerrada = true;
+      return this;
+    },
+    set() {
       return this;
     },
   };

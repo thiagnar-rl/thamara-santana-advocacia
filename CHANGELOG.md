@@ -7,6 +7,17 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
+## [1.5.0] — 05/11/2026
+
+### Adicionado
+
+- **[F8] Agenda ligada à Google Agenda, nos dois sentidos.** O que é criado, alterado, concluído ou excluído no sistema vai na hora para a Google Agenda da Thamara. O que muda no Google (celular, Gmail) volta para o sistema ao abrir, a cada 5 minutos ou no botão **Sincronizar agora**. Eventos criados no Google entram com o tipo novo **Outro**.
+  - **Solicitado por:** Thiago Rinaldi Luna (pedido de 04/11/2026)
+  - **Ramo:** `melhoria/F8-google-agenda`
+  - **Ficha:** [docs/solicitacoes/F8-google-agenda.md](docs/solicitacoes/F8-google-agenda.md)
+
+---
+
 ## [1.4.0] — 04/11/2026
 
 ### Adicionado

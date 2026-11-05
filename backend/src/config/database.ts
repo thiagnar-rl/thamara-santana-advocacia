@@ -17,6 +17,37 @@ import { createClient } from '@libsql/client/web';
 /** Pasta onde fica o arquivo do banco local (backend/data). */
 export const PASTA_DADOS = path.resolve(__dirname, '..', '..', 'data');
 
+/**
+ * Tabela de compromissos.
+ * [F8] Tipo "outro" (eventos criados direto no Google Agenda) e colunas do vínculo com o Google.
+ * Solicitado por Thiago Rinaldi Luna (04/11/2026). Fica numa função porque bancos antigos
+ * precisam recriar a tabela (o SQLite não deixa alterar a regra CHECK de uma coluna).
+ */
+export function tabelaCompromissos(nome: string): string {
+  return `CREATE TABLE IF NOT EXISTS ${nome} (
+    id                    INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario_id            INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    processo_id           INTEGER REFERENCES processos(id) ON DELETE CASCADE,
+    tipo                  TEXT    NOT NULL
+                          CHECK (tipo IN ('audiencia', 'recurso', 'manifestacao', 'despacho', 'outro')),
+    titulo                TEXT    NOT NULL CHECK (length(trim(titulo)) BETWEEN 1 AND 150),
+    data                  TEXT    NOT NULL                          -- AAAA-MM-DD
+                          CHECK (data GLOB '[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]'),
+    hora                  TEXT                                      -- HH:MM
+                          CHECK (hora IS NULL OR hora GLOB '[0-2][0-9]:[0-5][0-9]'),
+    local                 TEXT,
+    descricao             TEXT,
+    prioridade            TEXT    NOT NULL DEFAULT 'media'
+                          CHECK (prioridade IN ('baixa', 'media', 'alta')),
+    status                TEXT    NOT NULL DEFAULT 'pendente'
+                          CHECK (status IN ('pendente', 'concluido')),
+    concluido_em          TEXT,                                     -- quando foi concluído
+    criado_em             TEXT    NOT NULL DEFAULT (datetime('now', 'localtime')),
+    google_event_id       TEXT,                                     -- [F8] evento correspondente no Google Agenda
+    google_atualizado_em  TEXT                                      -- [F8] última alteração conhecida do evento (ISO)
+  );`;
+}
+
 /** Script DDL — projeto físico do banco. */
 export const ESQUEMA = `
   CREATE TABLE IF NOT EXISTS usuarios (
@@ -42,26 +73,7 @@ export const ESQUEMA = `
     atualizado_em    TEXT    NOT NULL DEFAULT (datetime('now', 'localtime'))
   );
 
-  CREATE TABLE IF NOT EXISTS compromissos (
-    id            INTEGER PRIMARY KEY AUTOINCREMENT,
-    usuario_id    INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
-    processo_id   INTEGER REFERENCES processos(id) ON DELETE CASCADE,
-    tipo          TEXT    NOT NULL
-                  CHECK (tipo IN ('audiencia', 'recurso', 'manifestacao', 'despacho')),
-    titulo        TEXT    NOT NULL CHECK (length(trim(titulo)) BETWEEN 1 AND 150),
-    data          TEXT    NOT NULL                                  -- AAAA-MM-DD
-                  CHECK (data GLOB '[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]'),
-    hora          TEXT                                              -- HH:MM
-                  CHECK (hora IS NULL OR hora GLOB '[0-2][0-9]:[0-5][0-9]'),
-    local         TEXT,
-    descricao     TEXT,
-    prioridade    TEXT    NOT NULL DEFAULT 'media'
-                  CHECK (prioridade IN ('baixa', 'media', 'alta')),
-    status        TEXT    NOT NULL DEFAULT 'pendente'
-                  CHECK (status IN ('pendente', 'concluido')),
-    concluido_em  TEXT,                                             -- quando foi concluído
-    criado_em     TEXT    NOT NULL DEFAULT (datetime('now', 'localtime'))
-  );
+  ${tabelaCompromissos('compromissos')}
 
   -- [F6] Cadastro de clientes (pessoa física ou jurídica) — solicitado por Thamara Santana (30/10/2026)
   CREATE TABLE IF NOT EXISTS clientes (
@@ -173,6 +185,17 @@ export const ESQUEMA = `
   CREATE INDEX IF NOT EXISTS idx_compromissos_usuario_data  ON compromissos (usuario_id, data);
   CREATE INDEX IF NOT EXISTS idx_compromissos_usuario_status ON compromissos (usuario_id, status, data);
   CREATE INDEX IF NOT EXISTS idx_compromissos_processo      ON compromissos (processo_id);
+
+  -- [F8] Conta Google conectada (Google Agenda e, no F1, Google Drive). Uma por usuária.
+  -- O "refresh token" é guardado CIFRADO (AES-256-GCM); sem o JWT_SECRET ninguém consegue usá-lo.
+  CREATE TABLE IF NOT EXISTS google_contas (
+    usuario_id             INTEGER PRIMARY KEY REFERENCES usuarios(id) ON DELETE CASCADE,
+    email                  TEXT    NOT NULL,
+    refresh_token_cifrado  TEXT    NOT NULL,
+    conectado_em           TEXT    NOT NULL,          -- ISO 8601 (UTC)
+    ultima_sincronizacao   TEXT,                      -- ISO 8601 (UTC)
+    ultimo_erro            TEXT
+  );
 `;
 
 export type Parametro = string | number | null;
@@ -258,6 +281,32 @@ async function prepararEsquema(banco: Banco): Promise<void> {
     await banco.script('ALTER TABLE processos ADD COLUMN clientes_nomes TEXT');
   }
   await migrarClientesDosProcessos(banco);
+  await migrarCompromissosParaGoogle(banco);
+}
+
+/**
+ * [F8] Bancos anteriores não aceitam o tipo "outro" nem têm as colunas do Google.
+ * O SQLite não permite mudar a regra CHECK, então a tabela é recriada com os mesmos dados,
+ * tudo dentro de uma transação (se algo falhar, nada muda).
+ */
+export async function migrarCompromissosParaGoogle(banco: Banco): Promise<void> {
+  const [tabela] = await banco.todos<{ sql: string }>(
+    "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'compromissos'",
+    [],
+  );
+  if (!tabela || tabela.sql.includes("'outro'")) return;
+  const colunas = 'id, usuario_id, processo_id, tipo, titulo, data, hora, local, descricao, prioridade, status, concluido_em, criado_em';
+  await banco.script(`
+    BEGIN;
+    ${tabelaCompromissos('compromissos_f8')}
+    INSERT INTO compromissos_f8 (${colunas}) SELECT ${colunas} FROM compromissos;
+    DROP TABLE compromissos;
+    ALTER TABLE compromissos_f8 RENAME TO compromissos;
+    CREATE INDEX IF NOT EXISTS idx_compromissos_usuario_data   ON compromissos (usuario_id, data);
+    CREATE INDEX IF NOT EXISTS idx_compromissos_usuario_status ON compromissos (usuario_id, status, data);
+    CREATE INDEX IF NOT EXISTS idx_compromissos_processo       ON compromissos (processo_id);
+    COMMIT;
+  `);
 }
 
 /**

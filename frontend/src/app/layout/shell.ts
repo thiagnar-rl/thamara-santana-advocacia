@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, untracked } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, effect, inject, signal, untracked } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ApiService } from '../core/api.service';
 import { AuthService } from '../core/auth.service';
 import { ConfirmacaoService } from '../core/confirmacao.service';
 import { EdicaoService } from '../core/edicao.service';
+import { AvisoService } from '../core/aviso.service';
+import { GoogleService } from '../core/google.service';
+import { avisoDaConexao, textoSituacaoGoogle } from '../core/logica/google.logica';
 import { iniciais } from '../core/logica/painel.logica';
 import { perguntaSaida } from '../core/logica/sessao.logica';
 import { ClienteModal } from '../shared/cliente-modal/cliente-modal';
@@ -25,6 +28,9 @@ export class Shell {
   protected edicao = inject(EdicaoService);
   protected confirmacao = inject(ConfirmacaoService);
   private api = inject(ApiService);
+  /** [F8] Google Agenda — pedido de Thiago Rinaldi Luna (04/11/2026). */
+  protected google = inject(GoogleService);
+  protected readonly textoGoogle = computed(() => textoSituacaoGoogle(this.google.situacao()));
 
   /** "curto" = nome usado na barra inferior do celular, quando o normal não cabe. */
   protected readonly menu: { rota: string; rotulo: string; curto?: string; icone: string }[] = [
@@ -41,6 +47,18 @@ export class Shell {
   protected readonly iniciais = computed(() => iniciais(this.auth.usuario()?.nome));
 
   constructor() {
+    // [F8] Sincroniza com o Google Agenda enquanto o sistema estiver aberto
+    this.google.iniciar(inject(DestroyRef));
+    // [F8] Volta do login do Google: mostra o aviso e limpa o endereço
+    const parametros = new URLSearchParams(window.location.search);
+    const aviso = avisoDaConexao(parametros.get('google'));
+    if (aviso) {
+      const avisos = inject(AvisoService);
+      if (aviso.tipo === 'sucesso') avisos.sucesso(aviso.texto);
+      else avisos.erro(aviso.texto);
+      inject(Router).navigate([], { queryParams: { google: null }, queryParamsHandling: 'merge', replaceUrl: true });
+    }
+
     effect(() => {
       this.api.versao();
       untracked(() =>

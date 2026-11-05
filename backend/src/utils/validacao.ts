@@ -1,6 +1,7 @@
 /** Funções puras de validação (sem acesso a banco). */
 
-export const TIPOS = ['audiencia', 'recurso', 'manifestacao', 'despacho'] as const;
+/** [F8] "outro" = evento vindo do Google Agenda (pode ser trocado depois pela usuária). */
+export const TIPOS = ['audiencia', 'recurso', 'manifestacao', 'despacho', 'outro'] as const;
 export const PRIORIDADES = ['baixa', 'media', 'alta'] as const;
 export const STATUS_COMPROMISSO = ['pendente', 'concluido'] as const;
 export const STATUS_PROCESSO = ['ativo', 'suspenso', 'arquivado', 'encerrado'] as const;
