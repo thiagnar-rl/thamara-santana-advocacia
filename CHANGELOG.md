@@ -7,6 +7,19 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
+## [1.9.1] — 05/11/2026
+
+### Corrigido
+
+- **[F11] Ajustes depois da publicação.**
+  - Foi incluído o arquivo de verificação do **Google Search Console** (`frontend/public/google284361ef5ba884ef.html`), para o Google confirmar que o site é do escritório. **Não apague esse arquivo.**
+  - Nas páginas por área, o link "← Áreas de atuação" passou a ficar numa linha própria. No celular, ele aparecia grudado no sobretítulo.
+  - **Solicitado por:** Thamara Santana (cliente), pedido de 05/11/2026
+  - **Ramo:** `correcao/F11-search-console`
+  - **Ficha:** [docs/solicitacoes/F11-paginas-por-area-whatsapp-e-sitemap.md](docs/solicitacoes/F11-paginas-por-area-whatsapp-e-sitemap.md) (seção 6)
+
+---
+
 ## [1.9.0] — 05/11/2026
 
 ### Adicionado
