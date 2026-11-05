@@ -113,6 +113,12 @@ export const routes: Routes = [
         title: 'Publicação · Thamara Santana Advocacia',
         loadComponent: () => import('./site/artigo/artigo').then((m) => m.ArtigoSite),
       },
+      // [F9] Política de Privacidade — solicitado por Thamara Santana (cliente) (05/11/2026)
+      {
+        path: 'privacidade',
+        title: 'Política de Privacidade · Thamara Santana Advocacia',
+        loadComponent: () => import('./site/privacidade/privacidade').then((m) => m.PrivacidadeSite),
+      },
     ],
   },
 

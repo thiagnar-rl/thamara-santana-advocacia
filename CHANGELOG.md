@@ -7,6 +7,17 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
+## [1.7.0] — 05/11/2026
+
+### Adicionado
+
+- **[F9] Política de Privacidade.** O site tem a página `/privacidade`, com índice e 9 seções baseadas na LGPD e nas regras do Google para Agenda e Drive. O link aparece no rodapé. É esse o link que vai cadastrado na tela de autorização do Google.
+  - **Solicitado por:** Thamara Santana (cliente), pedido de 05/11/2026
+  - **Ramo:** `melhoria/F9-politica-de-privacidade`
+  - **Ficha:** [docs/solicitacoes/F9-politica-de-privacidade.md](docs/solicitacoes/F9-politica-de-privacidade.md)
+
+---
+
 ## [1.6.2] — 05/11/2026
 
 ### Corrigido
