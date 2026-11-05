@@ -24,7 +24,7 @@ export interface AreaAtuacao {
 export const AREAS_ATUACAO: AreaAtuacao[] = [
   {
     chave: 'familia',
-    nome: 'Família, Patrimônio e Sucessões',
+    nome: 'Família e Sucessões',
     padrao:
       /\b(familia|familiar|divorci|guarda (compartilhada|unilateral|do filho|dos filhos)|pensao alimenticia|alimentos\b|heranca|herdeir|inventario|testament|sucessao|sucessoes|sucessori|partilha|uniao estavel|casamento|adocao|paternidade|holding|doacao|curatela|regime de bens|planejamento (patrimonial|sucessorio)|alienacao parental|espolio)/,
   },
@@ -89,7 +89,7 @@ export const FONTES_NOTICIAS: FonteNoticias[] = [
   { sigla: 'Agência Brasil', nome: 'Agência Brasil — Justiça', url: 'https://agenciabrasil.ebc.com.br/rss/justica/feed.xml' },
   {
     sigla: 'Busca: Família',
-    nome: 'Google Notícias — Família, Patrimônio e Sucessões',
+    nome: 'Google Notícias — Família e Sucessões',
     url: buscaGoogleNoticias('("direito de família" OR inventário OR herança OR divórcio OR "pensão alimentícia" OR "união estável" OR testamento)'),
     area: 'familia',
     maximo: 20,

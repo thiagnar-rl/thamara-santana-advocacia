@@ -14,7 +14,7 @@ import {
   tempoRelativo,
   validarPublicacao,
 } from '../src/app/core/logica/site.logica';
-import { AREA_PRINCIPAL, AREAS_EQUIPE, CONTATO, ESCRITORIO } from '../src/app/site/conteudo';
+import { AREAS_THAMARA, AREAS_EQUIPE, CONTATO, ESCRITORIO } from '../src/app/site/conteudo';
 
 /** [F7] Site institucional — pedido de Thamara Santana (cliente) (04/11/2026). */
 describe('[F7] site.logica', () => {
@@ -61,7 +61,11 @@ describe('[F7] site.logica', () => {
     assert.equal(ESCRITORIO.oab, 'OAB/SP 500.770');
     assert.equal(CONTATO.whatsapp, '5513991835059');
     assert.equal(CONTATO.instagram, 'thamarasantana.adv');
-    assert.equal(AREA_PRINCIPAL.chave, 'familia');
-    assert.deepEqual(AREAS_EQUIPE.map((a) => a.chave), ['previdenciario', 'trabalhista', 'consumidor', 'criminal']);
+    // [C5] Áreas da Dra. Thamara e da equipe — atualizadas a pedido da cliente Thamara Santana (05/11/2026)
+    assert.deepEqual(AREAS_THAMARA.map((a) => a.nome), ['Família e Sucessões', 'Cível', 'Trabalhista']);
+    assert.ok(AREAS_THAMARA[0].itens!.includes('Divórcio consensual e litigioso'));
+    assert.ok(AREAS_THAMARA[1].itens!.includes('Usucapião'));
+    assert.equal(AREAS_THAMARA[2].itens!.length, 2); // empregado (reclamante) e empregador (reclamado)
+    assert.deepEqual(AREAS_EQUIPE.map((a) => a.chave), ['previdenciario', 'criminal']);
   });
 });

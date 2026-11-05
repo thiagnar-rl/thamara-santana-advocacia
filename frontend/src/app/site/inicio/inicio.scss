@@ -144,6 +144,24 @@
     box-shadow: 0 40px 70px -35px rgba(29, 28, 33, 0.55);
   }
 
+  /* [C5] Segunda foto, sobreposta no canto */
+  .foto-detalhe img {
+    position: absolute;
+    right: -44px;
+    bottom: 96px;
+    width: 52%;
+    border: 6px solid #fff;
+    border-radius: 18px;
+    box-shadow: 0 30px 50px -25px rgba(29, 28, 33, 0.6);
+
+    @media (max-width: 900px) {
+      right: -12px;
+      bottom: 84px;
+      width: 46%;
+      border-width: 4px;
+    }
+  }
+
   figcaption {
     position: absolute;
     left: 20px;
@@ -219,18 +237,7 @@
 }
 
 /* ---------- Áreas de atuação ---------- */
-
-.grade-areas {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 28px;
-  margin-top: 56px;
-
-  @media (max-width: 960px) {
-    grid-template-columns: 1fr;
-  }
-}
-
+/* [C5] Card da Dra. Thamara com 3 especialidades + equipe abaixo */
 .area {
   position: relative;
   display: flex;
@@ -274,39 +281,102 @@
 
 .area.principal {
   flex-direction: column;
+  gap: 28px;
+  margin-top: 56px;
   padding: 40px 36px;
   border-color: rgba(214, 180, 108, 0.45);
   background:
     radial-gradient(90% 60% at 100% 0%, rgba(214, 180, 108, 0.16), transparent 60%),
     rgba(255, 255, 255, 0.04);
 
+  &:hover {
+    background:
+      radial-gradient(90% 60% at 100% 0%, rgba(214, 180, 108, 0.16), transparent 60%),
+      rgba(255, 255, 255, 0.05);
+  }
+
+  @media (max-width: 600px) {
+    padding: 30px 22px;
+  }
+}
+
+.grade-especialidades {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.especialidade {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 28px;
+
+  & + .especialidade {
+    border-left: 1px solid rgba(214, 180, 108, 0.22);
+  }
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+
+  @media (max-width: 960px) {
+    padding: 26px 0 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    & + .especialidade {
+      border-left: 0;
+      border-top: 1px solid rgba(214, 180, 108, 0.22);
+    }
+  }
+
   .icone-area {
-    width: 58px;
-    height: 58px;
+    width: 52px;
+    height: 52px;
   }
 
   h3 {
-    font-size: clamp(1.5rem, 2.6vw, 1.95rem);
+    margin-top: 6px;
+    font-size: clamp(1.35rem, 2.2vw, 1.6rem);
     line-height: 1.2;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.62);
   }
 
   ul {
     display: grid;
-    gap: 10px;
-    margin: 8px 0 0;
+    gap: 9px;
+    margin: 10px 0 0;
     padding: 0;
     list-style: none;
+    font-size: 0.95rem;
   }
 
   li {
     position: relative;
     padding-left: 22px;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.86);
 
     &::before {
       content: '';
       position: absolute;
       left: 0;
-      top: 0.7em;
+      top: 0.72em;
       width: 10px;
       height: 1px;
       background: var(--dourado-claro);
@@ -329,7 +399,17 @@
 .equipe {
   display: grid;
   gap: 14px;
-  align-content: start;
+  margin-top: 28px;
+}
+
+.grade-equipe {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .rotulo-equipe {

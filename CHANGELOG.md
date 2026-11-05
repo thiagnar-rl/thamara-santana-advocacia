@@ -7,6 +7,21 @@ Numeração de versões: `MAIOR.MENOR.CORREÇÃO`. Por exemplo, `1.0.1` é uma c
 
 ---
 
+## [1.6.2] — 05/11/2026
+
+### Corrigido
+
+- **[C5] Site: áreas de atuação e fotos novas.**
+  - A "Atuação da Dra. Thamara" passou a ter três áreas: **Família e Sucessões**, **Cível** e **Trabalhista**, com as especialidades enviadas pela cliente.
+  - "Família, Patrimônio e Sucessões" virou **"Família e Sucessões"** em todo o site.
+  - A foto da seção "Sobre mim" foi trocada pelas duas fotos novas.
+  - A equipe ficou com Previdenciário e Criminal.
+  - **Solicitado por:** Thamara Santana (cliente), pedido de 05/11/2026
+  - **Ramo:** `correcao/C5-areas-de-atuacao-e-fotos`
+  - **Ficha:** [docs/solicitacoes/C5-areas-de-atuacao-e-fotos.md](docs/solicitacoes/C5-areas-de-atuacao-e-fotos.md)
+
+---
+
 ## [1.6.1] — 05/11/2026
 
 ### Documentação

@@ -8,7 +8,7 @@ import { AVISO_LEGAL } from '../conteudo';
 
 /** Áreas mostradas nos filtros antes de a resposta chegar (a API devolve a lista oficial). */
 const AREAS_PADRAO: AreaSite[] = [
-  { chave: 'familia', nome: 'Família, Patrimônio e Sucessões' },
+  { chave: 'familia', nome: 'Família e Sucessões' },
   { chave: 'previdenciario', nome: 'Previdenciário' },
   { chave: 'trabalhista', nome: 'Trabalhista' },
   { chave: 'consumidor', nome: 'Consumidor' },

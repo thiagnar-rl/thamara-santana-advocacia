@@ -34,13 +34,14 @@ export const CONTATO = {
 };
 
 export const SOBRE = {
+  // [C5] Textos revistos a pedido da cliente Thamara Santana (05/11/2026): Família e Sucessões, Cível e Trabalhista
   paragrafos: [
-    'Sou advogada com atuação dedicada ao Direito de Família, Patrimônio e Sucessões. Parte essencial do meu trabalho é conduzir as conversas sobre herança enquanto as pessoas ainda podem expressar, por si mesmas, o que desejam e o que as preocupa.',
-    'Antes de falar em testamento, doação ou holding, procuro compreender a realidade de cada família: quem depende da renda daquele patrimônio, quais decisões já foram tomadas e quais ficaram apenas em conversas, sem que ninguém saiba ao certo o que foi combinado.',
-    'Meu papel é explicar o que a lei permite, quais são as consequências de cada escolha e o que precisa ser formalizado. Assim, a família pode decidir com clareza e segurança o destino daquilo que construiu.',
+    'Sou advogada com atuação em Direito de Família e Sucessões, Direito Civil e Direito do Trabalho. Em cada caso, o ponto de partida é ouvir com atenção: entender a história, as preocupações e o que realmente importa para quem me procura.',
+    'Questões como divórcio, pensão alimentícia, reconhecimento de paternidade e inventário mexem com a vida de toda a família. Por isso, conduzo cada etapa com sensibilidade, sigilo e firmeza, do primeiro atendimento até a solução.',
+    'Meu papel é explicar o que a lei permite, quais são as consequências de cada escolha e o que precisa ser formalizado. Assim, você decide com clareza e segurança o melhor caminho.',
   ],
   principios: [
-    { titulo: 'Escuta antes da solução', texto: 'Cada família tem sua história. O primeiro passo é entendê-la.' },
+    { titulo: 'Escuta antes da solução', texto: 'Cada caso tem sua história. O primeiro passo é entendê-la.' },
     { titulo: 'Clareza em cada escolha', texto: 'Explicação objetiva do que a lei permite e das consequências.' },
     { titulo: 'Formalização segura', texto: 'O que foi decidido fica registrado da forma correta.' },
   ],
@@ -54,21 +55,46 @@ export interface AreaDoSite {
   itens?: string[];
 }
 
-/** Área conduzida pela própria advogada (destaque no site). */
-export const AREA_PRINCIPAL: AreaDoSite = {
-  chave: 'familia',
-  nome: 'Família, Patrimônio e Sucessões',
-  icone: 'clientes',
-  descricao: 'Atuação conduzida diretamente pela Dra. Thamara Santana, do planejamento à formalização.',
-  itens: [
-    'Planejamento sucessório e patrimonial',
-    'Inventário e partilha, judicial e extrajudicial',
-    'Testamentos e doações',
-    'Holding familiar',
-    'Divórcio, união estável e regime de bens',
-    'Guarda, convivência e pensão alimentícia',
-  ],
-};
+/**
+ * Áreas conduzidas pela própria advogada (destaque no site).
+ * [C5] Família e Sucessões, Cível e Trabalhista — lista de especialidades enviada pela cliente Thamara Santana (04/11/2026).
+ */
+export const AREAS_THAMARA: AreaDoSite[] = [
+  {
+    chave: 'familia',
+    nome: 'Família e Sucessões',
+    icone: 'clientes',
+    descricao: 'Questões de família tratadas com escuta, sigilo e cuidado em cada etapa.',
+    itens: [
+      'Divórcio consensual e litigioso',
+      'Reconhecimento de paternidade',
+      'Ação de alimentos (pensão): fixação, revisão e exoneração',
+      'Cumprimento de sentença de alimentos, pelo rito da penhora ou da prisão',
+      'Inventário e partilha de bens',
+    ],
+  },
+  {
+    chave: 'civel',
+    nome: 'Cível',
+    icone: 'balanca',
+    descricao: 'Conflitos do dia a dia, imóveis, contratos e relações de consumo.',
+    itens: [
+      'Usucapião',
+      'Adjudicação compulsória',
+      'Indenização por dano moral e material',
+      'Obrigação de fazer',
+      'Direito do consumidor',
+      'Contratos em geral: locação, compra e venda e outros',
+    ],
+  },
+  {
+    chave: 'trabalhista',
+    nome: 'Trabalhista',
+    icone: 'predio',
+    descricao: 'Atuação nos dois lados da relação de trabalho.',
+    itens: ['Reclamação trabalhista em favor do empregado (reclamante)', 'Defesa do empregador (reclamado)'],
+  },
+];
 
 /** Áreas atendidas pela equipe do escritório. */
 export const AREAS_EQUIPE: AreaDoSite[] = [
@@ -77,18 +103,6 @@ export const AREAS_EQUIPE: AreaDoSite[] = [
     nome: 'Previdenciário',
     icone: 'documento',
     descricao: 'Aposentadorias, benefícios por incapacidade, BPC/LOAS, pensão por morte e revisões junto ao INSS.',
-  },
-  {
-    chave: 'trabalhista',
-    nome: 'Trabalhista',
-    icone: 'predio',
-    descricao: 'Orientação a empregados e empregadores: rescisões, horas extras, vínculo de emprego e acordos.',
-  },
-  {
-    chave: 'consumidor',
-    nome: 'Consumidor',
-    icone: 'alerta',
-    descricao: 'Cobranças indevidas, negativação, planos de saúde e problemas com compras, serviços e voos.',
   },
   {
     chave: 'criminal',
